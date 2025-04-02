@@ -37,6 +37,10 @@ const socialLinks = [
 ];
 ---
 
+<!-- a faire :  -->
+ <!-- 1 : Aligner les SVG au centre (viewbox à changer, re-télécharger et modifier depuis Figma) -->
+ <!-- 2 ajouer images et fix pb hauteur -->
+
 <header
   class="px-6 py-4 fixed z-30 w-full flex items-center justify-between transition-all duration-300 ease-in-out lg:py-0 bg-(--color-background) lg:backdrop-blur-md"
   id="header"
@@ -107,10 +111,14 @@ const socialLinks = [
 
       {/* Mobile Footer Section (unchanged) */}
       <div class="flex-shrink-0 pt-6 text-center">
-        <div class="flex justify-center gap-4 mb-4 text-(--color-text-secondary) items-center">
+        <div class="flex justify-center gap-4 mb-4 text-(--color-text-secondary) items-bottom">
           {socialLinks.map(link => (
-            <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.name} class="hover:text-(--color-primary)">
-              {/* set:html recevra maintenant la chaîne SVG de link.icon (qui vient de .default) */}
+            <a 
+              href={link.href} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label={link.name} 
+              class="hover:text-(--color-primary) flex items-center justify-center">
               <Fragment set:html={link.icon} />
             </a>
           ))}
