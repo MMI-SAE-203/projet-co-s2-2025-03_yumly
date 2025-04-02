@@ -1,8 +1,15 @@
 ---
-// Potentiellement récupérer les items du menu ici depuis Pocketbase ou autre source
-// Pour l'exemple, on utilise une liste statique
+import instagramIconRaw from '../assets/icons/Instagram.svg?raw';
+import dribbbleIconRaw from '../assets/icons/Dribble.svg?raw'; 
+import twitterIconRaw from '../assets/icons/Twitter.svg?raw';   
+import linkedInIconRaw from '../assets/icons/LinkedIn.svg?raw'; 
+import behanceIconRaw from '../assets/icons/Behance.svg?raw';   
+
+console.log("Instagram Icon Import:", typeof instagramIconRaw, instagramIconRaw);
+
+
 const menuItems = [
-  { name: "Cuisine", href: "#", subItems: [ // Gardé pour l'exemple, mais non utilisé dans le design mobile
+  { name: "Cuisine", href: "#", subItems: [
     { name: "Africaine", href: "/cuisine/africaine" },
     { name: "Asiatique", href: "/cuisine/asiatique" },
     { name: "Européenne", href: "/cuisine/europeenne" },
@@ -16,22 +23,22 @@ const menuItems = [
 
 const footerLinks = [
     { name: "Contact", href: "/contact"},
-    { name: "À propos", href: "/a-propos"},
+    { name: "Connexion", href: "/connexion"},
     { name: "Mentions légales", href: "/mentions-legales"},
 ];
 
 // TODO: Remplacer par tes vraies URLs de réseaux sociaux
 const socialLinks = [
-    { name: "Instagram", href: "#", icon: `<svg .../>` }, // Remplace par tes vrais SVG
-    { name: "Dribbble", href: "#", icon: `<svg .../>` }, // Remplace par tes vrais SVG
-    { name: "Twitter", href: "#", icon: `<svg .../>` }, // Remplace par tes vrais SVG
-    { name: "LinkedIn", href: "#", icon: `<svg .../>` }, // Remplace par tes vrais SVG
-    { name: "Behance", href: "#", icon: `<svg .../>` }, // Remplace par tes vrais SVG
-]
+    { name: "Instagram", href: "#", icon: instagramIconRaw}, 
+    { name: "Dribbble", href: "#", icon: dribbbleIconRaw},  
+    { name: "Twitter", href: "#", icon: twitterIconRaw },   
+    { name: "LinkedIn", href: "#", icon: linkedInIconRaw }, 
+    { name: "Behance", href: "#", icon: behanceIconRaw},   
+];
 ---
 
 <header
-  class="px-6 py-4 fixed z-30 w-full flex items-center justify-between transition-all duration-300 ease-in-out lg:py-0 bg-[--color-background] lg:backdrop-blur-md"
+  class="px-6 py-4 fixed z-30 w-full flex items-center justify-between transition-all duration-300 ease-in-out lg:py-0 bg-(--color-background) lg:backdrop-blur-md"
   id="header"
   x-data="{ scrolled: false }"
   @scroll.window="scrolled = (window.scrollY > 50)"
@@ -39,21 +46,20 @@ const socialLinks = [
 >
   <div class="flex items-center relative z-40">
     <a href="/" aria-label="Accueil Yumly">
-      <span class="text-2xl font-bold text-[--color-primary]">yumly.</span>
+      <span class="text-2xl font-bold text-(--color-primary) font-logo">yumly.</span>
     </a>
   </div>
 
   <div class="hidden lg:block absolute bottom-0 left-0 w-full h-[2px] bg-transparent z-0">
     <div class="absolute left-0 w-[calc(50%-28px)] h-full bg-black"></div>
     <div class="absolute right-0 w-[calc(50%-28px)] h-full bg-black"></div>
-    <div class="absolute left-1/2 -translate-x-1/2 translate-y-[-100%] w-[60px] h-[30px] bg-[--color-background] border-x-[2px] border-t-[2px] border-black rounded-t-full z-10"></div>
-    <div class="absolute left-1/2 -translate-x-1/2 translate-y-[-50%] w-[32px] h-[32px] bg-[--color-background] border-[2px] border-black rounded-full flex items-end overflow-hidden z-20 rotate-180">
+    <div class="absolute left-1/2 -translate-x-1/2 translate-y-[-100%] w-[60px] h-[30px] bg-(--color-background) border-x-[2px] border-t-[2px] border-black rounded-t-full z-10"></div>
+    <div class="absolute left-1/2 -translate-x-1/2 translate-y-[-50%] w-[32px] h-[32px] bg-(--color-background) border-[2px] border-black rounded-full flex items-end overflow-hidden z-20 rotate-180">
       <div class="w-full h-1/2 bg-black"></div>
     </div>
   </div>
 
-  <div class="flex items-center gap-4"> {/* Changé lg:flex-row-reverse enlevé pour garder le bouton à droite */}
-
+  <div class="flex items-center gap-4">
     <button
       class="group relative z-40 flex h-6 w-8 flex-col justify-between *:h-[2px] *:w-full *:bg-black *:transition-all *:duration-300 *:ease lg:hidden"
       id="menu-btn"
@@ -67,101 +73,91 @@ const socialLinks = [
     </button>
 
     <nav
-      class="
-        fixed z-30 inset-0 flex flex-col  
-        transition-transform duration-300 ease-in-out
-        max-lg:aria-hidden:invisible max-lg:aria-hidden:-translate-x-full  
-        max-lg:bg-[--color-background-light] /* Couleur de fond du menu mobile */
-        lg:relative lg:flex-row lg:items-center lg:bg-transparent lg:translate-x-0 lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-black
-      "
-      id="menu"
-      aria-hidden="true"
-    >
-        <div class="lg:hidden flex flex-col h-full w-full p-6 pt-20"> {/* Ajout padding top pour laisser espace au header global */}
-            
-            {/* Le logo et le bouton croix sont gérés par le <header> global et le #menu-btn qui reste visible */}
-            {/* On pourrait dupliquer le logo/bouton ici si le header global doit se cacher */}
+    class="
+      fixed z-30 inset-0 flex flex-col
+      transition-transform duration-300 ease-in-out
+      max-lg:aria-hidden:invisible max-lg:aria-hidden:-translate-x-full
+      max-lg:bg-(--color-background)
+      lg:relative lg:flex-row lg:items-center lg:bg-transparent lg:translate-x-0 lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-black
+    "
+    id="menu"
+    aria-hidden="true"
+  >
+    {/* Mobile Menu Section */}
+    <div class="lg:hidden flex flex-col h-full w-full p-5 pt-20">
+      <div class="flex-grow overflow-hidden flex items-center">
+        <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+          {menuItems.map((item, index) => (
+            <a
+              href={item.href}
+              // CHANGE HERE: Updated aspect ratio from aspect-[3/4] to aspect-[3/5]
+              class="flex-shrink-0 w-70 aspect-[3/5] rounded-lg overflow-hidden relative group"
+            >
+              {/* Fond de couleur orange au lieu d'une image */}
+              <div class="absolute inset-0 w-full h-full bg-(--color-orange-main) transition-transform duration-300 group-hover:scale-105"></div>
 
-            <div class="flex-grow overflow-hidden flex items-center"> {/* Centré verticalement */}
-                <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide"> {/* Activation scroll horizontal + masquage scrollbar */}
-                    {menuItems.map((item, index) => (
-                        <a href={item.href} class="flex-shrink-0 w-48 md:w-64 aspect-[3/4] rounded-lg shadow-md overflow-hidden relative group bg-gray-300"> {/* Taille des cartes */}
-                             {/* Image de fond (à remplacer par tes images) */}
-                            <img 
-                                src={`https://picsum.photos/300/400?random=${index}`} 
-                                alt={item.name} 
-                                class="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                                loading="lazy"
-                            />
-                            {/* Overlay et Titre */}
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-                            <h3 class="absolute bottom-4 left-4 text-white text-xl font-bold uppercase">{item.name}</h3>
-                            {/* Ajoute ici d'autres éléments si besoin (ex: nombre d'épiceries) */}
-                        </a>
-                    ))}
-                </div>
-            </div>
-
-            <div class="flex-shrink-0 pt-6 text-center">
-                {/* Icônes Réseaux Sociaux */}
-                <div class="flex justify-center gap-4 mb-4 text-[--color-text-secondary]">
-                     {socialLinks.map(link => (
-                        <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.name} class="hover:text-[--color-primary]">
-                            {/* Insère ton SVG ici */}
-                            <Fragment set:html={link.icon} /> 
-                        </a>
-                     ))}
-                </div>
-                {/* Crédits */}
-                <p class="text-xs text-[--color-text-muted] mb-2">Site par Camille, Lison & Léo</p>
-                {/* Ligne */}
-                <hr class="border-t border-[--color-border-light] w-1/2 mx-auto mb-4" />
-                {/* Liens Footer */}
-                <div class="flex justify-center gap-2">
-                    {footerLinks.map(link => (
-                        <a href={link.href} class="px-4 py-2 text-sm rounded-full bg-[--color-primary-light] text-[--color-primary-dark] hover:bg-[--color-primary] hover:text-white transition-colors">
-                            {link.name}
-                        </a>
-                    ))}
-                </div>
-            </div>
+              {/* Titre centré et agrandi */}
+              <div class="absolute inset-0 flex items-top pt-4 justify-center">
+                <h3 class="text-white text-3xl font-bold uppercase font-logo tracking-wide">{item.name}</h3>
+              </div>
+            </a>
+          ))}
         </div>
-        <ul class="hidden lg:flex lg:items-center *:relative *:overflow-hidden *:lg:before:absolute *:lg:before:bottom-0 *:lg:before:left-0 *:lg:before:h-2 *:lg:before:w-full *:lg:before:translate-y-2 *:lg:before:transition-all *:lg:before:duration-300 *:lg:before:ease-in-out *:lg:hover:before:translate-y-0">
-            {menuItems.map((item) => (
-                <li class:list={["lg:before:bg-[--color-orange]", {"group lg:hover:overflow-visible": item.subItems?.length}]}>
-                    <div class="relative">
-                        <a 
-                           class="px-5 py-8 flex items-center cursor-pointer" 
-                           href={item.href} 
-                           class:list={[{"pointer-events-none lg:pointer-events-auto" : item.subItems?.length}]} // Empêche le clic sur mobile si sous-menu (géré autrement)
-                        >
-                            {item.name}
-                            {item.subItems?.length && (
-                                <svg class="ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            )}
-                        </a>
+      </div>
 
-                        {/* Sous-menu Desktop (si applicable) */}
-                        {item.subItems?.length && (
-                            <div class="lg:absolute lg:left-0 lg:top-full lg:invisible lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100 lg:bg-[--color-orange-light] lg:shadow-md lg:rounded-md lg:p-2 lg:w-64 lg:z-30 lg:transition-all lg:duration-300 lg:border-2 lg:border-black">
-                                <ul class="">
-                                    {item.subItems.map(subItem => (
-                                        <li class="lg:hover:bg-[--color-orange] lg:rounded">
-                                            <a class="block px-5 py-3" href={subItem.href}>
-                                                {subItem.name}
-                                            </a>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        )}
-                    </div>
-                </li>
-            ))}
-        </ul>
-        </nav>
+      {/* Mobile Footer Section (unchanged) */}
+      <div class="flex-shrink-0 pt-6 text-center">
+        <div class="flex justify-center gap-4 mb-4 text-(--color-text-secondary) items-center">
+          {socialLinks.map(link => (
+            <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.name} class="hover:text-(--color-primary)">
+              {/* set:html recevra maintenant la chaîne SVG de link.icon (qui vient de .default) */}
+              <Fragment set:html={link.icon} />
+            </a>
+          ))}
+        </div>
+        <p class="text-xs text-(--color-text-muted) mb-2">Site par Camille, Lison & Léo</p>
+        <hr class="border-t border-(--color-border-light) w-1/2 mx-auto mb-4" />
+        <div class="flex justify-center gap-2">
+          {footerLinks.map(link => (
+            <a href={link.href} class="px-4 py-2 text-sm rounded-full bg-(--color-primary-light) text-(--color-primary-dark) hover:bg-(--color-primary) hover:text-white transition-colors">
+              {link.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* Desktop Menu Section (unchanged) */}
+    <ul class="hidden lg:flex lg:items-center *:relative *:overflow-hidden *:lg:before:absolute *:lg:before:bottom-0 *:lg:before:left-0 *:lg:before:h-2 *:lg:before:w-full *:lg:before:translate-y-2 *:lg:before:transition-all *:lg:before:duration-300 *:lg:before:ease-in-out *:lg:hover:before:translate-y-0">
+      {menuItems.map((item) => (
+        <li class:list={["lg:before:bg-(--color-orange)", {"group lg:hover:overflow-visible": item.subItems?.length}]}>
+          <div class="relative">
+            <a
+              class="px-5 py-8 flex items-center cursor-pointer"
+              href={item.href}
+              class:list={[{"pointer-events-none lg:pointer-events-auto" : item.subItems?.length}]}
+            >
+              {item.name}
+            </a>
+
+            {item.subItems?.length && (
+              <div class="lg:absolute lg:left-0 lg:top-full lg:invisible lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100 lg:bg-(--color-orange-light) lg:shadow-md lg:rounded-md lg:p-2 lg:w-64 lg:z-30 lg:transition-all lg:duration-300 lg:border-2 lg:border-black">
+                <ul class="">
+                  {item.subItems.map(subItem => (
+                    <li class="lg:hover:bg-(--color-orange) lg:rounded">
+                      <a class="block px-5 py-3" href={subItem.href}>
+                        {subItem.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  </nav>
   </div>
 </header>
 
@@ -169,42 +165,34 @@ const socialLinks = [
   // Gestion du menu mobile (ouverture/fermeture)
   const toggle = document.querySelector("#menu-btn");
   const nav = document.querySelector("#menu");
-  const page = document.body; // Ou document.documentElement pour être sûr
+  const page = document.body;
 
   if (toggle && nav) {
     toggle.addEventListener("click", () => {
       const isOpen = toggle.getAttribute("aria-expanded") === "true";
       toggle.setAttribute("aria-expanded", String(!isOpen));
-      nav.setAttribute("aria-hidden", String(isOpen)); // Contrôle la visibilité/translation via les classes `aria-hidden:*`
-      page.classList.toggle("overflow-hidden", !isOpen); // Bloque le scroll du body quand le menu est ouvert
+      nav.setAttribute("aria-hidden", String(isOpen));
+      page.classList.toggle("overflow-hidden", !isOpen);
     });
 
-    // Optionnel : Fermer le menu si on clique sur un lien de carte
-    const mobileLinks = nav.querySelectorAll('.lg\\:hidden a'); // Sélectionne les liens DANS la structure mobile
-     mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            // Ne ferme que si l'écran est en mode mobile (< 1024px)
-            if (window.innerWidth < 1024) { 
-                 toggle.setAttribute("aria-expanded", "false");
-                 nav.setAttribute("aria-hidden", "true");
-                 page.classList.remove("overflow-hidden");
-            }
-        });
-     });
-
+    // Fermer le menu si on clique sur un lien de carte
+    const mobileLinks = nav.querySelectorAll('.lg\\:hidden a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 1024) { 
+          toggle.setAttribute("aria-expanded", "false");
+          nav.setAttribute("aria-hidden", "true");
+          page.classList.remove("overflow-hidden");
+        }
+      });
+    });
   }
 
-  // --- Suppression de l'ancien script de sous-menu mobile ---
-  // L'ancien code qui gérait .classList.toggle('hidden') sur les sous-menus mobile
-  // n'est plus nécessaire avec ce design de cartes.
-
-  // --- Gestion du scroll header (ton code original, peut rester) ---
-  // Garde ton code existant pour cacher/afficher le header principal au scroll si tu le souhaites.
-  // Assure-toi que les z-index sont corrects (le menu overlay doit être au-dessus du contenu mais potentiellement sous le header fixe global si besoin). J'ai mis z-30 au header et nav, z-40 au logo et bouton pour qu'ils soient au-dessus. Ajuste si besoin.
+  // Gestion du scroll header
   const navBar = document.querySelector("#header");
   let lastScrollY = window.scrollY;
   let ticking = false;
-  const offset = 50; // Réduit peut-être l'offset
+  const offset = 50;
 
   function handleScroll() {
     const currentScrollY = window.scrollY;
@@ -212,9 +200,9 @@ const socialLinks = [
 
     // Ne pas cacher le header si le menu mobile est ouvert
     if (isMobileMenuOpen && window.innerWidth < 1024) {
-         navBar.classList.remove("-translate-y-full");
-         ticking = false;
-         return;
+      navBar.classList.remove("-translate-y-full");
+      ticking = false;
+      return;
     }
 
     if (currentScrollY > lastScrollY && currentScrollY > offset) {
@@ -225,7 +213,7 @@ const socialLinks = [
       navBar.classList.remove("-translate-y-full");
     }
 
-    lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY; // Évite les valeurs négatives
+    lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
     ticking = false;
   }
 
@@ -236,11 +224,8 @@ const socialLinks = [
     }
   });
 
-  // --- Fin Gestion du scroll header ---
-
-  // Helper pour masquer la scrollbar (si `scrollbar-hide` de Tailwind ne suffit pas/pas installé)
-  // const style = document.createElement('style');
-  // style.innerHTML = `.scrollbar-hide::-webkit-scrollbar { display: none; } .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }`;
-  // document.head.appendChild(style);
-
+  // Ajouter une classe pour masquer les scrollbars si nécessaire
+  const style = document.createElement('style');
+  style.innerHTML = `.scrollbar-hide::-webkit-scrollbar { display: none; } .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }`;
+  document.head.appendChild(style);
 </script>

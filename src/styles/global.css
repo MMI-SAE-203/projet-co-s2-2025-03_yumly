@@ -1,7 +1,7 @@
-@import "tailwindcss";
-
 @import "@fontsource-variable/gluten/index.css"; 
 @import "@fontsource-variable/montserrat/index.css"; 
+
+@import "tailwindcss";
 
 /* 3. Définir tes thèmes et variables personnalisés */
 @theme {
