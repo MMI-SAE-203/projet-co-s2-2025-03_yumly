@@ -11,6 +11,8 @@
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.3",
     "@astrojs/react": "^4.2.1",
+    "@fontsource-variable/gluten": "^5.2.5",
+    "@fontsource-variable/montserrat": "^5.2.5",
     "@tailwindcss/vite": "^4.0.15",
     "@types/alpinejs": "^3.13.11",
     "@types/react": "^19.0.12",

@@ -1,1 +1,64 @@
 @import "tailwindcss";
+
+@import "@fontsource-variable/gluten/index.css"; 
+@import "@fontsource-variable/montserrat/index.css"; 
+
+/* 3. Définir tes thèmes et variables personnalisés */
+@theme {
+    /* Fonts */
+    --font-logo: "Gluten Variable", sans-serif; /* Utilise le nom exact si possible, sinon "Gluten" peut suffire */
+    --font-sans: "Montserrat Variable", sans-serif; /* Utilise le nom exact si possible, sinon "Montserrat" peut suffire */
+
+    /* Greyscale */
+    --color-background: oklch(99.35% 0.021 103.87); /* #FFFEEE */
+    --color-grey-1: oklch(100% 0 100.6); /* #FFFFFF */
+    --color-grey-2: oklch(96.7% 0.0029 264.54); /* #F3F4F6 */
+    --color-grey-3: oklch(92.76% 0.0058 264.53); /* #E5E7EB */
+    --color-grey-4: oklch(87.17% 0.0093 258.34); /* #D1D5DB */
+    --color-grey-5: oklch(71.37% 0.0192 261.32); /* #9CA3AF */
+    --color-grey-6: oklch(55.1% 0.0234 264.36); /* #6B7280 */
+    --color-grey-7: oklch(44.61% 0.0263 256.8); /* #4B5563 */
+    --color-grey-8: oklch(37.29% 0.0306 259.73); /* #374151 */
+    --color-grey-9: oklch(27.81% 0.0296 256.85); /* #1F2937 */
+    --color-grey-10: oklch(21.01% 0.0318 264.66); /* #111827 */
+    --color-grey-11: oklch(0% 0 0); /* #000000 */
+
+    /* Couleurs Latino */
+    --color-orange-main: oklch(69.68% 0.2006 40.79); /* #ff6622 */
+    --color-orange-shade-1: oklch(73.07% 0.1739 43.01); /* #FF7D43 */
+    --color-orange-shade-2: oklch(77.05% 0.1432 43.89); /* #FF9465 */
+    --color-orange-shade-3: oklch(73.07% 0.1739 43.01); /* #FF7D43  */
+    --color-orange-shade-4: oklch(86.25% 0.0794 44.97); /* #FFC2A7 */
+    --color-orange-shade-5: oklch(91.07% 0.0495 44.9); /* #FFD8C7 */
+
+    /* Couleurs Asie */
+    --color-red-main: oklch(59.46% 0.2325 28.21); /* #E91B1B */
+    --color-red-shade-1: oklch(62.46% 0.2115 25.83); /* #EC3D3D */
+    --color-red-shade-2: oklch(67.35% 0.1782 23.15); /* #F06060 */
+    --color-red-shade-3: oklch(73.2% 0.1386 21.01); /* #F38282 */
+    --color-red-shade-4: oklch(79.9% 0.0977 19.44); /* #F6A4A4 */
+    --color-red-shade-5: oklch(87.14% 0.0583 18.33); /* #F9C6C6 */
+
+    /* Couleurs Afrique */
+    --color-green-main: oklch(57.12% 0.1691 142.39); /* #2A8F25 */
+    --color-green-shade-1: oklch(63.15% 0.1528 142.54); /* #4AA045 */
+    --color-green-shade-2: oklch(69.5% 0.1275 143.2); /* #6AB167 */
+    --color-green-shade-3: oklch(76% 0.1014 143.29); /* #8AC287 */
+    --color-green-shade-4: oklch(82.38% 0.0718 143.67); /* #AAD2A8 */
+    --color-green-shade-5: oklch(88.94% 0.0457 144.18); /* #C9E3C8 */
+
+    /* Couleurs Europe */
+    --color-blue-main: oklch(42.09% 0.227345 263.5945); /* #0034C6 */
+    --color-blue-shade-1: oklch(48.93% 0.198 264.84); /* #2652CE */
+    --color-blue-shade-2: oklch(57.53% 0.1628 266.78); /* #4D71D8 */
+    --color-blue-shade-3: oklch(66.56% 0.1238 267.86); /* #7390E0 */
+    --color-blue-shade-4: oklch(75.62% 0.0871 268.89); /* #99AEE8 */
+    --color-blue-shade-5: oklch(84.7% 0.0523 269.61); /* #BFCCF0 */
+}
+
+@layer base {
+    body {
+        font-family: var(--font-sans);
+        background-color: var(--color-background);
+    }
+}
