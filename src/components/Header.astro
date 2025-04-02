@@ -1,0 +1,162 @@
+<!-- NOTE 1 : Penser à changer les valeurs comme : "bg-[--color-background]", etc. avec des vraies variables à renseigner dans le fichier global.css -->
+
+
+<header 
+  class="px-6 py-4 fixed z-10 w-full flex items-stretch justify-between transition-all duration-300 ease-in-out lg:py-0 bg-[--color-background] lg:backdrop-blur-md"
+  id="header"
+>    
+  <div class="flex items-center relative z-20">
+    <a href="/" aria-label="Accueil">
+    </a>
+  </div>
+
+  <div class="hidden lg:block absolute bottom-0 left-0 w-full h-[2px] bg-transparent z-0">
+    <div class="absolute left-0 w-[calc(50%-28px)] h-full bg-black"></div>
+    <div class="absolute right-0 w-[calc(50%-28px)] h-full bg-black"></div>
+    <div class="absolute left-1/2 -translate-x-1/2 translate-y-[-100%] w-[60px] h-[30px] bg-[--color-background] border-x-[2px] border-t-[2px] border-black rounded-t-full z-10"></div>
+    <div class="absolute left-1/2 -translate-x-1/2 translate-y-[-50%] w-[32px] h-[32px] bg-[--color-background] border-[2px] border-black rounded-full flex items-end overflow-hidden z-20 rotate-180">
+      <div class="w-full h-1/2 bg-black"></div>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-4 lg:flex-row-reverse">
+    <button 
+      class="group relative z-20 flex h-6 w-8 flex-col justify-between *:h-[2px] *:w-full *:bg-black *:transition-all *:duration-300 *:ease lg:hidden"
+      id="menu-btn"
+      aria-label="Menu"
+      aria-controls="menu"
+      aria-expanded="false"
+    >
+      <span class="group-aria-expanded:translate-y-[10.5px] group-aria-expanded:rotate-135"></span>
+      <span class="group-aria-expanded:opacity-0"></span>
+      <span class="group-aria-expanded:-translate-y-[10.5px] group-aria-expanded:-rotate-135"></span>
+    </button>
+
+    <nav 
+    class="fixed z-10 inset-0 text-2xl text-black transition-all duration-300 ease-in-out max-lg:aria-hidden:invisible max-lg:aria-hidden:opacity-0 max-lg:aria-hidden:pointer-events-none lg:relative lg:flex lg:items-center lg:bg-transparent lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-black lg:opacity-100 lg:pointer-events-auto max-lg:backdrop-blur-xl max-lg:bg-opacity-50"
+    id="menu"
+    aria-hidden="true"
+  >
+    <ul class="mt-[25vh] max-lg:mr-16 max-lg:ml-auto max-lg:w-3/4 max-lg:font-medium max-lg:text-2xl lg:m-0 lg:flex *:relative *:overflow-hidden *:lg:before:absolute *:lg:before:bottom-0 *:lg:before:left-0 *:lg:before:h-2 *:lg:before:w-full *:lg:before:translate-y-2 *:lg:before:transition-all *:lg:before:duration-300 *:lg:before:ease-in-out *:lg:hover:before:translate-y-0">
+
+      <!-- Menu Programmation avec sous-menu -->
+      <li class="lg:before:bg-(--color-orange) group lg:hover:overflow-visible">
+        <div class="relative">
+          <!-- Ajout de l'icône flèche en version mobile -->
+          <a class=" px-5 py-4 max-lg:py-6 max-lg:text-gray-800 lg:py-8 flex items-center cursor-pointer" href="#">
+            Cuisine
+            <svg class="ml-2 w-4 h-4 lg:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+            <svg class="ml-2 w-4 h-4 hidden lg:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </a>
+          
+          <!-- Sous-menu modifié pour garder une consistance dans l'alignement -->
+          <div class="lg:absolute lg:left-0 lg:top-full lg:invisible lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-80 lg:bg-[--color-orange-light] lg:shadow-md lg:rounded-md lg:p-2 lg:w-64 lg:z-30 lg:transition-all lg:duration-300 lg:border-2 lg:border-black max-lg:pl-5">
+            <!-- Sous-items alignés avec les éléments principaux -->
+            <ul class="max-lg:py-2">
+              <li class="lg:hover:bg-(--color-orange) lg:rounded">
+                <a class="block px-5 py-4 max-lg:py-5 lg:px-5 lg:py-3" href="/films">
+                  Africaine
+                </a>
+              </li>
+              <li class="lg:hover:bg-(--color-orange) lg:rounded">
+                <a class="block px-5 py-4 max-lg:py-5 lg:px-5 lg:py-3" href="/activites">
+                  Asiatique
+                </a>
+              </li>
+              <li class="lg:hover:bg-(--color-orange) lg:rounded">
+                <a class="block px-5 py-4 max-lg:py-5 lg:px-5 lg:py-3" href="/activites">
+                  Européenne
+                </a>
+              </li>
+              <li class="lg:hover:bg-(--color-orange) lg:rounded">
+                <a class="block px-5 py-4 max-lg:py-5 lg:px-5 lg:py-3" href="/activites">
+                  Latino
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      
+      <li class="lg:before:bg-(--color-red)">
+        <a class="block px-5 py-4 max-lg:py-6 lg:py-8" href="/festival">Épiceries</a>
+      </li>
+
+      <li class="lg:before:bg-(--color-yellow)">
+        <a class="block px-5 py-4 max-lg:py-6 lg:py-8" href="/invites">Recettes</a>
+      </li>
+      <li class="lg:before:bg-(--color-blue)">
+        <a class="block px-5 py-4 max-lg:py-6 lg:py-8" href="/informations">Devenir partenaire</a>
+      </li>
+      <li class="lg:before:bg-(--color-blue)">
+        <a class="block px-5 py-4 max-lg:py-6 lg:py-8" href="/informations">Connexion</a>
+      </li>
+    </ul>
+  </nav>
+  </div>
+</header>
+
+<script>
+    // Gestion du menu mobile
+    const toggle = document.querySelector("#menu-btn");
+    const nav = document.querySelector("#menu");
+    const page = document.body;
+    
+    if (toggle && nav) {
+      toggle.addEventListener("click", () => {
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+        nav.setAttribute("aria-hidden", String(isOpen));
+        page.classList.toggle("noscroll", !isOpen);
+      });
+    }
+
+    // Gestion du scroll header
+    const navBar = document.querySelector("#header");
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    const offset = 205;
+
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > offset) {
+        navBar.classList.add("-translate-y-full");
+      } else {
+        navBar.classList.remove("-translate-y-full");
+      }
+
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(handleScroll);
+        ticking = true;
+      }
+    });
+
+    // Gestion du sous-menu mobile uniquement
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuLinks = document.querySelectorAll('.group > div > a');
+      
+      if (window.innerWidth < 1024) {
+        menuLinks.forEach(link => {
+          if (link.nextElementSibling) {
+            link.addEventListener('click', (e) => {
+              if (window.innerWidth < 1024) {
+                e.preventDefault();
+                const submenu = link.nextElementSibling;
+                submenu.classList.toggle('hidden');
+              }
+            });
+          }
+        });
+      }
+    });
+</script>
