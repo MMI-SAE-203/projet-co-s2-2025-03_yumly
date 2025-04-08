@@ -1,0 +1,113 @@
+---
+
+interface Item {
+  image: string;
+  alt: string;
+  // On garde title et content au cas où, mais on ne les affiche pas par défaut ici
+  title?: string;
+  content?: string;
+}
+
+interface Props {
+  items: Item[];
+  backgroundUrl: string; // URL de l'image de fond (doit être dans /public)
+  itemWidthClass?: string; // Largeur de chaque image (ex: "w-48")
+  gapClass?: string; // Espacement entre images (ex: "gap-8")
+  containerPaddingClass?: string; // Padding autour du carousel (ex: "py-10")
+}
+
+const {
+  items = [],
+  backgroundUrl, // Pas de valeur par défaut, elle est essentielle
+  itemWidthClass = "w-40 sm:w-48", // Plus petit par défaut pour un look "posé"
+  gapClass = "gap-6 md:gap-10", // Espace potentiellement plus grand
+  containerPaddingClass = "py-10 px-4" // Padding par défaut pour la section
+} = Astro.props;
+---
+
+{/* Conteneur principal avec l'image de fond */}
+<div
+  class:list={[
+    "minimal-scroll-carousel-container relative w-full",
+    containerPaddingClass // Applique le padding autour
+  ]}
+  style={`
+    background-image: url(${backgroundUrl});
+    background-size: 500px; /* <<--- VALEUR RÉDUITE (ajuste si besoin) */
+    background-repeat: repeat;
+    image-rendering: pixelated; /* Garde-le pour l'instant */
+  `}
+  >
+  <div
+    class:list={[
+      "scroll-content flex items-center", // items-center pour aligner verticalement si hauteurs varient
+      gapClass,
+      "overflow-x-auto scroll-smooth snap-x snap-mandatory",
+      "cursor-grab active:cursor-grabbing",
+      "scrollbar-hide" // Classe utilitaire pour cacher la scrollbar
+    ]}
+    data-carousel-scrollable>
+
+    {/* Itération sur les items */}
+    {items.map((item) => (
+      // Conteneur simple pour l'image, gère la largeur et le snap
+      <div class:list={["flex-shrink-0 snap-center", itemWidthClass]}>
+        {/* Juste l'image, avec une ombre pour la "poser" */}
+        <img
+          src={item.image}
+          alt={item.alt}
+          class="w-full h-auto object-contain block"
+          loading="lazy"
+          draggable="false"
+        />
+        {/* On n'affiche PAS le titre/contenu ici pour garder le look épuré */}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+/* Classes utilitaires pour cacher la scrollbar (inchangé) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>
+
+{/* Le script de drag-to-scroll est identique à ScrollCarousel */}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const scrollContainers = document.querySelectorAll('[data-carousel-scrollable]');
+    scrollContainers.forEach(slider => {
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+
+      slider.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        isDown = true;
+        slider.classList.add('active:cursor-grabbing');
+        startX = e.pageX - (slider as HTMLElement).offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+      slider.addEventListener('mouseleave', () => { isDown = false; slider.classList.remove('active:cursor-grabbing'); });
+      slider.addEventListener('mouseup', () => { isDown = false; slider.classList.remove('active:cursor-grabbing'); });
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - (slider as HTMLElement).offsetLeft;
+        const walk = (x - startX);
+        slider.scrollLeft = scrollLeft - walk;
+      });
+
+      // Support Tactile (inchangé)
+      slider.addEventListener('touchstart', (e) => { const touch = e.touches[0]; isDown = true; startX = touch.pageX - (slider as HTMLElement).offsetLeft; scrollLeft = slider.scrollLeft; }, { passive: true });
+      slider.addEventListener('touchend', () => { isDown = false; });
+      slider.addEventListener('touchcancel', () => { isDown = false; });
+      slider.addEventListener('touchmove', (e) => { if (!isDown) return; const touch = e.touches[0]; const x = touch.pageX - (slider as HTMLElement).offsetLeft; const walk = (x - startX); slider.scrollLeft = scrollLeft - walk; }, { passive: true });
+    });
+  });
+</script>

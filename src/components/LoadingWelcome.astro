@@ -1,0 +1,180 @@
+---
+import noodlesImage from '../assets/img/noodles.webp';
+
+const waveColor1 = "rgba(var(--rgb-background, 255, 250, 245), 0.1)"; 
+const waveColor2 = "rgba(var(--rgb-orange-main, 255, 107, 0), 0.08)"; 
+---
+
+<div
+    x-data="loadingWelcomeState()"
+    x-init="init"
+    x-show="!isFinished"
+    class="fixed inset-0 pb-50 z-50 flex flex-col items-center justify-center overflow-hidden px-4"
+    x-bind:class="{
+        'bg-[var(--color-orange-main)]': stage === 'welcome1',
+        'bg-[var(--color-background)]': stage === 'welcome2' || stage === 'transitioning1to2',
+        'transition-colors duration-1000 ease-in-out': stage !== 'welcome1' || isAnimationsEnabled,
+        'transition-opacity duration-1000 ease-in-out': isFadingOut, // Durée fondu final
+        'opacity-100': !isFadingOut,
+        'opacity-0': isFadingOut
+    }"
+    @click="handleClick">
+
+    <!-- Vagues SVG -->
+    <div class="absolute inset-0 z-0 overflow-hidden ">
+        <svg
+            class="absolute bottom-0 left-0 w-full h-auto"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1440 320"  preserveAspectRatio="none">
+
+            <defs>
+                 <!-- Définition des keyframes pour l'animation -->
+                 <style>
+                    @keyframes wave-move1 {
+                        0% { transform: translateX(0); }
+                        100% { transform: translateX(-1440px); } 
+                    }
+                    @keyframes wave-move2 {
+                        0% { transform: translateX(0); }
+                        100% { transform: translateX(-1440px); }
+                    }
+                    .wave-path1  {
+                        animation: wave-move1 15s linear infinite;
+                    }
+                    .wave-path2 {
+                        animation: wave-move2 15s linear infinite;
+                    }
+                 </style>
+            </defs>
+
+            <path
+                class="wave-path2"
+                fill={waveColor1}
+                d="M0,192 C240,128 480,128 720,192 C960,256 1200,256 1440,192 L1440,320 L0,320 Z M1440,192 C1680,128 1920,128 2160,192 C2400,256 2640,256 2880,192 L2880,320 L1440,320 Z"
+            ></path>
+
+            <path
+                class="wave-path1"
+                fill={waveColor2}
+                d="M0,224 C240,288 480,288 720,224 C960,160 1200,160 1440,224 L1440,320 L0,320 Z M1440,224 C1680,288 1920,288 2160,224 C2400,160 2640,160 2880,224 L2880,320 L1440,320 Z"
+             ></path>
+        </svg>
+    </div>
+
+
+    <!-- Conteneur du contenu principal -->
+    <div class="relative flex w-full flex-col items-center text-center z-10">
+
+        <!-- Textes "yumly."-->
+        <div
+            class="absolute inset-x-0 top-1/2 z-0 -translate-y-1/2 transform font-logo text-8xl font-bold text-[var(--color-orange-main)] leading-none opacity-0 transition-opacity duration-1000 ease-in-out"
+            :class="{ 'opacity-100': stage === 'welcome2' || stage === 'transitioning1to2' }"
+        >
+            <div class="-mb-5">yumly.</div>
+            <div class="-mb-5">yumly.</div>
+            <div class="-mb-5">yumly.</div>
+            <div>yumly.</div>
+        </div>
+
+        <!-- Image -->
+        <img
+            src={noodlesImage.src}
+            alt="Yumly illustration de nouilles"
+            width={noodlesImage.width}
+            height={noodlesImage.height}
+            class="relative z-10 mb-4 h-48 w-48 object-contain transition-all duration-1000 ease-in-out"
+            :class="{
+            'translate-y-0': stage === 'welcome1', // Position initiale
+            'translate-y-16': stage === 'welcome2' || stage === 'transitioning1to2' // Position finale (décalée vers le bas)
+            }"
+            loading="eager"/>
+
+        <!-- Texte BIENVENUE -->
+        <h1 class="relative z-10 font-['--font-logo'] font-bold transition-all duration-1000 ease-in-out text-green"
+            :class="{
+                'mt-8 text-3xl text-[var(--color-grey-1)] translate-y-0': stage === 'welcome1', // Styles initiaux
+                'mt-8 text-2xl text-[var(--color-orange-main)] translate-y-26': stage === 'welcome2' || stage === 'transitioning1to2' // Styles finaux (décalé avec l'image)
+                }"> BIENVENUE ! </h1>
+    </div>
+</div>
+
+<!-- Script AlpineJS -->
+<script is:inline>
+    window.loadingWelcomeState = function() {
+        return {
+            stage: 'welcome1',
+            isFadingOut: false,
+            isFinished: false,
+            isAnimationsEnabled: false,
+            stage1Timer: null,
+            stage2Timer: null,
+            finalFadeTimer: null,
+
+            init() {
+                console.log("Alpine Init - Stage:", this.stage);
+                if (this.stage === 'welcome1' && !this.isFinished) {
+                    this.startStage1Timer();
+                    setTimeout(() => {
+                        this.isAnimationsEnabled = true;
+                    }, 100);
+                }
+            },
+
+            startStage1Timer() {
+                console.log("Starting timer for Stage 1 (3s)");
+                clearTimeout(this.stage1Timer);
+                this.stage1Timer = setTimeout(() => {
+                    this.goToStage2Transition();
+                }, 3000);
+            },
+
+            goToStage2Transition() {
+                if (this.stage !== 'welcome1') return;
+                console.log("Starting smooth transition to Stage 2 styles");
+                clearTimeout(this.stage1Timer);
+                this.stage = 'transitioning1to2';
+                 setTimeout(() => {
+                    if (this.stage === 'transitioning1to2') {
+                         this.stage = 'welcome2';
+                         console.log("Visual transition complete. Stage formally set to welcome2.");
+                         this.startStage2Timer();
+                    }
+                }, 1000);
+            },
+
+            startStage2Timer() {
+                 console.log("Starting timer for Stage 2 (1.5s before final fade)");
+                 clearTimeout(this.stage2Timer);
+                 this.stage2Timer = setTimeout(() => {
+                    this.startFinalFade();
+                }, 1500);
+            },
+
+            startFinalFade() {
+                if (this.stage !== 'welcome2' && this.stage !== 'transitioning1to2') return;
+                console.log("Starting final fade out of the whole component.");
+                clearTimeout(this.stage1Timer);
+                clearTimeout(this.stage2Timer);
+                clearTimeout(this.finalFadeTimer);
+                this.isFadingOut = true;
+                this.finalFadeTimer = setTimeout(() => {
+                    console.log("Final fade complete. Setting isFinished = true");
+                    this.isFinished = true;
+                    this.stage = 'finished';
+                }, 1000);
+            },
+
+            handleClick() {
+                console.log("Click detected on stage:", this.stage);
+                if (this.stage === 'welcome1') {
+                     console.log("Click initiates smooth transition to stage 2 styles.");
+                    this.goToStage2Transition();
+                }
+                 else if (this.stage === 'transitioning1to2' || this.stage === 'welcome2') {
+                      console.log("Click initiates final fade out.");
+                      this.startFinalFade();
+                 }
+            },
+        }
+    }
+</script>

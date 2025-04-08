@@ -1,12 +1,338 @@
 ---
-import Layout from "../layouts/Layout.astro";
----
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import Carousel_infini from '../components/Carousel_infini.astro'; // Assure-toi que ce chemin est correct
+import Carousel from '../components/Carousel.astro';
 
-<Layout>
-  <section class="text-center py-20">
-    <h1 class="text-4xl font-bold text-orange">Le monde à votre table !</h1>
-    <p class="mt-4 text-lg text-gray-700">
-      Découvrez les meilleures épiceries du monde entier.
-    </p>
+import grilleMenus from '../assets/img/grille_menus.png'; // Importe l'image pour le background
+
+import afriqueImage from '../assets/img/Afrique-final.webp';
+import asieImage from '../assets/img/Asie-final.webp';
+import europeImage from '../assets/img/Europe-final.webp';
+import latinoImage from '../assets/img/Latino-final.webp';
+
+
+// RECETTES 
+import recette1 from '../assets/img/recette-1.webp';
+import recette2 from '../assets/img/recette-2.webp';
+import recette3 from '../assets/img/recette-3.webp';
+import recette4 from '../assets/img/recette-4.webp';
+import recette5 from '../assets/img/recette-5.webp';
+import recette6 from '../assets/img/recette-6.webp';
+import recette7 from '../assets/img/recette-7.webp';
+import recette8 from '../assets/img/recette-8.webp';
+import recette9 from '../assets/img/recette-9.webp';
+import recette10 from '../assets/img/recette-10.webp';
+import recette11 from '../assets/img/recette-11.webp';
+import recette12 from '../assets/img/recette-12.webp';
+import recette13 from '../assets/img/recette-13.webp';
+import recette14 from '../assets/img/recette-14.webp';
+import recette15 from '../assets/img/recette-15.webp';
+
+
+
+
+
+const groceryItems = [
+  { image: afriqueImage.src, alt: 'Épicerie Africaine', title: 'Épiceries Africaines' },
+  { image: asieImage.src, alt: 'Épicerie Asiatique', title: 'Épiceries Asiatiques' },
+  { image: europeImage.src, alt: 'Épicerie Européenne', title: 'Épiceries Européennes' }, // Correction ici
+  { image: latinoImage.src, alt: 'Épicerie Latino', title: 'Épiceries Latino' },
+];
+
+const recipeItems = [
+  { image: recette1.src, alt: 'Recette 1', title: 'Nom Recette 1' },
+  { image: recette2.src, alt: 'Recette 2', title: 'Nom Recette 2' },
+  { image: recette3.src, alt: 'Recette 3', title: 'Nom Recette 3' },
+  { image: recette4.src, alt: 'Recette 4', title: 'Nom Recette 4' },
+  { image: recette5.src, alt: 'Recette 5', title: 'Nom Recette 5' },
+  { image: recette6.src, alt: 'Recette 6', title: 'Nom Recette 6' },
+  { image: recette7.src, alt: 'Recette 7', title: 'Nom Recette 7' },
+  { image: recette8.src, alt: 'Recette 8', title: 'Nom Recette 8' },
+  { image: recette9.src, alt: 'Recette 9', title: 'Nom Recette 9' },
+  { image: recette10.src, alt: 'Recette 10', title: 'Nom Recette 10' },
+  { image: recette11.src, alt: 'Recette 11', title: 'Nom Recette 11' },
+  { image: recette12.src, alt: 'Recette 12', title: 'Nom Recette 12' },
+  { image: recette13.src, alt: 'Recette 13', title: 'Nom Recette 13' },
+  { image: recette14.src, alt: 'Recette 14', title: 'Nom Recette 14' },
+  { image: recette15.src, alt: 'Recette 15', title: 'Nom Recette 15' },
+
+
+];
+
+// Données pour les produits phares (si tu veux le rendre dynamique aussi)
+// Pour l'instant, c'est statique comme demandé
+---
+<Layout title="Accueil" description="Yumly - Le monde à votre table ! Découvrez les meilleures épiceries et recettes du monde entier.">
+
+  <!-- Section Hero -->
+  <section class="h-screen flex flex-col items-center justify-center bg-[url('/img/hero-background-mobile.jpg')] bg-cover bg-center px-4 text-center relative">
+    <!-- Assure-toi d'avoir une image de fond appropriée ici -->
+    <div class="absolute inset-0 bg-grey-11/30"></div> <!-- Overlay optionnel pour la lisibilité -->
+    <div class="relative z-10">
+       <h1 class="font-logo text-6xl text-orange-main mb-4 drop-shadow-md">yumly.</h1>
+       <p class="font-sans text-xl text-grey-1 font-semibold drop-shadow-sm">Le monde à votre table !</p>
+    </div>
   </section>
+
+  <!-- Boutons Connexion/Inscription -->
+  <section class="py-8 px-4">
+    <div class="flex justify-center items-center gap-4">
+      <a href="/connexion" class="py-3 px-8 rounded-full border-2 border-orange-main text-orange-main font-semibold hover:bg-orange-shade-5 transition-colors">
+        Se connecter
+      </a>
+      <a href="/inscription" class="py-3 px-8 rounded-full bg-orange-main text-white font-semibold hover:bg-orange-shade-1 transition-colors">
+        S'inscrire
+      </a>
+    </div>
+  </section>
+
+  <!-- Quote Section -->
+  <section class="py-8 px-6">
+      <p class="font-logo text-xl text-center text-orange-main max-w-xl mx-auto leading-relaxed">
+        <span class="text-4xl leading-none">“</span>
+        Passionnés par la cuisine du monde, nous sélectionnons pour vous les meilleures épiceries afin de rendre chaque repas unique.
+        <span class="text-4xl leading-none">”</span>
+      </p>
+  </section>
+
+  <!-- Objectifs Cards -->
+  <section class="py-8 px-4">
+    <div class="flex flex-col gap-6">
+      <div class="bg-green-main text-white p-6 rounded-xl shadow-md">
+        <h2 class="font-semibold text-lg mb-2">Retrouvez la cuisine mondiale</h2>
+        <p class="text-sm opacity-90">Parcourez une multitude d'épiceries à la recherche des produits qui vont vous faire re-découvrir le meilleur qu'à la cuisine à vous offrir.</p>
+      </div>
+      <div class="bg-green-main text-white p-6 rounded-xl shadow-md">
+        <h2 class="font-semibold text-lg mb-2">Découvrez de nouvelles recettes délicieuses</h2>
+        <p class="text-sm opacity-90">Et entrez dans un nouveau monde de plaisir gustatif, conciliant respect des cultures et qualité de la nourriture.</p>
+      </div>
+      <div class="bg-green-main text-white p-6 rounded-xl shadow-md">
+        <h2 class="font-semibold text-lg mb-2">Trouvez l'épicerie parfaite</h2>
+        <p class="text-sm opacity-90">Changez vos habitudes alimentaires et découvrez une vaste sélection de produits d'exception, au plus proche des producteurs.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Séparateur Carrés -->
+  <section class="py-8 overflow-hidden">
+      <div class="flex w-full justify-center">
+          <div class="flex w-full">
+              {Array(10).fill().map(() => (
+                  <img src="/assets/img/Separator1.png" alt="" class="h-12 object-contain" />
+
+              ))}
+          </div>
+      </div>
+  </section>
+
+  <!-- Découvrez les Épiceries Carousel -->
+  <section class="py-12 px-4">
+    <h2 class="text-center font-bold text-3xl text-grey-9 mb-8">DÉCOUVREZ LES ÉPICERIES !</h2>
+    <!-- Assure-toi que Carousel_infini peut gérer ce type d'item ou ajuste les données -->
+    <Carousel_infini items={groceryItems.map(item => ({ ...item, content: `<h3 class='text-white font-semibold text-lg mt-2'>${item.title}</h3>` }))} />
+  </section>
+
+  <!-- Valeurs Section -->
+  <section class="py-12 px-4">
+    <div class="text-center mb-10">
+        <h2 class="text-center font-bold text-3xl text-grey-9 mb-2">LE MONDE À VOTRE TABLE !</h2>
+        <p class="text-lg text-grey-7">Nos valeurs</p>
+    </div>
+    <div class="max-w-2xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 mb-8">
+            <div>
+                <h3 class="font-semibold text-lg text-orange-main mb-2">Respect</h3>
+                <p class="text-grey-8 text-sm">Nous valorisons chaque culture culinaire avec bienveillance, sans stéréotype ni appropriation.</p>
+            </div>
+            <div>
+                <h3 class="font-semibold text-lg text-orange-main mb-2">Facilité d'accès</h3>
+                <p class="text-grey-8 text-sm">Un seul clic pour trouver les produits et les épiceries qui correspondent à vos envies, près de chez vous.</p>
+            </div>
+            <div>
+                <h3 class="font-semibold text-lg text-orange-main mb-2">Diversité culinaire</h3>
+                <p class="text-grey-8 text-sm">Yumly rassemble des saveurs du monde entier pour faire de chaque repas une découverte.</p>
+            </div>
+            <div>
+                <h3 class="font-semibold text-lg text-orange-main mb-2">Transmission</h3>
+                <p class="text-grey-8 text-sm">Nous partageons les recettes, les gestes et les histoires qui font la richesse des traditions culinaires.</p>
+            </div>
+        </div>
+        <div> {/* md:col-span-2 si le parent était grid */}
+            <h3 class="font-semibold text-lg text-orange-main mb-2">Soutient aux commerces locaux</h3>
+            <p class="text-grey-8 text-sm">Nous mettons en avant les artisans de la diversité : les épiceries indépendantes, proches, passionnées.</p>
+        </div>
+    </div>
+  </section>
+
+  <!-- Recettes Carousel -->
+  <section class="py-12 px-4">
+      <h2 class="text-center font-bold text-3xl text-grey-9 mb-8">Nos Recettes Inspirantes</h2>
+      <Carousel 
+      items={recipeItems}
+      backgroundUrl="/assets/img/grille2.webp" {/* Assure-toi que c'est le bon fond */}
+      />
+  </section>
+
+  <!-- Notre Équipe -->
+  <section class="py-12 px-4">
+    <h2 class="text-center font-bold text-3xl text-grey-9 mb-10">NOTRE ÉQUIPE</h2>
+    <div class="flex justify-center items-end gap-6 md:gap-12 mb-8">
+      <!-- Camille -->
+      <div class="text-center mt-6">
+        <img src="/img/team-camille.png" alt="Portrait de Camille" class="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full border-4 border-orange-main mx-auto shadow-md">
+        <p class="mt-3 font-semibold text-orange-main">Camille</p>
+      </div>
+      <!-- Lison (Centre, plus haut) -->
+      <div class="text-center">
+        <img src="/img/team-lison.png" alt="Portrait de Lison" class="w-28 h-28 md:w-36 md:h-36 object-cover rounded-full border-4 border-orange-main mx-auto shadow-lg">
+        <p class="mt-3 font-semibold text-orange-main">Lison</p>
+      </div>
+      <!-- Léo -->
+      <div class="text-center mt-6">
+         <img src="/img/team-leo.png" alt="Portrait de Léo" class="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full border-4 border-orange-main mx-auto shadow-md">
+         <p class="mt-3 font-semibold text-orange-main">Léo</p>
+      </div>
+    </div>
+    <div class="max-w-xl mx-auto text-left text-grey-8 text-sm space-y-4">
+        <p>
+            Nous sommes trois étudiants en MMI à Montbéliard qui partagent une passion commune pour la bonne cuisine, les découvertes gourmandes et les expériences culinaires.
+        </p>
+        <p>
+            Nous avons créé Yumly dans le but de rassembler et de partager des recettes, des bonnes adresses et des astuces food pour tous, que vous soyez cordon-bleu ou roi du micro-ondes.
+        </p>
+    </div>
+  </section>
+
+  <!-- Quelques Statistiques -->
+  <section class="py-12 px-4">
+      <div class="relative mb-10 text-center">
+          {/*
+             Utilisation d'un pseudo-élément pour le fond grille.
+             Alternative: <img src={grilleMenus.src} class="absolute inset-0 w-full h-full object-contain opacity-20 z-0" alt=""/>
+             L'approche bg-[] est plus simple si l'image est bien un motif répétable ou si son positionnement central suffit.
+          */}
+          <div class="inline-block relative py-2 px-4 bg-no-repeat bg-center" style={`background-image: url(${grilleMenus.src}); background-size: contain;`}>
+            <h2 class="relative z-10 text-center font-bold text-3xl text-grey-9">QUELQUES STATISTIQUES</h2>
+          </div>
+      </div>
+
+      <div class="flex flex-col items-center justify-center gap-10 md:flex-row md:gap-16 lg:gap-24">
+          <div class="flex flex-col items-center text-center">
+              <div class="w-16 h-16 mb-3 text-grey-9">
+                  <!-- Placeholder ICON -->
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h2.64m-13.5 0L12 18.75m.75 2.25L12 18.75m0 0V5.25m0 0a2.25 2.25 0 0 0-4.5 0V12a2.25 2.25 0 0 0 4.5 0V5.25Z" />
+                   </svg>
+              </div>
+              <p class="text-4xl font-bold text-orange-main">50+</p>
+              <p class="font-semibold text-orange-main mt-1">épiceries</p>
+          </div>
+          <div class="flex flex-col items-center text-center">
+               <div class="w-16 h-16 mb-3 text-grey-9">
+                  <!-- Placeholder ICON -->
+                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+                       <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H4.5a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A3.375 3.375 0 0 0 8.625 1.5H7.5a3.375 3.375 0 0 0-3.375 3.375v1.5c0 .534.184 1.04.498 1.454l4.01 4.678a.75.75 0 0 0 1.134 0l4.01-4.678A2.625 2.625 0 0 0 16.5 6.375v-1.5a3.375 3.375 0 0 0-3.375-3.375h-1.125A3.375 3.375 0 0 0 12 4.875Z" />
+                   </svg>
+              </div>
+              <p class="text-4xl font-bold text-orange-main">1200+</p>
+              <p class="font-semibold text-orange-main mt-1">produits</p>
+          </div>
+          <div class="flex flex-col items-center text-center">
+              <div class="w-16 h-16 mb-3 text-grey-9">
+                  <!-- Placeholder ICON -->
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
+                  </svg>
+              </div>
+              <p class="text-4xl font-bold text-orange-main">20+</p>
+              <p class="font-semibold text-orange-main mt-1">pays</p>
+          </div>
+      </div>
+  </section>
+
+  <!-- Nos Partenaires -->
+  <section class="py-12 px-4 bg-blue-main">
+      <h2 class="text-center font-bold text-3xl text-white mb-10">NOS PARTENAIRES</h2>
+      <div class="flex flex-wrap justify-center items-center gap-4 max-w-3xl mx-auto">
+          <div class="bg-blue-shade-4 h-20 w-32 rounded-lg"></div>
+          <div class="bg-blue-shade-4 h-20 w-40 rounded-lg"></div>
+          <div class="bg-blue-shade-4 h-20 w-32 rounded-lg"></div>
+          <div class="bg-blue-shade-4 h-20 w-36 rounded-lg"></div>
+          <div class="bg-blue-shade-4 h-20 w-48 rounded-lg"></div>
+          {/* Ajuste les tailles/nombre si besoin */}
+      </div>
+  </section>
+
+  <!-- Nos Produits Phares -->
+  <section class="py-12 px-4">
+      <h2 class="text-center font-bold text-3xl text-red-main mb-10">NOS PRODUITS PHARES</h2>
+      <div class="relative max-w-xs mx-auto">
+         {/* Simple affichage, ajoute AlpineJS ou un composant carousel si besoin de slider */}
+          <div class="flex items-center justify-center">
+              {/* Flèche Précédent (pourrait être cachée s'il n'y a qu'un produit ou contrôlée par JS) */}
+              <button class="absolute -left-4 top-1/2 -translate-y-1/2 text-grey-7 hover:text-grey-9 p-2 z-10" aria-label="Produit précédent">
+                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                 </svg>
+              </button>
+
+              <img src="/img/paprika.png" alt="Paprika McCormick" class="h-48 w-auto object-contain">
+
+              {/* Flèche Suivant */}
+              <button class="absolute -right-4 top-1/2 -translate-y-1/2 text-grey-7 hover:text-grey-9 p-2 z-10" aria-label="Produit suivant">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                  </svg>
+              </button>
+          </div>
+      </div>
+  </section>
+
+  <!-- Pro Banner -->
+  <section class="py-12 px-4">
+     <div class="border-2 border-red-main rounded-lg p-6 pt-8 max-w-md mx-auto flex flex-col items-center text-center relative shadow-lg">
+         <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-background px-2">
+             {/* Placeholder ICON Boutique */}
+             <div class="w-10 h-10 text-red-main bg-background rounded-full border-2 border-red-main flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h2.64m-13.5 0L12 18.75m.75 2.25L12 18.75m0 0V5.25m0 0a2.25 2.25 0 0 0-4.5 0V12a2.25 2.25 0 0 0 4.5 0V5.25Z" />
+                  </svg>
+             </div>
+         </div>
+         <h3 class="font-semibold text-lg text-grey-9 mb-1">Pro ? Recensez votre magasin !</h3>
+         <p class="text-sm text-grey-7 mb-3">Découvrez l'abonnement</p>
+         <p class="text-3xl font-bold text-red-main my-2">-,-€</p>
+         <a href="/pro/abonnement" class="inline-block mt-4 py-2 px-6 rounded-full border-2 border-red-main text-red-main font-semibold hover:bg-red-shade-5 transition-colors">
+             Voir plus
+         </a>
+     </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="py-16 px-4 relative overflow-hidden">
+      {/* Formes vertes en fond */}
+      <div class="absolute top-0 -left-1/4 w-1/2 h-full bg-green-main opacity-80 rounded-full transform -rotate-12"></div>
+      <div class="absolute bottom-0 -right-1/4 w-1/2 h-full bg-green-main opacity-80 rounded-full transform rotate-12"></div>
+
+      <div class="relative z-10">
+          <div class="bg-orange-main text-white font-bold text-lg py-3 px-6 text-center max-w-xs mx-auto mb-10 rounded shadow-md">
+              CE QU'ILS DISENT
+          </div>
+
+          <div class="bg-background p-6 rounded-lg shadow-xl max-w-md mx-auto text-center">
+              <img src="/img/avatar-xavier.png" alt="Avatar de Xavier" class="w-20 h-20 object-cover rounded-full border-4 border-orange-main mx-auto mb-4 shadow-md">
+              <div class="flex justify-center mb-3 text-orange-main">
+                  {/* Stars */}
+                  {'★★★★★'.split('').map(star => <span class="text-xl">{star}</span>)}
+                  {/* Alternative: SVG Icons */}
+              </div>
+              <p class="font-semibold text-grey-9 mb-2">Xavier (Paris)</p>
+              <p class="text-grey-7 text-sm italic leading-relaxed">
+                  "Moi qui adore cuisiner mexicain, Yumly m'a aidé à dénicher les meilleurs produits et où les commander facilement. Super pratique !"
+              </p>
+          </div>
+      </div>
+  </section>
+
 </Layout>

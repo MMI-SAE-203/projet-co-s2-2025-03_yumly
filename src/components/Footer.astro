@@ -1,0 +1,250 @@
+---
+// Footer.astro
+import { Image } from "astro:assets";
+import IconInstagram from "../assets/icons/Instagram.svg";
+import IconTwitter from "../assets/icons/Twitter.svg";
+import IconLinkedin from "../assets/icons/Linkedin.svg";
+import IconBehance from "../assets/icons/Behance.svg";
+import IconDribble from "../assets/icons/Dribbble.svg";
+// import IconConnexion from "../assets/icons/logo_connexion.svg";
+// import IconInscription from "../assets/icons/icon_inscription.svg";
+// import DecoFooterDesktop from "../assets/icons/deco_footer_desktop.svg";
+---
+
+
+<footer
+    class="bg-[color:var(--color-orange-main)] text-[color:var(--color-grey-1)]"
+>
+    <!-- Checkerboard pattern for desktop -->
+    <!-- <Image
+        src={DecoFooterDesktop}
+        alt="Décoration footer"
+        class="hidden lg:block w-full h-6 object-cover"
+    /> -->
+
+
+    <div class="container mx-auto px-4 py-6">
+        <div class="flex flex-col lg:flex-row lg:justify-between">
+            <!-- Logo and Slogan -->
+            <div class="mb-6 lg:mb-0">
+                <h2 class="text-3xl font-bold mb-1">yumly.</h2>
+                <p class="mb-4">Le monde à votre table !</p>
+            </div>
+
+
+            <!-- Navigation Categories -->
+            <div class="mb-6 lg:mb-0">
+                <p class="font-medium mb-3">Découvrez la cuisine :</p>
+                <div class="flex flex-wrap gap-2">
+                    <a
+                        href="/africaine"
+                        class="bg-[color:var(--color-orange-main)] text-[color:var(--color-grey-1)] border border-[color:var(--color-grey-1)] rounded-full px-4 py-1 hover:bg-[color:var(--color-grey-1)] hover:text-[color:var(--color-orange-main)] transition-colors"
+                        >Africaine</a
+                    >
+                    <a
+                        href="/asiatique"
+                        class="bg-[color:var(--color-orange-main)] text-[color:var(--color-grey-1)] border border-[color:var(--color-grey-1)] rounded-full px-4 py-1 hover:bg-[color:var(--color-grey-1)] hover:text-[color:var(--color-orange-main)] transition-colors"
+                        >Asiatique</a
+                    >
+                    <a
+                        href="/europeenne"
+                        class="bg-[color:var(--color-orange-main)] text-[color:var(--color-grey-1)] border border-[color:var(--color-grey-1)] rounded-full px-4 py-1 hover:bg-[color:var(--color-grey-1)] hover:text-[color:var(--color-orange-main)] transition-colors"
+                        >Européenne</a
+                    >
+                    <a
+                        href="/latino"
+                        class="bg-[color:var(--color-orange-main)] text-[color:var(--color-grey-1)] border border-[color:var(--color-grey-1)] rounded-full px-4 py-1 hover:bg-[color:var(--color-grey-1)] hover:text-[color:var(--color-orange-main)] transition-colors"
+                        >Latino</a
+                    >
+                </div>
+            </div>
+
+
+            <!-- Additional Links -->
+            <div>
+                <p class="font-medium mb-3">Découvrez aussi :</p>
+                <div class="flex flex-wrap gap-2">
+                    <a
+                        href="/epiceries"
+                        class="bg-[color:var(--color-orange-main)] text-[color:var(--color-grey-1)] border border-[color:var(--color-grey-1)] rounded-full px-4 py-1 hover:bg-[color:var(--color-grey-1)] hover:text-[color:var(--color-orange-main)] transition-colors"
+                        >Épiceries</a
+                    >
+                    <a
+                        href="/recettes"
+                        class="bg-[color:var(--color-orange-main)] text-[color:var(--color-grey-1)] border border-[color:var(--color-grey-1)] rounded-full px-4 py-1 hover:bg-[color:var(--color-grey-1)] hover:text-[color:var(--color-orange-main)] transition-colors"
+                        >Recettes</a
+                    >
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Contact Section -->
+        <div
+            class="flex flex-col lg:flex-row lg:justify-between items-center mt-10"
+        >
+            <div class="flex-1 mb-6 lg:mb-0">
+                <!-- Character illustration for desktop -->
+                <div class="hidden lg:flex items-center">
+                    <img src="#" alt="Mascotte Yumly" class="w-20 h-20" />
+                    <h3 class="text-2xl font-bold ml-4">RESTONS EN CONTACT</h3>
+                </div>
+
+
+                <!-- Legal links for mobile -->
+                <div class="flex flex-wrap gap-2 justify-center lg:hidden">
+                    <a
+                        href="/politique"
+                        class="bg-[color:var(--color-orange-shade-5)] text-[color:var(--color-orange-main)] rounded-full px-4 py-1"
+                        >Politique de confidentialité</a
+                    >
+                    <a
+                        href="/contact"
+                        class="bg-[color:var(--color-orange-shade-5)] text-[color:var(--color-orange-main)] rounded-full px-4 py-1"
+                        >Contact</a
+                    >
+                    <a
+                        href="/faq"
+                        class="bg-[color:var(--color-orange-shade-5)] text-[color:var(--color-orange-main)] rounded-full px-4 py-1"
+                        >FAQ</a
+                    >
+                    <a
+                        href="/mentions"
+                        class="bg-[color:var(--color-orange-shade-5)] text-[color:var(--color-orange-main)] rounded-full px-4 py-1"
+                        >Mentions légales</a
+                    >
+                </div>
+            </div>
+
+
+            <div
+                class="flex-1 flex flex-col lg:flex-row justify-center lg:justify-end items-center gap-4"
+            >
+                <div class="flex gap-4 mb-4 lg:mb-0">
+                    <a
+                        href="/connexion"
+                        class="flex items-center bg-[color:var(--color-orange-main)] text-[color:var(--color-grey-1)] border border-[color:var(--color-grey-1)] rounded-full px-6 py-2 hover:bg-[color:var(--color-grey-1)] hover:text-[color:var(--color-orange-main)] transition-colors"
+                    >
+                        <!-- <Image
+                            src={IconConnexion}
+                            alt="Connexion"
+                            class="w-5 h-5 mr-2"
+                        /> -->
+                        <span>Connexion</span>
+                    </a>
+                    <a
+                        href="/inscription"
+                        class="flex items-center bg-[color:var(--color-orange-main)] text-[color:var(--color-grey-1)] border border-[color:var(--color-grey-1)] rounded-full px-6 py-2 hover:bg-[color:var(--color-grey-1)] hover:text-[color:var(--color-orange-main)] transition-colors"
+                    >
+                        <!-- <Image
+                            src={IconInscription}
+                            alt="Inscription"
+                            class="w-5 h-5 mr-2"
+                        /> -->
+                        <span>Inscription</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Social Media and Legal Links -->
+        <div
+            class="mt-8 lg:mt-12 flex flex-col lg:flex-row lg:justify-between items-center"
+        >
+            <!-- Legal links for desktop -->
+            <div class="hidden lg:flex flex-wrap gap-2 mb-6 lg:mb-0">
+                <a
+                    href="/politique"
+                    class="bg-[color:var(--color-orange-shade-5)] text-[color:var(--color-grey-1)] rounded-full px-4 py-1"
+                    >Politique de confidentialité</a
+                >
+                <a
+                    href="/contact"
+                    class="bg-[color:var(--color-orange-shade-3)] text-[color:var(--color-grey-1)] rounded-full px-3 py-1"
+                    >Contact</a
+                >
+                <a
+                    href="/faq"
+                    class="bg-[color:var(--color-orange-shade-3)] text-[color:var(--color-grey-1)] rounded-full px-3 py-1"
+                    >FAQ</a
+                >
+                <a
+                    href="/mentions"
+                    class="bg-[color:var(--color-orange-shade-3)] text-[color:var(--color-grey-1)] rounded-full px-4 py-1"
+                    >Mentions légales</a
+                >
+            </div>
+
+
+            <!-- Social Media links -->
+            <div>
+                <p class="text-center lg:text-right mb-4">
+                    Suivez-nous sur les réseaux !
+                </p>
+                <ul class="flex justify-center lg:justify-end gap-4">
+
+                    <li>
+                        <a
+                            href="https://instagram.com"
+                            aria-label="Instagram"
+                            class="hover:opacity-75 transition-opacity"
+                        >
+                            <Image
+                                src={IconInstagram}
+                                alt="Instagram"
+                                class="w-6 h-6"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://twitter.com"
+                            aria-label="Twitter"
+                            class="hover:opacity-75 transition-opacity"
+                        >
+                            <Image
+                                src={IconTwitter}
+                                alt="Twitter"
+                                class="w-6 h-6"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://linkedin.com"
+                            aria-label="LinkedIn"
+                            class="hover:opacity-75 transition-opacity"
+                        >
+                            <Image
+                                src={IconLinkedin}
+                                alt="LinkedIn"
+                                class="w-6 h-6"
+                            />
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://behance.com"
+                            aria-label="Behance"
+                            class="hover:opacity-75 transition-opacity"
+                        >
+                            <Image
+                                src={IconBehance}
+                                alt="Behance"
+                                class="w-6 h-6"
+                            />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- Copyright -->
+        <div class="mt-8 text-center lg:text-left text-sm">
+            <p>Créé par Camille, Léo et Lison</p>
+            <p>© 2025 Yumly. Tout droit réservé</p>
+        </div>
+    </div>
+</footer>

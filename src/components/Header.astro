@@ -65,11 +65,14 @@ const imageMap = {
   "Épiceries": imageEpiceries,
 };
 
+// Type pour les clés du imageMap
+type ImageMapKey = keyof typeof imageMap;
+
 // --- Ajout de l'imageSrc aux liens mobiles ---
 const mobileCardLinks = baseMobileCardLinks.map(item => ({
   ...item,
   // Astro importe l'image comme un objet, on prend la propriété 'src'
-  imageSrc: imageMap[item.name]?.src
+  imageSrc: item?.name && (item.name as ImageMapKey) in imageMap ? imageMap[item.name as ImageMapKey]?.src : undefined
 }));
 
 
@@ -167,7 +170,7 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
                 {item.imageSrc && (
                    <img
                      src={item.imageSrc}
-                     alt={`Image pour ${item.name}`} /* Texte alt descriptif */
+                     alt={`Image pour ${item.name}`}
                      class="absolute bottom-0 left-0 w-full h-3/4 object-cover transition-transform duration-300 group-hover:scale-105 z-0" /* object-cover + positionnement */
                      loading="lazy"
                    />
@@ -187,7 +190,7 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={link.name}
-                class="hover:text-(--color-primary) flex items-center justify-center w-9 h-9" /* Taille icone ajustée ? w-6 h-6 avant */
+                class="hover:text-(--color-primary) flex items-center justify-center w-9 h-9" 
               >
                 <Fragment set:html={link.icon} />
               </a>
@@ -197,7 +200,7 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
           <p class="text-xs text-(--color-text-muted) mb-2">Site par Camille, Lison & Léo</p>
           {/* Séparateur */}
           <hr class="border-t border-(--color-border-light) w-1/2 mx-auto mb-4" />
-          {/* Boutons Footer Mobile */}
+          {/* Boutons Footer Mobile */} 
           <div class="flex justify-center px-2">
             <div class="grid grid-cols-3 gap-2 w-auto">
               {mobileFooterButtons.map(link => (

@@ -1,0 +1,93 @@
+---
+// Ce composant attend une prop "items" qui est un tableau d'objets.
+// Chaque objet doit avoir au moins 'image' (le src string) et 'alt'.
+// Il peut aussi avoir 'content' (du HTML) comme tu l'as défini dans index.astro.
+interface Item {
+  image: string; // Le chemin de l'image traité par Astro (ex: afriqueImage.src)
+  alt: string;
+  title?: string; // Optionnel, si tu veux l'utiliser
+  content?: string; // Le HTML pour le titre/overlay
+}
+interface Props {
+  items: Item[];
+}
+
+const { items = [] } = Astro.props; // Récupère la prop "items", avec une valeur par défaut au cas où
+
+// On transforme les données de la prop "items" pour correspondre à la structure attendue par Alpine ('imgSrc', 'imgAlt')
+// Et on s'assure d'inclure 'content' si présent.
+const slidesForAlpine = items.map(item => ({
+  imgSrc: item.image, // Utilise le chemin traité par Astro passé via la prop
+  imgAlt: item.alt,
+  content: item.content || '', // Assure-toi que content est au moins une chaîne vide
+}));
+---
+
+<!-- Conteneur principal centré -->
+<div class="w-full flex justify-center">
+  <div class="max-w-[900px] w-full px-[15px] lg:px-0 mx-auto">
+    {/* 
+      Injecte les données préparées dans x-data.
+      On utilise JSON.stringify pour convertir le tableau JS en une chaîne JSON valide,
+      qui sera ensuite interprétée par Alpine pour initialiser l'état 'slides'.
+      Utilisation de backticks (`) pour l'attribut x-data afin d'interpoler facilement.
+    */}
+    <div x-data={`{
+            slides: ${JSON.stringify(slidesForAlpine)},
+            currentSlideIndex: 1,
+            previous() {
+                if (this.currentSlideIndex > 1) {
+                    this.currentSlideIndex = this.currentSlideIndex - 1
+                } else {
+                    this.currentSlideIndex = this.slides.length
+                }
+            },
+            next() {
+                if (this.currentSlideIndex < this.slides.length) {
+                    this.currentSlideIndex = this.currentSlideIndex + 1
+                } else {
+                    this.currentSlideIndex = 1
+                }
+            }
+        }` } class="relative w-full overflow-hidden pt-6 pb-6 rounded-lg">
+
+        {/* Boutons Précédent/Suivant (inchangés) */}
+        <button type="button" class="absolute left-5 top-1/2 z-20 flex rounded-full -translate-y-1/2 items-center justify-center bg-surface/40 p-2 text-white transition hover:bg-surface/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:outline-offset-0 dark:bg-surface-dark/40 dark:text-on-surface-dark dark:hover:bg-surface-dark/60 dark:focus-visible:outline-primary-dark" aria-label="previous slide" x-on:click="previous()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="3" class="size-6 md:size-8 pr-0.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+        </button>
+        <button type="button" class="absolute right-5 top-1/2 z-20 flex rounded-full -translate-y-1/2 items-center justify-center bg-surface/40 p-2 text-white transition hover:bg-surface/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:outline-offset-0 dark:bg-surface-dark/40 dark:text-on-surface-dark dark:hover:bg-surface-dark/60 dark:focus-visible:outline-primary-dark" aria-label="next slide" x-on:click="next()">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="3" class="size-6 md:size-8 pl-0.5" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>
+        </button>
+
+        <div class="relative min-h-[50svh] w-full rounded-lg overflow-hidden">
+            <template x-for="(slide, index) in slides">
+                <div x-show="currentSlideIndex == index + 1" class="absolute inset-0" x-transition.opacity.duration.1000ms>
+                    {/* Image de fond */}
+                    <img
+                        class="absolute w-full h-full inset-0 object-cover rounded-lg text-on-surface dark:text-on-surface-dark"
+                        :src="slide.imgSrc"
+                        :alt="slide.imgAlt" />
+
+                    {/* Overlay optionnel pour le contenu (titre) - Utilise x-if */}
+                    <div x-if="slide.content"
+                         class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent p-6 pointer-events-none">
+                         {/* Utilise x-html pour injecter le contenu HTML */}
+                         <div x-html="slide.content"></div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        {/* Indicateurs (dots) (inchangés) */}
+        <div class="absolute rounded-radius bottom-3 md:bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-4 md:gap-3 bg-surface/75 px-1.5 py-1 md:px-2 dark:bg-surface-dark/75" role="group" aria-label="slides" >
+            <template x-for="(slide, index) in slides">
+                <button class="size-2 rounded-full transition bg-on-surface dark:bg-on-surface-dark" x-on:click="currentSlideIndex = index + 1" :class="[currentSlideIndex === index + 1 ? 'bg-on-surface dark:bg-on-surface-dark' : 'bg-on-surface/50 dark:bg-on-surface-dark/50']" :aria-label="'slide ' + (index + 1)"></button>
+            </template>
+        </div>
+    </div>
+  </div>
+</div>
