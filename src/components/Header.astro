@@ -92,14 +92,13 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
 ---
 
 <!-- A FINIR : 
-1 : "yumly" en haut à gauche version mobile, devient orange & plus grand (5xl?) quand menu mobile ouvert seulement
-2 : Agrandir police dans les cards menu mobile, ajouter compteur (1,2,3,4,5,6...)
+2 : Agrandir police dans les cards menu mobile (fait), ajouter compteur (1,2,3,4,5,6...)
 3 : La barre entre les crédits et les boutons sous-menu plus large, orange, plus épaisse. 
 4 :  -->
 
 
 <header
-  class="px-6 py-4 fixed z-30 w-full flex items-center justify-between transition-all duration-300 ease-in-out lg:py-0 bg-(--color-background) lg:backdrop-blur-md"
+  class="px-6 py-4 fixed z-30 w-full flex items-center justify-between transition-all duration-300 ease-in-out lg:py-0 bg-transparent lg:backdrop-blur-md"
   id="header"
   x-data="{ scrolled: false }"
   @scroll.window="scrolled = (window.scrollY > 50)"
@@ -108,7 +107,7 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
   {/* Logo */}
   <div class="flex items-center relative z-40">
     <a href="/" aria-label="Accueil Yumly">
-      <span class="text-2xl font-bold text-(--color-primary) font-logo">yumly.</span>
+      <span class="text-3xl lg:text-5xl font-bold text-(--color-orange-main) font-logo">yumly.</span>
     </a>
   </div>
 
@@ -116,8 +115,8 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
   <div class="hidden lg:block absolute bottom-0 left-0 w-full h-[2px] bg-transparent z-0">
     <div class="absolute left-0 w-[calc(50%-28px)] h-full bg-black"></div>
     <div class="absolute right-0 w-[calc(50%-28px)] h-full bg-black"></div>
-    <div class="absolute left-1/2 -translate-x-1/2 translate-y-[-100%] w-[60px] h-[30px] bg-(--color-background) border-x-[2px] border-t-[2px] border-black rounded-t-full z-10"></div>
-    <div class="absolute left-1/2 -translate-x-1/2 translate-y-[-50%] w-[32px] h-[32px] bg-(--color-background) border-[2px] border-black rounded-full flex items-end overflow-hidden z-20 rotate-180">
+    <div class="absolute left-1/2 -translate-x-1/2 translate-y-[-100%] w-[60px] h-[30px] bg-transparent border-x-[2px] border-t-[2px] border-black rounded-t-full z-10"></div>
+    <div class="absolute left-1/2 -translate-x-1/2 translate-y-[-50%] w-[32px] h-[32px] bg-transparent border-[2px] border-black rounded-full flex items-end overflow-hidden z-20 rotate-180">
       <div class="w-full h-1/2 bg-black"></div>
     </div>
   </div>
@@ -163,7 +162,7 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
                 {/* Section Haute (Orange + Titre + Bordure) - Environ 1/4 de la hauteur */}
                 <div class="relative h-1/4 bg-(--color-orange-main) border-b-2 border-white flex items-center justify-center p-2 z-10">
                    {/* Ajustement taille police si besoin */}
-                   <h3 class="text-white text-xl font-bold uppercase font-logo tracking-wide text-center">{item.name}</h3>
+                   <h3 class="text-white text-3xl font-bold uppercase font-logo tracking-wide text-center">{item.name}</h3>
                 </div>
 
                 {/* Image (prend le reste de la hauteur, environ 3/4) */}

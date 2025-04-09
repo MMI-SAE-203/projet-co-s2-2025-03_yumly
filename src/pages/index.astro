@@ -1,16 +1,22 @@
 ---
 // src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
-import Carousel_infini from '../components/Carousel_infini.astro'; // Assure-toi que ce chemin est correct
+import Carousel_infini from '../components/Carousel_infini.astro';
 import Carousel from '../components/Carousel.astro';
 
 import grilleMenus from '../assets/img/grille_menus.png'; // Importe l'image pour le background
+
+import heroVideo from "../assets/videos/video_hero_landing_page_cut.mp4";
+import autoplayVideo from "../assets/videos/autoplay_video.mp4"; 
 
 import afriqueImage from '../assets/img/Afrique-final.webp';
 import asieImage from '../assets/img/Asie-final.webp';
 import europeImage from '../assets/img/Europe-final.webp';
 import latinoImage from '../assets/img/Latino-final.webp';
 
+import camilleSvgRaw from '../assets/icons/camille.svg?raw';
+import lisonSvgRaw from '../assets/icons/lison.svg?raw';
+import leoSvgRaw from '../assets/icons/leo.svg?raw';
 
 // RECETTES 
 import recette1 from '../assets/img/recette-1.webp';
@@ -28,10 +34,6 @@ import recette12 from '../assets/img/recette-12.webp';
 import recette13 from '../assets/img/recette-13.webp';
 import recette14 from '../assets/img/recette-14.webp';
 import recette15 from '../assets/img/recette-15.webp';
-
-
-
-
 
 const groceryItems = [
   { image: afriqueImage.src, alt: 'Épicerie Africaine', title: 'Épiceries Africaines' },
@@ -56,24 +58,32 @@ const recipeItems = [
   { image: recette13.src, alt: 'Recette 13', title: 'Nom Recette 13' },
   { image: recette14.src, alt: 'Recette 14', title: 'Nom Recette 14' },
   { image: recette15.src, alt: 'Recette 15', title: 'Nom Recette 15' },
-
-
 ];
-
-// Données pour les produits phares (si tu veux le rendre dynamique aussi)
-// Pour l'instant, c'est statique comme demandé
 ---
 <Layout title="Accueil" description="Yumly - Le monde à votre table ! Découvrez les meilleures épiceries et recettes du monde entier.">
 
-  <!-- Section Hero -->
-  <section class="h-screen flex flex-col items-center justify-center bg-[url('/img/hero-background-mobile.jpg')] bg-cover bg-center px-4 text-center relative">
-    <!-- Assure-toi d'avoir une image de fond appropriée ici -->
-    <div class="absolute inset-0 bg-grey-11/30"></div> <!-- Overlay optionnel pour la lisibilité -->
-    <div class="relative z-10">
-       <h1 class="font-logo text-6xl text-orange-main mb-4 drop-shadow-md">yumly.</h1>
-       <p class="font-sans text-xl text-grey-1 font-semibold drop-shadow-sm">Le monde à votre table !</p>
-    </div>
-  </section>
+<!-- Section Hero -->
+<section class="h-screen flex flex-col items-center justify-center relative px-4 text-center overflow-hidden">
+  <!-- Vidéo en arrière-plan -->
+  <div class="absolute inset-0 w-full h-full z-0">
+    <video
+      autoplay
+      muted
+      loop
+      playsinline
+      class="absolute min-w-full min-h-full w-auto h-auto object-cover left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+    >
+      <source src={heroVideo} type="video/mp4" />
+    </video>
+    <div class="absolute inset-0 bg-grey-11/40"></div> 
+  </div>
+  
+  <!-- Contenu texte -->
+  <div class="relative z-10">
+    <h1 class="font-logo text-6xl text-orange-main mb-4 drop-shadow-md">yumly.</h1>
+    <p class="font-sans text-xl text-grey-1 font-semibold drop-shadow-sm">Le monde à votre table !</p>
+  </div>
+</section>
 
   <!-- Boutons Connexion/Inscription -->
   <section class="py-8 px-4">
@@ -170,30 +180,41 @@ const recipeItems = [
       <h2 class="text-center font-bold text-3xl text-grey-9 mb-8">Nos Recettes Inspirantes</h2>
       <Carousel 
       items={recipeItems}
-      backgroundUrl="/assets/img/grille2.webp" {/* Assure-toi que c'est le bon fond */}
+      backgroundUrl="/assets/img/grille2.webp" 
       />
   </section>
 
-  <!-- Notre Équipe -->
-  <section class="py-12 px-4">
-    <h2 class="text-center font-bold text-3xl text-grey-9 mb-10">NOTRE ÉQUIPE</h2>
-    <div class="flex justify-center items-end gap-6 md:gap-12 mb-8">
-      <!-- Camille -->
-      <div class="text-center mt-6">
-        <img src="/img/team-camille.png" alt="Portrait de Camille" class="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full border-4 border-orange-main mx-auto shadow-md">
-        <p class="mt-3 font-semibold text-orange-main">Camille</p>
+<!-- Notre Équipe -->
+<section class="py-12 px-4">
+  <h2 class="text-center font-bold text-3xl text-grey-9 mb-10">NOTRE ÉQUIPE</h2>
+  <div class="flex justify-center items-end gap-6 md:gap-12 mb-8">
+    <!-- Camille -->
+    <div class="text-center mt-6">
+      <div
+        aria-label="Portrait de Camille" 
+        set:html={camilleSvgRaw}>
       </div>
-      <!-- Lison (Centre, plus haut) -->
-      <div class="text-center">
-        <img src="/img/team-lison.png" alt="Portrait de Lison" class="w-28 h-28 md:w-36 md:h-36 object-cover rounded-full border-4 border-orange-main mx-auto shadow-lg">
-        <p class="mt-3 font-semibold text-orange-main">Lison</p>
-      </div>
-      <!-- Léo -->
-      <div class="text-center mt-6">
-         <img src="/img/team-leo.png" alt="Portrait de Léo" class="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full border-4 border-orange-main mx-auto shadow-md">
-         <p class="mt-3 font-semibold text-orange-main">Léo</p>
-      </div>
+      <p class="mt-3 font-semibold text-orange-main">Camille</p>
     </div>
+
+    <!-- Lison (Centre, plus haut) -->
+    <div class="text-center">
+      <div
+        aria-label="Portrait de Lison" 
+        set:html={lisonSvgRaw}>
+      </div>
+      <p class="mt-3 font-semibold text-orange-main">Lison</p>
+    </div>
+
+    <!-- Léo -->
+    <div class="text-center mt-6">
+       <div
+         aria-label="Portrait de Léo" 
+         set:html={leoSvgRaw}>
+       </div>
+       <p class="mt-3 font-semibold text-orange-main">Léo</p>
+    </div>
+  </div>
     <div class="max-w-xl mx-auto text-left text-grey-8 text-sm space-y-4">
         <p>
             Nous sommes trois étudiants en MMI à Montbéliard qui partagent une passion commune pour la bonne cuisine, les découvertes gourmandes et les expériences culinaires.
@@ -207,11 +228,6 @@ const recipeItems = [
   <!-- Quelques Statistiques -->
   <section class="py-12 px-4">
       <div class="relative mb-10 text-center">
-          {/*
-             Utilisation d'un pseudo-élément pour le fond grille.
-             Alternative: <img src={grilleMenus.src} class="absolute inset-0 w-full h-full object-contain opacity-20 z-0" alt=""/>
-             L'approche bg-[] est plus simple si l'image est bien un motif répétable ou si son positionnement central suffit.
-          */}
           <div class="inline-block relative py-2 px-4 bg-no-repeat bg-center" style={`background-image: url(${grilleMenus.src}); background-size: contain;`}>
             <h2 class="relative z-10 text-center font-bold text-3xl text-grey-9">QUELQUES STATISTIQUES</h2>
           </div>
