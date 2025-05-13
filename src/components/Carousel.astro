@@ -33,11 +33,14 @@ const {
   ]}
   style={`
     background-image: url(${backgroundUrl});
-    background-size: 500px; /* <<--- VALEUR RÉDUITE (ajuste si besoin) */
-    background-repeat: repeat;
-    image-rendering: pixelated; /* Garde-le pour l'instant */
+    /* --- MODIFICATION ICI --- */
+    /* La hauteur de l'image prendra 100% de la hauteur du conteneur */
+    /* La largeur s'ajustera automatiquement pour garder les proportions */
+    background-size: auto 100%; 
+    background-repeat: repeat-x; /* Répète uniquement horizontalement */
+    image-rendering: pixelated; 
   `}
-  >
+>
   <div
     class:list={[
       "scroll-content flex items-center", // items-center pour aligner verticalement si hauteurs varient

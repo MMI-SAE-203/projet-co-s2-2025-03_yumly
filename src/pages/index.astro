@@ -80,7 +80,7 @@ const recipeItems = [
   
   <!-- Contenu texte -->
   <div class="relative z-10">
-    <h1 class="font-logo text-6xl text-orange-main mb-4 drop-shadow-md">yumly.</h1>
+    <h1 class="font-logo font-bold text-6xl text-orange-main mb-4 drop-shadow-md">yumly.</h1>
     <p class="font-sans text-xl text-grey-1 font-semibold drop-shadow-sm">Le monde à votre table !</p>
   </div>
 </section>
@@ -228,9 +228,18 @@ const recipeItems = [
   <!-- Quelques Statistiques -->
   <section class="py-12 px-4">
       <div class="relative mb-10 text-center">
-          <div class="inline-block relative py-2 px-4 bg-no-repeat bg-center" style={`background-image: url(${grilleMenus.src}); background-size: contain;`}>
-            <h2 class="relative z-10 text-center font-bold text-3xl text-grey-9">QUELQUES STATISTIQUES</h2>
-          </div>
+        <div 
+        class="inline-block relative py-2 px-4" {/* 1. inline-block: s'adapte à la largeur du contenu */}
+        style={`
+          background-image: url(${grilleMenus.src});
+        background-size: auto 100%; 
+          background-repeat: repeat-x; 
+          image-rendering: pixelated;   
+        `}
+      >
+        {/* Le h2 doit rester relatif pour passer au-dessus du fond */}
+        <h2 class="relative z-10 text-center font-bold text-3xl text-grey-9">QUELQUES STATISTIQUES</h2>
+      </div>
       </div>
 
       <div class="flex flex-col items-center justify-center gap-10 md:flex-row md:gap-16 lg:gap-24">
@@ -352,3 +361,7 @@ const recipeItems = [
   </section>
 
 </Layout>
+
+
+
+  

@@ -1,10 +1,7 @@
 FINIR LANDING PAGE  : 
-    - Responsive	? -> pas encore fait 
-         - En dessous de 640px, la grille derrière le carousel "Nos recettes inspirantes" se casse -> pas encore fait 
          - Responsive carousel europe, afrique, etc. -> pas encore fait
          - grid version mobile des valeurs (déjà bien faite en desktop ?)
-    - Importer Images équipe 
-    - Grille derrière "Quelques statistiques" à ajuster -> pas encore fait
+    - Grille derrière "Quelques statistiques" à ajuster -> pas encore fait -> FAIRE DES CARRÉS AVEC TAILWIND 
     - Aligner les statistiques, pas les empiler 
     - Les produits phares à ajouter (carousel)
     - Fix les avis (carousel, truc bizarre ??)
@@ -19,3 +16,8 @@ FINIR LANDING PAGE  :
     
     - autres éléments responsive de la page (cards, etc.)
 - épaisseur typo, 
+
+
+FAIT 
+         - En dessous de 640px, la grille derrière le carousel "Nos recettes inspirantes" se casse FAIT 
+                    - Responsive	
