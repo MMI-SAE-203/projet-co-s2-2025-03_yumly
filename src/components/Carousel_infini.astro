@@ -1,7 +1,4 @@
 ---
-// Ce composant attend une prop "items" qui est un tableau d'objets.
-// Chaque objet doit avoir au moins 'image' (le src string) et 'alt'.
-// Il peut aussi avoir 'content' (du HTML) comme tu l'as défini dans index.astro.
 interface Item {
   image: string; // Le chemin de l'image traité par Astro (ex: afriqueImage.src)
   alt: string;
@@ -14,24 +11,16 @@ interface Props {
 
 const { items = [] } = Astro.props; // Récupère la prop "items", avec une valeur par défaut au cas où
 
-// On transforme les données de la prop "items" pour correspondre à la structure attendue par Alpine ('imgSrc', 'imgAlt')
-// Et on s'assure d'inclure 'content' si présent.
 const slidesForAlpine = items.map(item => ({
-  imgSrc: item.image, // Utilise le chemin traité par Astro passé via la prop
+  imgSrc: item.image,
   imgAlt: item.alt,
-  content: item.content || '', // Assure-toi que content est au moins une chaîne vide
+  content: item.content || '', 
 }));
 ---
 
 <!-- Conteneur principal centré -->
 <div class="w-full flex justify-center">
   <div class="max-w-[900px] w-full px-[15px] lg:px-0 mx-auto">
-    {/* 
-      Injecte les données préparées dans x-data.
-      On utilise JSON.stringify pour convertir le tableau JS en une chaîne JSON valide,
-      qui sera ensuite interprétée par Alpine pour initialiser l'état 'slides'.
-      Utilisation de backticks (`) pour l'attribut x-data afin d'interpoler facilement.
-    */}
     <div x-data={`{
             slides: ${JSON.stringify(slidesForAlpine)},
             currentSlideIndex: 1,
@@ -63,7 +52,7 @@ const slidesForAlpine = items.map(item => ({
             </svg>
         </button>
 
-        <div class="relative min-h-[50svh] w-full rounded-lg overflow-hidden">
+        <div class="relative min-h-[60svh] w-full rounded-lg overflow-hidden">
             <template x-for="(slide, index) in slides">
                 <div x-show="currentSlideIndex == index + 1" class="absolute inset-0" x-transition.opacity.duration.1000ms>
                     {/* Image de fond */}

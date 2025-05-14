@@ -1,8 +1,6 @@
 FINIR LANDING PAGE  : 
          - Responsive carousel europe, afrique, etc. -> pas encore fait
          - grid version mobile des valeurs (déjà bien faite en desktop ?)
-    - Grille derrière "Quelques statistiques" à ajuster -> pas encore fait -> FAIRE DES CARRÉS AVEC TAILWIND 
-    - Aligner les statistiques, pas les empiler 
     - Les produits phares à ajouter (carousel)
     - Fix les avis (carousel, truc bizarre ??)
     - Fix footer 
@@ -21,3 +19,5 @@ FINIR LANDING PAGE  :
 FAIT 
          - En dessous de 640px, la grille derrière le carousel "Nos recettes inspirantes" se casse FAIT 
                     - Responsive	
+
+PAS DE RESPONSIVE SUR LE SITE SAUF LANDING PAGE YOUPI
