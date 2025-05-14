@@ -1,0 +1,83 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import "../../styles/global.css";
+
+import imgHeroAsie from "../../assets/img/img-hero-asie.webp";
+---
+
+<Header />
+
+<main class="relative bg-[var(--color-background)] overflow-hidden pb-24">
+    <!-- Titre ASIE (en haut, en surplomb de l'image) -->
+    <div class="relative z-20 flex justify-center">
+        <h1
+            class="text-[8rem] md:text-[7rem] font-extrabold text-[var(--color-red-main)] leading-none font-[var(--font-logo)] mt-25 mb-[-2rem]"
+        >
+            ASIE
+        </h1>
+    </div>
+
+    <!-- Image juste en dessous -->
+    <div class="relative z-10 flex justify-center">
+        <img
+            src={imgHeroAsie.src}
+            alt="Rue asiatique"
+            class="w-full max-w-[450px] h-auto"
+        />
+    </div>
+
+    <!-- Grille rouge responsive alignée sous l’image -->
+    <div
+        class="absolute z-0 left-1/2 -translate-x-1/2 top-[360px] pointer-events-none"
+    >
+        <div
+            class="grid grid-cols-11 grid-rows-6 gap-0"
+            style="
+    width: calc(100vw - 14px);            /* 7px de marge de chaque côté */
+    max-width: 525px;                     /* limite sur desktop */
+    margin-bottom: 25px;
+  "
+        >
+            {
+                Array.from({ length: 66 }).map((_, i) => (
+                    <div
+                        key={i}
+                        class="aspect-square border border-[var(--color-red-main)]"
+                    />
+                ))
+            }
+        </div>
+    </div>
+    <!-- Réserve l’espace pour la grille + 45px -->
+    <div class="h-[calc((100vw-14px)/11*6)] max-h-[250px] mb-[45px]"></div>
+
+    <!-- Section Recherche Produit -->
+    <section
+        class="bg-[var(--color-red-shade-5)] py-10 px-4 flex justify-center"
+    >
+        <div
+            class="bg-[var(--color-red-main)] text-white rounded-2xl w-full max-w-md p-6 text-center shadow-lg"
+        >
+            <p class="text-lg font-semibold mb-4">Vous cherchez un produit ?</p>
+
+            <!-- Conteneur blanc à l'intérieur de la card rouge -->
+            <div
+                class="bg-white rounded-full px-4 py-2 flex items-center gap-2"
+            >
+                <img
+                    src="/src/assets/icons/red-search.svg"
+                    alt="Recherche"
+                    class="w-5 h-5"
+                />
+                <input
+                    type="text"
+                    placeholder="Rechercher..."
+                    class="flex-1 bg-transparent outline-none text-[var(--color-red-shade-1)] placeholder:text-[var(--color-red-shade-2)]"
+                />
+            </div>
+        </div>
+    </section>
+</main>
+
+<Footer />
