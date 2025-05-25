@@ -188,59 +188,61 @@ const recipeItems = [
   </section>
 
 <!-- Notre Équipe -->
-<section class="py-12 px-4">
-  <h2 class="text-center font-bold text-3xl text-grey-9 mb-10">NOTRE ÉQUIPE</h2>
-  <div class="flex justify-center items-end gap-6 md:gap-12 mb-8">
+<section class="py-12 px-2 sm:px-4">
+  <h2 class="text-center font-bold text-2xl sm:text-3xl text-grey-9 mb-8 sm:mb-10">NOTRE ÉQUIPE</h2>
+    <div class="flex justify-center items-end gap-4 sm:gap-6 md:gap-12 mb-8">
     <!-- Camille -->
-    <div class="text-center mt-6">
+    <div class="text-center mt-6 flex-shrink-0">
       <div
+        class="w-20 h-20 sm:w-auto sm:h-auto mx-auto overflow-hidden flex items-center justify-center"
         aria-label="Portrait de Camille" 
         set:html={camilleSvgRaw}>
       </div>
-      <p class="mt-3 font-semibold text-orange-main">Camille</p>
+      <p class="mt-5 sm:mt-6 font-semibold text-orange-main text-sm sm:text-base text-center">Camille</p>
     </div>
 
     <!-- Lison (Centre, plus haut) -->
-    <div class="text-center">
+    <div class="text-center flex-shrink-0">
+      <p class="mb-5 sm:mb-6 font-semibold text-orange-main text-sm sm:text-base text-center">Lison</p>
       <div
+        class="w-20 h-48 sm:w-auto sm:h-auto mx-auto overflow-hidden flex items-top justify-center"
         aria-label="Portrait de Lison" 
         set:html={lisonSvgRaw}>
       </div>
-      <p class="mt-3 font-semibold text-orange-main">Lison</p>
     </div>
 
     <!-- Léo -->
-    <div class="text-center mt-6">
+    <div class="text-center mt-6 flex-shrink-0">
        <div
+         class="w-20 h-20 sm:w-auto sm:h-auto mx-auto overflow-hidden flex items-center justify-center"
          aria-label="Portrait de Léo" 
          set:html={leoSvgRaw}>
        </div>
-       <p class="mt-3 font-semibold text-orange-main">Léo</p>
+      <p class="mt-5 sm:mt-6 font-semibold text-orange-main text-sm sm:text-base text-center">Léo</p>
     </div>
   </div>
-    <div class="max-w-xl mx-auto text-left text-grey-8 text-sm space-y-4">
-        <p>
-            Nous sommes trois étudiants en MMI à Montbéliard qui partagent une passion commune pour la bonne cuisine, les découvertes gourmandes et les expériences culinaires.
-        </p>
-        <p>
-            Nous avons créé Yumly dans le but de rassembler et de partager des recettes, des bonnes adresses et des astuces food pour tous, que vous soyez cordon-bleu ou roi du micro-ondes.
-        </p>
+    <div class="max-w-xl mx-auto text-left text-grey-8 text-sm space-y-4 px-4 sm:px-6 md:px-8">
+      <p>
+        Nous sommes trois étudiants en MMI à Montbéliard qui partagent une passion commune pour la bonne cuisine, les découvertes gourmandes et les expériences culinaires.
+      </p>
+      <p>
+        Nous avons créé Yumly dans le but de rassembler et de partager des recettes, des bonnes adresses et des astuces food pour tous, que vous soyez cordon-bleu ou roi du micro-ondes.
+      </p>
     </div>
   </section>
 
   <!-- Quelques Statistiques -->
-<section class="py-12 lg:px-4 overflow-x-hidden"> {/* 1. overflow-x-hidden sur le parent */}
-  <div class="mb-10 text-center"> {/* Conteneur pour centrer le texte */}
-    <div class="inline-block relative py-20 lg:px-4"> {/* 2. Ce div reste inline-block et relative pour positionner le ::before */}
-      {/* Le texte réel */}
-      <span class="relative z-10 text-4xl font-semibold">QUELQUES STATISTIQUES</span>
+<section class="py-12 lg:px-4 overflow-x-hidden"> 
+  <div class="mb-10 text-center"> <!-- Div pour grid & titre -->
+    <div class="inline-block relative py-20 lg:px-4"> 
+      
+      <span class="relative z-10 text-4xl font-extrabold">QUELQUES STATISTIQUES</span>
 
-      {/* Le conteneur pour le fond qui s'étendra */}
       <div
       class="absolute inset-y-0 left-1/2 transform -translate-x-1/2 w-screen -z-10 pointer-events-none"
         style={`
           background-image: url(${grilleMenus.src});
-          background-size: auto 100%; /* 100% de la hauteur de son parent (le div inline-block) */
+          background-size: auto 100%; 
           background-repeat: repeat-x;
           image-rendering: pixelated;
         `}
@@ -249,39 +251,35 @@ const recipeItems = [
     </div>
   </div>
 
-        <h2 class="relative z-10 text-center text-2xl text-grey-9 mb-10">Découvrez nos chiffres clés</h2>
+<h2 class="relative z-10 text-center text-2xl text-grey-9 mb-10">Découvrez nos chiffres clés</h2>
 
-
-    {/* Section des statistiques avec les icônes */}
-    <div class="flex flex-col items-center justify-center gap-10 md:flex-row md:gap-16 lg:gap-24">
-        {/* Statistique 1: Épiceries */}
-        <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 mb-3 text-grey-9">
-                {/* Injection de l'icône SVG pour les épiceries */}
-                <Fragment set:html={statEpicerie} />
-            </div>
-            <p class="text-4xl font-bold text-orange-main">50+</p>
-            <p class="font-semibold text-orange-main mt-1">épiceries</p>
+<div class="flex justify-center items-end gap-6 sm:gap-8 md:gap-16 lg:gap-24">
+    <!-- Statistique 1: Épiceries -->
+    <div class="flex flex-col items-center text-center mt-8 sm:mt-0">
+        <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-3 text-grey-9">
+            <Fragment set:html={statEpicerie} />
         </div>
+        <p class="text-4xl font-bold text-orange-main">50+</p>
+        <p class="font-semibold text-orange-main mt-1">épiceries</p>
+    </div>
 
-        {/* Statistique 2: Produits */}
-        <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 mb-3 text-grey-9">
-                {/* Injection de l'icône SVG pour les produits */}
-                <Fragment set:html={statProduits} />
-            </div>
-            <p class="text-4xl font-bold text-orange-main">1200+</p>
-            <p class="font-semibold text-orange-main mt-1">produits</p>
+    <!-- Statistique 2: Produits -->
+    <div class="flex flex-col items-center text-center">
+        <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-3 text-grey-9">
+            <Fragment set:html={statProduits} />
         </div>
+        <p class="text-4xl font-bold text-orange-main">1200+</p>
+        <p class="font-semibold text-orange-main mt-1">produits</p>
+    </div>
 
-        {/* Statistique 3: Pays */}
-        <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 mb-3 text-grey-9">
-                <Fragment set:html={statPays} />
-            </div>
-            <p class="text-4xl font-bold text-orange-main">20+</p>
-            <p class="font-semibold text-orange-main mt-1">pays</p>
+    <!-- Statistique 3: Pays -->
+      <div class="flex flex-col items-center text-center mt-8 sm:mt-0">
+        <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-3 text-grey-9">
+            <Fragment set:html={statPays} />
         </div>
+        <p class="text-4xl font-bold text-orange-main">20+</p>
+        <p class="font-semibold text-orange-main mt-1">pays</p>
+      </div>
     </div>
   </section>
 
