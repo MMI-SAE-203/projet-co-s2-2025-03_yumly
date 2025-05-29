@@ -1,13 +1,14 @@
 ---
-// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
 import Carousel_infini from '../components/Carousel_infini.astro';
 import Carousel from '../components/Carousel.astro';
 
-import grilleMenus from '../assets/img/grille_menus.png'; // Importe l'image pour le background
-
+import grilleMenus from '../../public/assets/img/grille_menus.png';
 import heroVideo from "../assets/videos/video_hero_landing_page_cut.mp4";
-import autoplayVideo from "../assets/videos/autoplay_video.mp4"; 
+
+import statEpicerie from "../assets/icons/stat_epicerie.svg?raw";
+import statProduits from "../assets/icons/stat_produit.svg?raw";
+import statPays from "../assets/icons/stat_pays.svg?raw";
 
 import afriqueImage from '../assets/img/Afrique-final.webp';
 import asieImage from '../assets/img/Asie-final.webp';
@@ -17,6 +18,21 @@ import latinoImage from '../assets/img/Latino-final.webp';
 import camilleSvgRaw from '../assets/icons/camille.svg?raw';
 import lisonSvgRaw from '../assets/icons/lison.svg?raw';
 import leoSvgRaw from '../assets/icons/leo.svg?raw';
+
+// PRODUITS PHARES
+import burrataImg from '../assets/img/burrata.webp';
+import epiceImg from '../assets/img/epice.webp';
+import paprikaImg from '../assets/img/paprika.webp';
+import jerkyImg from '../assets/img/jerky.webp';
+import gloriaImg from '../assets/img/gloria.webp';
+
+const produitPhares = [
+  { image: burrataImg.src, alt: 'Burrata', name: 'Burrata' },
+  { image: epiceImg.src, alt: 'Bocal d\'épices', name: 'Épices' },
+  { image: paprikaImg.src, alt: 'Paprika McCormick', name: 'Paprika McCormick' },
+  { image: jerkyImg.src, alt: 'Kruga Biltong', name: 'Kruga Biltong' },
+  { image: gloriaImg.src, alt: 'Gloria Cassis', name: 'Gloria Cassis' }
+];
 
 // RECETTES 
 import recette1 from '../assets/img/recette-1.webp';
@@ -38,7 +54,7 @@ import recette15 from '../assets/img/recette-15.webp';
 const groceryItems = [
   { image: afriqueImage.src, alt: 'Épicerie Africaine', title: 'Épiceries Africaines' },
   { image: asieImage.src, alt: 'Épicerie Asiatique', title: 'Épiceries Asiatiques' },
-  { image: europeImage.src, alt: 'Épicerie Européenne', title: 'Épiceries Européennes' }, // Correction ici
+  { image: europeImage.src, alt: 'Épicerie Européenne', title: 'Épiceries Européennes' }, 
   { image: latinoImage.src, alt: 'Épicerie Latino', title: 'Épiceries Latino' },
 ];
 
@@ -59,11 +75,77 @@ const recipeItems = [
   { image: recette14.src, alt: 'Recette 14', title: 'Nom Recette 14' },
   { image: recette15.src, alt: 'Recette 15', title: 'Nom Recette 15' },
 ];
+
+import iconePerso1 from '../assets/icons/perso1.svg';
+import iconePerso2 from '../assets/icons/perso2.svg';
+import iconePerso3 from '../assets/icons/perso3.svg';
+import iconePerso4 from '../assets/icons/perso4.svg';
+import iconePerso5 from '../assets/icons/perso5.svg';
+
+const testimonials = [
+  {
+    name: "Françoise",
+    city: "Marseille",
+    avatar: iconePerso1,
+    rating: 5,
+    quote: "J'adore la cuisine chinoise, Yumly a été pour moi la solution pour retrouver tous les produits que j'aime, le plus simplement possible !"
+  },
+  {
+    name: "Mélissa",
+    city: "Paris",
+    avatar: iconePerso2,
+    rating: 5,
+    quote: "Grâce à Yumly j'ai découvert des épiceries proches de chez moi, et j'ai pu découvrir une toute nouvelle culture culinaire !"
+  },
+  {
+    name: "Xavier",
+    city: "Paris",
+    avatar: iconePerso3,
+    rating: 5,
+    quote: "Moi qui adore cuisiner mexicain, Yumly m'a aidé à dénicher les meilleurs produits et où les commander facilement. Super pratique !"
+  },
+  {
+    name: "Michelle",
+    city: "Toulouse",
+    avatar: iconePerso4,
+    rating: 5,
+    quote: "Étant fan de nourriture, je n'ai pas pu passer à côté de Yumly. Je peux simplifier mes courses en produits exotiques !"
+  },
+  {
+    name: "Tariq",
+    city: "Lyon",
+    avatar: iconePerso5,
+    rating: 5,
+    quote: "Yumly m'a fait redécouvrir les produits libanais de mon enfance. Un vrai plaisir !"
+  },
+    {
+    name: "Camille",
+    city: "Lille",
+    avatar: iconePerso2,
+    rating: 5,
+    quote: "J'ai pu trouver des épiceries coréennes dans ma ville. J'ai adoré le concept Yumly !"
+  },
+  {
+    name: "Nadia",
+    city: "Strasbourg",
+    avatar: iconePerso1,
+    rating: 5,
+    quote: "Un gain de temps énorme ! Je découvre et je cuisine des plats que je n'aurais jamais osé faire avant."
+  },
+   {
+    name: "Joel",
+    city: "Paris",
+    avatar: iconePerso3,
+    rating: 5,
+    quote: "Merci Yumly ! Je découvre de nouvelles recettes tous les jours, qui donnent plus envie les unes que les autres !"
+  },
+
+];
 ---
 <Layout title="Accueil" description="Yumly - Le monde à votre table ! Découvrez les meilleures épiceries et recettes du monde entier.">
 
 <!-- Section Hero -->
-<section class="h-screen flex flex-col items-center justify-center relative px-4 text-center overflow-hidden">
+  <section class="h-screen flex flex-col items-center justify-center relative px-4 text-center overflow-hidden">
   <!-- Vidéo en arrière-plan -->
   <div class="absolute inset-0 w-full h-full z-0">
     <video
@@ -83,9 +165,9 @@ const recipeItems = [
     <h1 class="font-logo font-bold text-6xl text-orange-main mb-4 drop-shadow-md">yumly.</h1>
     <p class="font-sans text-xl text-grey-1 font-semibold drop-shadow-sm">Le monde à votre table !</p>
   </div>
-</section>
+  </section>
 
-  <!-- Boutons Connexion/Inscription -->
+<!-- Boutons Connexion/Inscription -->
   <section class="py-8 px-4">
     <div class="flex justify-center items-center gap-4">
       <a href="/connexion" class="py-3 px-8 rounded-full border-2 border-orange-main text-orange-main font-semibold hover:bg-orange-shade-5 transition-colors">
@@ -97,7 +179,7 @@ const recipeItems = [
     </div>
   </section>
 
-  <!-- Quote Section -->
+<!-- Quote Section -->
   <section class="py-8 px-6">
       <p class="font-logo text-xl text-center text-orange-main max-w-xl mx-auto leading-relaxed">
         <span class="text-4xl leading-none">“</span>
@@ -106,7 +188,7 @@ const recipeItems = [
       </p>
   </section>
 
-  <!-- Objectifs Cards -->
+<!-- Objectifs Cards -->
   <section class="py-8 px-4">
     <div class="flex flex-col gap-6">
       <div class="bg-green-main text-white p-6 rounded-xl shadow-md">
@@ -124,7 +206,7 @@ const recipeItems = [
     </div>
   </section>
 
-  <!-- Séparateur Carrés -->
+<!-- Séparateur Carrés -->
   <section class="py-8 overflow-hidden">
       <div class="flex w-full justify-center">
           <div class="flex w-full">
@@ -136,14 +218,14 @@ const recipeItems = [
       </div>
   </section>
 
-  <!-- Découvrez les Épiceries Carousel -->
+<!-- Découvrez les Épiceries Carousel -->
   <section class="py-12 px-4">
     <h2 class="text-center font-bold text-3xl text-grey-9 mb-8">DÉCOUVREZ LES ÉPICERIES !</h2>
     <!-- Assure-toi que Carousel_infini peut gérer ce type d'item ou ajuste les données -->
     <Carousel_infini items={groceryItems.map(item => ({ ...item, content: `<h3 class='text-white font-semibold text-lg mt-2'>${item.title}</h3>` }))} />
   </section>
 
-  <!-- Valeurs Section -->
+<!-- Valeurs Section -->
   <section class="py-12 px-4">
     <div class="text-center mb-10">
         <h2 class="text-center font-bold text-3xl text-grey-9 mb-2">LE MONDE À VOTRE TABLE !</h2>
@@ -175,7 +257,7 @@ const recipeItems = [
     </div>
   </section>
 
-  <!-- Recettes Carousel -->
+<!-- Recettes Carousel -->
   <section class="py-12 px-4">
       <h2 class="text-center font-bold text-3xl text-grey-9 mb-8">Nos Recettes Inspirantes</h2>
       <Carousel 
@@ -185,98 +267,102 @@ const recipeItems = [
   </section>
 
 <!-- Notre Équipe -->
-<section class="py-12 px-4">
-  <h2 class="text-center font-bold text-3xl text-grey-9 mb-10">NOTRE ÉQUIPE</h2>
-  <div class="flex justify-center items-end gap-6 md:gap-12 mb-8">
+  <section class="py-12 px-2 sm:px-4">
+  <h2 class="text-center font-bold text-2xl sm:text-3xl text-grey-9 mb-8 sm:mb-10">NOTRE ÉQUIPE</h2>
+    <div class="flex justify-center items-end gap-4 sm:gap-6 md:gap-12 mb-8">
     <!-- Camille -->
-    <div class="text-center mt-6">
+    <div class="text-center mt-6 flex-shrink-0">
       <div
+        class="w-20 h-20 sm:w-auto sm:h-auto mx-auto overflow-hidden flex items-center justify-center"
         aria-label="Portrait de Camille" 
         set:html={camilleSvgRaw}>
       </div>
-      <p class="mt-3 font-semibold text-orange-main">Camille</p>
+      <p class="mt-5 sm:mt-6 font-semibold text-orange-main text-sm sm:text-base text-center">Camille</p>
     </div>
 
     <!-- Lison (Centre, plus haut) -->
-    <div class="text-center">
+    <div class="text-center flex-shrink-0">
+      <p class="mb-5 sm:mb-6 font-semibold text-orange-main text-sm sm:text-base text-center">Lison</p>
       <div
+        class="w-20 h-48 sm:w-auto sm:h-auto mx-auto overflow-hidden flex items-top justify-center"
         aria-label="Portrait de Lison" 
         set:html={lisonSvgRaw}>
       </div>
-      <p class="mt-3 font-semibold text-orange-main">Lison</p>
     </div>
 
     <!-- Léo -->
-    <div class="text-center mt-6">
+    <div class="text-center mt-6 flex-shrink-0">
        <div
+         class="w-20 h-20 sm:w-auto sm:h-auto mx-auto overflow-hidden flex items-center justify-center"
          aria-label="Portrait de Léo" 
          set:html={leoSvgRaw}>
        </div>
-       <p class="mt-3 font-semibold text-orange-main">Léo</p>
+      <p class="mt-5 sm:mt-6 font-semibold text-orange-main text-sm sm:text-base text-center">Léo</p>
     </div>
   </div>
-    <div class="max-w-xl mx-auto text-left text-grey-8 text-sm space-y-4">
-        <p>
-            Nous sommes trois étudiants en MMI à Montbéliard qui partagent une passion commune pour la bonne cuisine, les découvertes gourmandes et les expériences culinaires.
-        </p>
-        <p>
-            Nous avons créé Yumly dans le but de rassembler et de partager des recettes, des bonnes adresses et des astuces food pour tous, que vous soyez cordon-bleu ou roi du micro-ondes.
-        </p>
+    <div class="max-w-xl mx-auto text-left text-grey-8 text-sm space-y-4 px-4 sm:px-6 md:px-8">
+      <p>
+        Nous sommes trois étudiants en MMI à Montbéliard qui partagent une passion commune pour la bonne cuisine, les découvertes gourmandes et les expériences culinaires.
+      </p>
+      <p>
+        Nous avons créé Yumly dans le but de rassembler et de partager des recettes, des bonnes adresses et des astuces food pour tous, que vous soyez cordon-bleu ou roi du micro-ondes.
+      </p>
     </div>
   </section>
 
-  <!-- Quelques Statistiques -->
-  <section class="py-12 px-4">
-      <div class="relative mb-10 text-center">
-        <div 
-        class="inline-block relative py-2 px-4" {/* 1. inline-block: s'adapte à la largeur du contenu */}
+<!-- Quelques Statistiques -->
+  <section class="py-12 lg:px-4 overflow-x-hidden"> 
+  <div class="mb-10 text-center"> <!-- Div pour grid & titre -->
+    <div class="inline-block relative py-20 lg:px-4"> 
+      
+      <span class="relative z-10 text-4xl font-extrabold">QUELQUES STATISTIQUES</span>
+
+      <div
+      class="absolute inset-y-0 left-1/2 transform -translate-x-1/2 w-screen -z-10 pointer-events-none"
         style={`
           background-image: url(${grilleMenus.src});
-        background-size: auto 100%; 
-          background-repeat: repeat-x; 
-          image-rendering: pixelated;   
+          background-size: auto 100%; 
+          background-repeat: repeat-x;
+          image-rendering: pixelated;
         `}
       >
-        {/* Le h2 doit rester relatif pour passer au-dessus du fond */}
-        <h2 class="relative z-10 text-center font-bold text-3xl text-grey-9">QUELQUES STATISTIQUES</h2>
       </div>
-      </div>
+    </div>
+  </div>
 
-      <div class="flex flex-col items-center justify-center gap-10 md:flex-row md:gap-16 lg:gap-24">
-          <div class="flex flex-col items-center text-center">
-              <div class="w-16 h-16 mb-3 text-grey-9">
-                  <!-- Placeholder ICON -->
-                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h2.64m-13.5 0L12 18.75m.75 2.25L12 18.75m0 0V5.25m0 0a2.25 2.25 0 0 0-4.5 0V12a2.25 2.25 0 0 0 4.5 0V5.25Z" />
-                   </svg>
-              </div>
-              <p class="text-4xl font-bold text-orange-main">50+</p>
-              <p class="font-semibold text-orange-main mt-1">épiceries</p>
-          </div>
-          <div class="flex flex-col items-center text-center">
-               <div class="w-16 h-16 mb-3 text-grey-9">
-                  <!-- Placeholder ICON -->
-                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
-                       <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H4.5a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A3.375 3.375 0 0 0 8.625 1.5H7.5a3.375 3.375 0 0 0-3.375 3.375v1.5c0 .534.184 1.04.498 1.454l4.01 4.678a.75.75 0 0 0 1.134 0l4.01-4.678A2.625 2.625 0 0 0 16.5 6.375v-1.5a3.375 3.375 0 0 0-3.375-3.375h-1.125A3.375 3.375 0 0 0 12 4.875Z" />
-                   </svg>
-              </div>
-              <p class="text-4xl font-bold text-orange-main">1200+</p>
-              <p class="font-semibold text-orange-main mt-1">produits</p>
-          </div>
-          <div class="flex flex-col items-center text-center">
-              <div class="w-16 h-16 mb-3 text-grey-9">
-                  <!-- Placeholder ICON -->
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-full h-full">
-                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
-                  </svg>
-              </div>
-              <p class="text-4xl font-bold text-orange-main">20+</p>
-              <p class="font-semibold text-orange-main mt-1">pays</p>
-          </div>
+<h2 class="relative z-10 text-center text-2xl text-grey-9 mb-10">Découvrez nos chiffres clés</h2>
+
+<div class="flex justify-center items-end gap-6 sm:gap-8 md:gap-16 lg:gap-24">
+    <!-- Statistique 1: Épiceries -->
+    <div class="flex flex-col items-center text-center mt-8 sm:mt-0">
+        <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-3 text-grey-9">
+            <Fragment set:html={statEpicerie} />
+        </div>
+        <p class="text-4xl font-bold text-orange-main">50+</p>
+        <p class="font-semibold text-orange-main mt-1">épiceries</p>
+    </div>
+
+    <!-- Statistique 2: Produits -->
+    <div class="flex flex-col items-center text-center">
+        <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-3 text-grey-9">
+            <Fragment set:html={statProduits} />
+        </div>
+        <p class="text-4xl font-bold text-orange-main">1200+</p>
+        <p class="font-semibold text-orange-main mt-1">produits</p>
+    </div>
+
+    <!-- Statistique 3: Pays -->
+      <div class="flex flex-col items-center text-center mt-8 sm:mt-0">
+        <div class="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 mb-3 text-grey-9">
+            <Fragment set:html={statPays} />
+        </div>
+        <p class="text-4xl font-bold text-orange-main">20+</p>
+        <p class="font-semibold text-orange-main mt-1">pays</p>
       </div>
+    </div>
   </section>
 
-  <!-- Nos Partenaires -->
+<!-- Nos Partenaires -->
   <section class="py-12 px-4 bg-blue-main">
       <h2 class="text-center font-bold text-3xl text-white mb-10">NOS PARTENAIRES</h2>
       <div class="flex flex-wrap justify-center items-center gap-4 max-w-3xl mx-auto">
@@ -289,78 +375,106 @@ const recipeItems = [
       </div>
   </section>
 
-  <!-- Nos Produits Phares -->
+<!-- Nos Produits Phares -->
   <section class="py-12 px-4">
-      <h2 class="text-center font-bold text-3xl text-red-main mb-10">NOS PRODUITS PHARES</h2>
-      <div class="relative max-w-xs mx-auto">
-         {/* Simple affichage, ajoute AlpineJS ou un composant carousel si besoin de slider */}
-          <div class="flex items-center justify-center">
-              {/* Flèche Précédent (pourrait être cachée s'il n'y a qu'un produit ou contrôlée par JS) */}
-              <button class="absolute -left-4 top-1/2 -translate-y-1/2 text-grey-7 hover:text-grey-9 p-2 z-10" aria-label="Produit précédent">
-                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                 </svg>
-              </button>
-
-              <img src="/img/paprika.png" alt="Paprika McCormick" class="h-48 w-auto object-contain">
-
-              {/* Flèche Suivant */}
-              <button class="absolute -right-4 top-1/2 -translate-y-1/2 text-grey-7 hover:text-grey-9 p-2 z-10" aria-label="Produit suivant">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                  </svg>
-              </button>
-          </div>
-      </div>
+    <h2 class="text-center font-bold text-3xl text-red-main mb-10">NOS PRODUITS PHARES</h2>
+  
+    <div class="max-w-4xl mx-auto">
+        <Carousel 
+            items={produitPhares}
+            itemWidthClass="w-32 sm:w-40 md:w-44"
+            itemHeightClass="h-32 sm:h-40 md:h-44"
+            gapClass="gap-4 sm:gap-6 md:gap-8"
+            containerPaddingClass="py-8 px-4"
+            showNames={true}
+        />
+    </div>
   </section>
 
-  <!-- Pro Banner -->
+<!-- Video en autoplay -->
   <section class="py-12 px-4">
-     <div class="border-2 border-red-main rounded-lg p-6 pt-8 max-w-md mx-auto flex flex-col items-center text-center relative shadow-lg">
-         <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-background px-2">
-             {/* Placeholder ICON Boutique */}
-             <div class="w-10 h-10 text-red-main bg-background rounded-full border-2 border-red-main flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                     <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h2.64m-13.5 0L12 18.75m.75 2.25L12 18.75m0 0V5.25m0 0a2.25 2.25 0 0 0-4.5 0V12a2.25 2.25 0 0 0 4.5 0V5.25Z" />
-                  </svg>
-             </div>
-         </div>
-         <h3 class="font-semibold text-lg text-grey-9 mb-1">Pro ? Recensez votre magasin !</h3>
-         <p class="text-sm text-grey-7 mb-3">Découvrez l'abonnement</p>
-         <p class="text-3xl font-bold text-red-main my-2">-,-€</p>
-         <a href="/pro/abonnement" class="inline-block mt-4 py-2 px-6 rounded-full border-2 border-red-main text-red-main font-semibold hover:bg-red-shade-5 transition-colors">
-             Voir plus
-         </a>
-     </div>
-  </section>
-
-  <!-- Testimonial Section -->
-  <section class="py-16 px-4 relative overflow-hidden">
-      {/* Formes vertes en fond */}
-      <div class="absolute top-0 -left-1/4 w-1/2 h-full bg-green-main opacity-80 rounded-full transform -rotate-12"></div>
-      <div class="absolute bottom-0 -right-1/4 w-1/2 h-full bg-green-main opacity-80 rounded-full transform rotate-12"></div>
-
-      <div class="relative z-10">
-          <div class="bg-orange-main text-white font-bold text-lg py-3 px-6 text-center max-w-xs mx-auto mb-10 rounded shadow-md">
-              CE QU'ILS DISENT
-          </div>
-
-          <div class="bg-background p-6 rounded-lg shadow-xl max-w-md mx-auto text-center">
-              <img src="/img/avatar-xavier.png" alt="Avatar de Xavier" class="w-20 h-20 object-cover rounded-full border-4 border-orange-main mx-auto mb-4 shadow-md">
-              <div class="flex justify-center mb-3 text-orange-main">
-                  {/* Stars */}
-                  {'★★★★★'.split('').map(star => <span class="text-xl">{star}</span>)}
-                  {/* Alternative: SVG Icons */}
-              </div>
-              <p class="font-semibold text-grey-9 mb-2">Xavier (Paris)</p>
-              <p class="text-grey-7 text-sm italic leading-relaxed">
-                  "Moi qui adore cuisiner mexicain, Yumly m'a aidé à dénicher les meilleurs produits et où les commander facilement. Super pratique !"
-              </p>
-          </div>
+  <div class="flex flex-col items-center justify-center w-full max-h-screen">
+    <div class="relative w-full h-3/4 md:w-3/4 md:h-4/5 md:px-8">
+      <img
+        src="/assets/img/grille-bg-video.webp"
+        alt="Background Grid"
+        class="w-full h-full object-cover"/>
+      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5/6 h-full md:w-2/3 md:h-2/3">
+        <video
+          class="w-full h-full object-cover"
+          autoplay
+          loop
+          muted
+          playsinline>
+          <source src="/assets/videos/autoplay_video.mp4" type="video/mp4" />
+        </video>
       </div>
+    </div>
+  </div>
   </section>
+
+<!-- Pour les pro -->
+  <section class="py-12 px-4">
+  <div class="border-2 border-red-main rounded-lg p-6 pt-8 max-w-md mx-auto flex flex-col items-center text-center relative shadow-lg">
+    <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-background px-2">
+      <!-- Cercle -->
+      <div class="w-10 h-10 text-red-main bg-background rounded-full border-2 border-red-main flex items-center justify-center">
+        <!-- Conteneur pour l'icône SVG -->
+        <div class="w-4 h-4 flex items-center justify-center">
+          <Fragment set:html={statEpicerie} />
+        </div>
+      </div>
+    </div>
+    <h3 class="font-semibold text-lg text-grey-9 mb-1">Pro ? Recensez votre magasin !</h3>
+    <p class="text-sm text-grey-7 mb-3">Découvrez l'abonnement</p>
+    <p class="text-3xl font-bold text-red-main my-2">-,-€</p>
+    <a href="/pro/abonnement" class="inline-block mt-4 py-2 px-6 rounded-full border-2 border-red-main text-red-main font-semibold hover:bg-red-shade-5 transition-colors">
+      Voir plus
+    </a>
+  </div>
+  </section>
+
+<!-- Carousel Avis -->
+  <section class="py-16 px-4 bg-green-main relative overflow-hidden">
+  <!-- Titre -->
+  <div class="bg-orange-main text-white font-bold text-lg py-3 px-6 text-center max-w-xs mx-auto mb-10 rounded shadow-md z-10 relative">
+    CE QU'ILS DISENT
+  </div>
+
+  <!-- Carousel -->
+  <div x-data class="flex gap-6 overflow-x-auto px-4 scrollbar-hide">
+    {testimonials.map((t, index) => (
+      <div
+        class="flex-shrink-0 w-64 bg-background p-5 rounded-lg shadow-md text-center"
+        key={index}
+      >
+        <img
+          src={t.avatar.src}
+          alt={`Avatar de ${t.name}`}
+          class="w-20 h-20 object-cover rounded-full border-4 border-orange-main mx-auto mb-4"
+        />
+        <div class="flex justify-center mb-2 text-orange-main">
+          {Array.from({ length: t.rating }).map((_, i) => (
+            <span key={i} class="text-xl">★</span>
+          ))}
+        </div>
+        <p class="font-semibold text-grey-9">{t.name} ({t.city})</p>
+        <p class="text-grey-7 text-sm italic mt-2">{t.quote}</p>
+      </div>
+    ))}
+  </div>
+  </section>
+  
+  <div class="pb-64"></div>
 
 </Layout>
+
+<style is:global>
+.w-16.h-16 > svg {
+    width: 100%;
+    height: 100%;
+}
+</style>
 
 
 
