@@ -3,25 +3,29 @@
 interface Item {
   image: string;
   alt: string;
-  // On garde title et content au cas où, mais on ne les affiche pas par défaut ici
+  name?: string; // Ajout du nom optionnel
   title?: string;
   content?: string;
 }
 
 interface Props {
   items: Item[];
-  backgroundUrl: string; // URL de l'image de fond (doit être dans /public)
-  itemWidthClass?: string; // Largeur de chaque image (ex: "w-48")
-  gapClass?: string; // Espacement entre images (ex: "gap-8")
-  containerPaddingClass?: string; // Padding autour du carousel (ex: "py-10")
+  backgroundUrl?: string;
+  itemWidthClass?: string;
+  itemHeightClass?: string;
+  gapClass?: string;
+  containerPaddingClass?: string;
+  showNames?: boolean; // Nouveau paramètre pour afficher les noms
 }
 
 const {
   items = [],
-  backgroundUrl, // Pas de valeur par défaut, elle est essentielle
-  itemWidthClass = "w-40 sm:w-48", // Plus petit par défaut pour un look "posé"
-  gapClass = "gap-6 md:gap-10", // Espace potentiellement plus grand
-  containerPaddingClass = "py-10 px-4" // Padding par défaut pour la section
+  backgroundUrl, 
+  itemWidthClass = "w-40 sm:w-48", 
+  itemHeightClass = "h-40 sm:h-48",
+  gapClass = "gap-6 md:gap-10", 
+  containerPaddingClass = "py-10 px-4",
+  showNames = false // Par défaut, on n'affiche pas les noms
 } = Astro.props;
 ---
 
@@ -31,46 +35,50 @@ const {
     "minimal-scroll-carousel-container relative w-full",
     containerPaddingClass // Applique le padding autour
   ]}
-  style={`
+  style={backgroundUrl ? `
     background-image: url(${backgroundUrl});
-    /* --- MODIFICATION ICI --- */
-    /* La hauteur de l'image prendra 100% de la hauteur du conteneur */
-    /* La largeur s'ajustera automatiquement pour garder les proportions */
     background-size: auto 100%; 
-    background-repeat: repeat-x; /* Répète uniquement horizontalement */
+    background-repeat: repeat-x;
     image-rendering: pixelated; 
-  `}
+  ` : ''}
 >
   <div
     class:list={[
-      "scroll-content flex items-center", // items-center pour aligner verticalement si hauteurs varient
+      "scroll-content flex", 
+      showNames ? "items-start" : "items-center", // Si on affiche les noms, on aligne en haut
       gapClass,
       "overflow-x-auto scroll-smooth snap-x snap-mandatory",
       "cursor-grab active:cursor-grabbing",
-      "scrollbar-hide" // Classe utilitaire pour cacher la scrollbar
+      "scrollbar-hide"
     ]}
     data-carousel-scrollable>
 
     {/* Itération sur les items */}
     {items.map((item) => (
-      // Conteneur simple pour l'image, gère la largeur et le snap
-      <div class:list={["flex-shrink-0 snap-center", itemWidthClass]}>
-        {/* Juste l'image, avec une ombre pour la "poser" */}
-        <img
-          src={item.image}
-          alt={item.alt}
-          class="w-full h-auto object-contain block"
-          loading="lazy"
-          draggable="false"
-        />
-        {/* On n'affiche PAS le titre/contenu ici pour garder le look épuré */}
+      <div class:list={["flex-shrink-0 snap-center", showNames ? "flex flex-col items-center" : "", itemWidthClass, !showNames ? itemHeightClass : ""]}>
+        {/* Image */}
+        <div class:list={[showNames ? itemHeightClass : "h-full", "w-full", showNames ? "mb-2" : ""]}>
+          <img
+            src={item.image}
+            alt={item.alt}
+            class="w-full h-full object-contain block"
+            loading="lazy"
+            draggable="false"
+          />
+        </div>
+        
+        {/* Nom du produit (affiché seulement si showNames est true et que le nom existe) */}
+        {showNames && item.name && (
+          <h3 class="text-sm font-medium text-gray-800 text-center leading-tight">
+            {item.name}
+          </h3>
+        )}
       </div>
     ))}
   </div>
 </div>
 
 <style>
-/* Classes utilitaires pour cacher la scrollbar (inchangé) */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -80,7 +88,6 @@ const {
 }
 </style>
 
-{/* Le script de drag-to-scroll est identique à ScrollCarousel */}
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const scrollContainers = document.querySelectorAll('[data-carousel-scrollable]');
@@ -106,7 +113,6 @@ const {
         slider.scrollLeft = scrollLeft - walk;
       });
 
-      // Support Tactile (inchangé)
       slider.addEventListener('touchstart', (e) => { const touch = e.touches[0]; isDown = true; startX = touch.pageX - (slider as HTMLElement).offsetLeft; scrollLeft = slider.scrollLeft; }, { passive: true });
       slider.addEventListener('touchend', () => { isDown = false; });
       slider.addEventListener('touchcancel', () => { isDown = false; });
