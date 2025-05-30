@@ -3,23 +3,115 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout>
+<Layout title="Contact" description="Yumly - Des questions ? Contactez-nous !">
 
-    <div class="max-w-4xl mx-auto px-4 py-16">
-        <!-- En-tête Contact -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4 pt-40">
-                <span class="text-orange-500">CONTACT</span>
-            </h1>
-            <div class="w-16 h-1 bg-orange-500 mx-auto mb-6"></div>
-            <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                Vous avez un projet en tête ou une question ? N'hésitez pas à me contacter ! 
-                Je serais ravi de discuter de vos besoins et de voir comment je peux vous aider 
-                à concrétiser vos idées. Que ce soit pour un site web, une application ou tout 
-                autre projet numérique, je m'engage à vous fournir des solutions créatives et 
-                efficaces adaptées à vos objectifs.
-            </p>
-        </div>
-    </div>
+<h1 class="text-4xl font-bold text-[oklch(69.68%_0.2006_40.79)] mb-2 px-4 pt-30 py-2 max-w-3xl mx-auto">
+        CONTACT
+        </h1>
+        <h3 class="text-4xl font-logo font-bold text-[oklch(69.68%_0.2006_40.79)] mb-8 px-4 max-w-3xl mx-auto">
+        Yumly.
+        </h3>
 
-</Layout>
+        <div class="mb-10 max-w-3xl mx-auto">
+            <!-- Début de page -->
+            <div class="flex items-center mb-6">
+                <div class="bg-[oklch(69.68%_0.2006_40.79)] h-6 flex-grow">
+                </div>
+
+                <h2 class="text-2xl font-bold text-[oklch(69.68%_0.2006_40.79)] px-4 whitespace-normal max-w-[225px] text-center">
+                    Nous contacter
+                </h2>
+
+                <div class="bg-[oklch(69.68%_0.2006_40.79)] h-6 flex-grow">
+                </div>
+            </div>
+
+            <div class="px-4">
+                <p class="py-4">
+                Vous avez une question sur Yumly, nos recommandations d'épiceries ou simplement des suggestions pour améliorer notre projet ? N'hésitez pas à nous contacter 
+                via le formulaire ci-dessous.
+                </p>
+                <p class="py-4">
+                Yumly est un projet étudiant développé par Camille, Lison et Léo dans le cadre d'un projet collectif en MMI à l'IUT de Montbéliard. Nous apprécions 
+                particulièrement vos retours qui nous aident à améliorer cette expérience.
+                </p>
+                <p class="py-4">
+                Nous nous efforçons de répondre à toutes les demandes dans un délai de 48 heures.
+                </p>
+                <p class="py-4">
+                Vous pouvez aussi nous contacter à l'adresse suivante : 
+                <a href="mailto:Yumly@gmail.com" class="text-[oklch(69.68%_0.2006_40.79)] underline hover:text-[oklch(79.68%_0.2006_40.79)]">Yumly@gmail.com</a>
+                </p>
+            </div>
+
+                        <div class="flex items-center mb-6">
+                <div class="bg-[oklch(69.68%_0.2006_40.79)] h-6 flex-grow">
+                </div>
+
+                <h2 class="text-2xl font-bold text-[oklch(69.68%_0.2006_40.79)] px-4 whitespace-normal max-w-[225px] text-center">
+                    Formulaire de contact
+                </h2>
+
+                <div class="bg-[oklch(69.68%_0.2006_40.79)] h-6 flex-grow">
+                </div>
+            </div>
+
+
+
+
+            <div x-data="formulaire()" class="bg-[#fffde8] p-4 rounded-md space-y-4 max-w-md mx-auto">
+            <div>
+                <label class="block font-semibold">Nom</label>
+                <input type="text" x-model="nom" class="w-full border border-black rounded-xl p-2" required>
+            </div>
+
+            <div>
+                <label class="block font-semibold">Prénom</label>
+                <input type="text" x-model="prenom" class="w-full border border-black rounded-xl p-2" required>
+            </div>
+
+            <div>
+                <label class="block font-semibold">Email</label>
+                <input type="email" x-model="email" class="w-full border border-black rounded-xl p-2" required>
+            </div>
+
+            <div>
+                <label class="block font-semibold">Objet</label>
+                <input type="text" x-model="objet" class="w-full border border-black rounded-xl p-2" required>
+            </div>
+
+            <div>
+                <label class="block font-semibold">Message</label>
+                <textarea x-model="message" class="w-full border border-black rounded-xl p-2 h-28 resize-none" required></textarea>
+            </div>
+
+            <button
+                @click="envoyerEmail"
+                class="bg-[oklch(69.68%_0.2006_40.79)] text-white font-bold px-4 py-2 rounded-xl hover:brightness-90"
+            >
+                Envoyer
+            </button>
+            </div>
+
+</Layout>   
+
+<script>
+  function formulaire() {
+    return {
+      nom: '',
+      prenom: '',
+      email: '',
+      objet: '',
+      message: '',
+      envoyerEmail() {
+        const destinataire = "Yumly@gmail.com";
+        const sujet = encodeURIComponent(this.objet);
+        const corps = encodeURIComponent(
+          `Nom : ${this.nom}\nPrénom : ${this.prenom}\nEmail : ${this.email}\n\nMessage :\n${this.message}`
+        );
+
+        window.location.href = `mailto:${destinataire}?subject=${sujet}&body=${corps}`;
+      }
+    };
+  }
+</script>
