@@ -1,0 +1,217 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+
+import pozoleImage from '../assets/img/pozole-test.webp';
+
+
+---
+
+<Layout title="Pozole - Yumly">
+    <main>
+      <div class="relative w-full py-16">
+    <!-- Textes en arrière-plan -->
+    <div class="text-center">
+        <div>
+            <h2 class="text-6xl font-bold text-(--color-orange-main)">RECETTE</h2>
+            <h2 class="text-6xl font-bold text-(--color-orange-main)">RECETTE</h2>
+            <h2 class="text-6xl font-bold text-(--color-orange-main)">RECETTE</h2>
+            <h2 class="text-6xl font-bold text-(--color-orange-main)">RECETTE</h2>
+            <h2 class="text-6xl font-bold text-(--color-orange-main)">RECETTE</h2>
+        </div>
+    </div>
+    
+    <!-- Image superposée au centre -->
+        <div class="absolute inset-0 flex justify-center items-center">
+            <div class="w-auto h-auto"> <!-- Tailles fixes en unités Tailwind -->
+                <Image 
+                    src={pozoleImage} 
+                    alt="Pozole" 
+                    class="w-auto h-auto object-fit-cover" 
+                    width={250}
+                    height={250}
+                />
+            </div>
+        </div>
+    </div>
+
+        <!-- Bannière d'ingrédients -->
+        <div class="bg-(--color-green-main) py-4 px-8">
+            <h2 class="text-xl font-bold text-center mb-4 text-(--color-background)">INGRÉDIENTS</h2>
+            <div class="space-y-2 text-sm text-(--color-background)">
+                <div class="flex justify-between">
+                    <span>• 300 g de porc (ou poulet)</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>• 200 g de maïs hominy (en boîte ou précuit)</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>• 1 oignon</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>• 2 gousses d'ail</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>• 1 cuillère à soupe de paprika</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>• 1 piment rouge (optionnel)</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>• Salade, radis, citron vert en garniture</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visuel des ingrédients verticaux -->
+        <div class="py-6 space-y-4">
+            <div class="flex items-center px-4">
+                <div class="flex items-center justify-center">
+                    <span class="text-2xl">Radis</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center px-4">
+                <div class="flex items-center justify-center">
+                    <span class="text-2xl">Maîs</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center px-4">
+                <div class="flex items-center justify-center">
+                    <span class="text-2xl">Paprika</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center px-4">
+                <div class="flex items-center justify-center">
+                    <span class="text-2xl">Citron vert</span>
+                </div>
+            </div>
+            
+            <div class="flex items-center px-4">
+                <div class="flex items-center justify-center">
+                    <span class="text-2xl">Salade</span>
+                </div>
+            </div>
+
+            <div class="flex items-center px-4">
+                <div class="flex items-center justify-center">
+                    <span class="text-2xl">Porc</span>
+                </div>
+            </div>
+
+        <!-- Bol décoratif -->
+        <div class="px-4 py-6 text-center">
+            <div class="w-32 h-32 mx-auto">
+            <Image 
+                src={import('../assets/img/bol.webp')} 
+                alt="Bol décoratif" 
+                class="w-full h-full object-contain" 
+                width={128}
+                height={128}
+            />
+            </div>
+        </div>
+
+        <!-- Conseil de préparation -->
+<div class="py-6">
+    <div class="px-4">
+        <!-- Header avec mascotte et titre alignés -->
+        <div class="flex items-center space-x-4 mb-4">
+            <!-- Mascotte -->
+            <div class="flex-shrink-0">
+                <div class="w-20 h-20 rounded-full flex items-center justify-center">
+                    <Image 
+                        src={import('../assets/icons/mascotte2.svg')} 
+                        alt="Mascotte chef" 
+                        class="w-full h-full object-contain" 
+                        width={80}
+                        height={80}
+                    />
+                </div>
+            </div>
+            
+            <!-- Titre PRÉPARATION -->
+            <div class="bg-(--color-green-main) text-(--color-background) px-6 py-2 rounded-lg">
+                <h3 class="font-bold text-lg">PRÉPARATION</h3>
+            </div>
+        </div>
+        
+        <!-- Instructions en dessous, alignées à gauche -->
+        <div>
+            <ul class="space-y-3 text-sm">
+                <li class="flex items-start space-x-3">
+                    <span class="bg-(--color-green-main) rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
+                    <span>Faites cuire la viande avec l'oignon et l'ail dans 1,5 L d'eau pendant 1h.</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                    <span class="bg-(--color-green-main) rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
+                    <span>Ajoutez le maïs hominy, le paprika et laissez mijoter 30 min.</span>
+                </li>
+                <li class="flex items-start space-x-3">
+                    <span class="bg-(--color-green-main) rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">3</span>
+                    <span>Servez chaud avec de la salade, des radis et du citron vert.</span>
+                </li>
+
+        </div>
+    </div>
+</div>
+
+        <!-- Séparateur damier gris -->
+        <div class="h-10" style="background-image: linear-gradient(45deg, var(--color-green-main) 25%, transparent 25%), linear-gradient(-45deg, var(--color-green-main) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-green-main) 75%), linear-gradient(-45deg, transparent 75%, var(--color-green-main) 75%); background-size: 40px 40px; background-position: 0 0, 0 20px, 20px -20px, -20px 0px;"></div>
+
+        <!-- Carousel produit associé - CODE À IMPLÉMENTER -->
+        <!-- 
+        <div class="px-4 py-6">
+            <h2 class="text-xl font-bold mb-4 text-center">PRODUITS ASSOCIÉS</h2>
+            // Ici votre carousel de produits existant de la landing page
+        </div>
+        -->
+
+        <!-- Plus de recettes -->
+        <div class="bg-blue-600 py-6">
+            <div class="px-4">
+                <h2 class="text-xl font-bold text-center mb-4">PLUS DE RECETTES</h2>
+                
+                <div class="rounded-lg overflow-hidden">
+                    <div class="flex">
+                        <img src="/api/placeholder/120/120" alt="Tacos" class="w-24 h-24 object-cover">
+                        <div class="p-4 flex-1">
+                            <h3 class="font-bold text-lg">TACOS</h3>
+                            <p class="text-sm text-gray-600">25 MIN</p>
+                            <p class="text-xs text-gray-500 mt-1">Tacos authentiques mexicains avec viande marinée et garnitures fraîches</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Séparateur damier rouge -->
+        <div class="h-8" style="background-image: linear-gradient(45deg, #ff4444 25%, transparent 25%), linear-gradient(-45deg, #ff4444 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ff4444 75%), linear-gradient(-45deg, transparent 75%, #ff4444 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;"></div>
+
+        <!-- Section aspects nutritionnels -->
+        <div class="bg-green-600 py-6">
+            <div class="px-4">
+                <h2 class="text-xl font-bold text-center mb-6">LES ASPECTS NUTRITIONNELS</h2>
+                
+                <div class="rounded-lg p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <div class="text-4xl font-bold text-green-600">25,2G</div>
+                            <div class="text-sm text-gray-600">DE PROTÉINES</div>
+                            <div class="text-xs text-gray-500">par portion</div>
+                        </div>
+                        
+                        <div class="w-24 h-24">
+                            <img src="/api/placeholder/100/100" alt="Pozole dans un bol" class="w-full h-full object-cover rounded-full">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Séparateur damier orange -->
+        <div class="h-8" style="background-image: linear-gradient(45deg, #ff8800 25%, transparent 25%), linear-gradient(-45deg, #ff8800 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ff8800 75%), linear-gradient(-45deg, transparent 75%, #ff8800 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0px;"></div>
+    </main>
+</Layout>
