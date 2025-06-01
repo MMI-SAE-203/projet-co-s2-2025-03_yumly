@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import LayoutWithWelcome from '../layouts/LayoutWithWelcome.astro';
 import Carousel_infini from '../components/Carousel_infini.astro';
 import Carousel from '../components/Carousel.astro';
 
@@ -142,7 +142,7 @@ const testimonials = [
 
 ];
 ---
-<Layout title="Accueil" description="Yumly - Le monde à votre table ! Découvrez les meilleures épiceries et recettes du monde entier.">
+<LayoutWithWelcome title="Accueil" description="Yumly - Le monde à votre table ! Découvrez les meilleures épiceries et recettes du monde entier.">
 
 <!-- Section Hero -->
   <section class="h-screen flex flex-col items-center justify-center relative px-4 text-center overflow-hidden">
@@ -467,7 +467,7 @@ const testimonials = [
   
   <div class="pb-64"></div>
 
-</Layout>
+</LayoutWithWelcome>
 
 <style is:global>
 .w-16.h-16 > svg {
