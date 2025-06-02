@@ -189,22 +189,44 @@ const testimonials = [
   </section>
 
 <!-- Objectifs Cards -->
-  <section class="py-8 px-4">
-    <div class="flex flex-col gap-6">
-      <div class="bg-green-main text-white p-6 rounded-xl shadow-md">
-        <h2 class="font-semibold text-lg mb-2">Retrouvez la cuisine mondiale</h2>
-        <p class="text-sm opacity-90">Parcourez une multitude d'épiceries à la recherche des produits qui vont vous faire re-découvrir le meilleur qu'à la cuisine à vous offrir.</p>
+<section class="py-8 px-4">
+  <!-- Layout mobile : colonnes empilées -->
+  <div class="flex flex-col gap-6 md:hidden">
+    <div class="bg-green-main text-white p-6 rounded-xl shadow-md">
+      <h2 class="font-semibold text-lg mb-2">Retrouvez la cuisine mondiale</h2>
+      <p class="text-sm opacity-90">Parcourez une multitude d'épiceries à la recherche des produits qui vont vous faire re-découvrir le meilleur qu'à la cuisine à vous offrir.</p>
+    </div>
+    <div class="bg-green-main text-white p-6 rounded-xl shadow-md">
+      <h2 class="font-semibold text-lg mb-2">Découvrez de nouvelles recettes délicieuses</h2>
+      <p class="text-sm opacity-90">Et entrez dans un nouveau monde de plaisir gustatif, conciliant respect des cultures et qualité de la nourriture.</p>
+    </div>
+    <div class="bg-green-main text-white p-6 rounded-xl shadow-md">
+      <h2 class="font-semibold text-lg mb-2">Trouvez l'épicerie parfaite</h2>
+      <p class="text-sm opacity-90">Changez vos habitudes alimentaires et découvrez une vaste sélection de produits d'exception, au plus proche des producteurs.</p>
+    </div>
+  </div>
+
+  <!-- Layout desktop : grande carte à droite, deux petites à gauche -->
+  <div class="hidden md:flex gap-6 h-96 px-12 lg:px-40">
+    <!-- Colonne gauche : deux cartes empilées -->
+    <div class="flex flex-col gap-6 w-1/2">
+      <div class="bg-green-main text-white p-6 rounded-xl shadow-md flex-1 flex flex-col justify-center">
+      <h2 class="font-semibold text-lg mb-2">Trouvez l'épicerie parfaite</h2>
+      <p class="text-sm opacity-90">Changez vos habitudes alimentaires et découvrez une vaste sélection de produits d'exception, au plus proche des producteurs.</p>
       </div>
-      <div class="bg-green-main text-white p-6 rounded-xl shadow-md">
-        <h2 class="font-semibold text-lg mb-2">Découvrez de nouvelles recettes délicieuses</h2>
-        <p class="text-sm opacity-90">Et entrez dans un nouveau monde de plaisir gustatif, conciliant respect des cultures et qualité de la nourriture.</p>
-      </div>
-      <div class="bg-green-main text-white p-6 rounded-xl shadow-md">
-        <h2 class="font-semibold text-lg mb-2">Trouvez l'épicerie parfaite</h2>
-        <p class="text-sm opacity-90">Changez vos habitudes alimentaires et découvrez une vaste sélection de produits d'exception, au plus proche des producteurs.</p>
+      <div class="bg-green-main text-white p-6 rounded-xl shadow-md flex-1 flex flex-col justify-center">
+      <h2 class="font-semibold text-lg mb-2">Découvrez de nouvelles recettes délicieuses</h2>
+      <p class="text-sm opacity-90">Et entrez dans un nouveau monde de plaisir gustatif, conciliant respect des cultures et qualité de la nourriture.</p>
       </div>
     </div>
-  </section>
+    
+    <!-- Colonne droite : grande carte -->
+    <div class="bg-green-main text-white p-8 rounded-xl shadow-md w-1/2 flex flex-col justify-center">
+      <h2 class="font-bold text-3xl mb-4">RETROUVEZ LA CUISINE MONDIALE</h2>
+      <p class="text-lg opacity-90 leading-relaxed">Parcourez une multitude d'épiceries à la recherche des produits qui vont vous faire re-découvrir le meilleur qu'à la cuisine à vous offrir.</p>
+    </div>
+  </div>
+</section>
 
 <!-- Séparateur Carrés -->
   <section class="py-8 overflow-hidden">
@@ -218,12 +240,39 @@ const testimonials = [
       </div>
   </section>
 
+
+
+
 <!-- Découvrez les Épiceries Carousel -->
   <section class="py-12 px-4">
     <h2 class="text-center font-bold text-3xl text-grey-9 mb-8">DÉCOUVREZ LES ÉPICERIES !</h2>
-    <!-- Assure-toi que Carousel_infini peut gérer ce type d'item ou ajuste les données -->
-    <Carousel_infini items={groceryItems.map(item => ({ ...item, content: `<h3 class='text-white font-semibold text-lg mt-2'>${item.title}</h3>` }))} />
+    <!-- Carousel pour mobile uniquement -->
+    <div class="block md:hidden">
+      <Carousel_infini items={groceryItems.map(item => ({ ...item, content: `<h3 class='text-white font-semibold text-lg mt-2'>${item.title}</h3>` }))} />
+    </div>
+
+  <!-- Grille 4 colonnes pour desktop -->
+  <div class="hidden md:grid md:grid-cols-4 gap-6">
+    {groceryItems.map((item) => (
+      <div class="flex flex-col items-center">
+        <img 
+          src={item.image} 
+          alt={item.alt}
+          class="w-full h-full object-cover rounded-lg shadow-lg"
+        />
+        <h3 class="text-grey-9 font-semibold text-lg mt-4 text-center">
+          {item.title}
+        </h3>
+      </div>
+    ))}
+  </div>
   </section>
+
+
+
+
+
+
 
 <!-- Valeurs Section -->
   <section class="py-12 px-4">
