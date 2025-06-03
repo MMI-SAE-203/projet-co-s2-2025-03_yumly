@@ -1,15 +1,98 @@
 ---
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
+import Layout from "../../layouts/Layout.astro";
 import "../../styles/global.css";
 
 import imgHeroAsie from "../../assets/img/img-hero-asie.webp";
+import imgSepAsie from "../../assets/img/img-sep-asie.webp";
+
+import Carousel_infini from '../../components/Carousel_infini.astro';
+import Carousel from '../../components/Carousel.astro';
+
+import { getProduitsAsie } from "../../../backend/testback.js";
+const produitsAsie = await getProduitsAsie();
+
+// PRODUITS PHARES
+import burrataImg from '../../assets/img/burrata.webp';
+import epiceImg from '../../assets/img/epice.webp';
+import paprikaImg from '../../assets/img/paprika.webp';
+import jerkyImg from '../../assets/img/jerky.webp';
+import gloriaImg from '../../assets/img/gloria.webp';
+
+// IMG CAROUSSELS PLAT PREF
+import pref1 from '../../assets/img/plat_pref1.webp';
+import pref2 from '../../assets/img/plat_pref2.webp';
+import pref3 from '../../assets/img/plat_pref3.webp';
+
+// RECETTES 
+import recette1 from '../../assets/img/assiette-asie1.webp';
+import recette2 from '../../assets/img/assiette-asie2.webp';
+import recette3 from '../../assets/img/assiette-asie3.webp';
+import recette4 from '../../assets/img/assiette-asie4.webp';
+import recette5 from '../../assets/img/assiette-asie5.webp';
+
+// IMAGES ÉPICERIES
+import afriqueImage from '../../assets/img/Afrique-final.webp';
+import asieImage from '../../assets/img/Asie-final.webp';
+import europeImage from '../../assets/img/Europe-final.webp';
+import latinoImage from '../../assets/img/Latino-final.webp';
+
+// AVIS
+import iconePerso1 from '../../assets/icons/perso1.svg';
+import iconePerso2 from '../../assets/icons/perso2.svg';
+import iconePerso3 from '../../assets/icons/perso3.svg';
+import iconePerso4 from '../../assets/icons/perso4.svg';
+import iconePerso5 from '../../assets/icons/perso5.svg';
+
+const produitPhares = [
+  { image: burrataImg.src, alt: 'Burrata', name: 'Burrata' },
+  { image: epiceImg.src, alt: 'Bocal d\'\u00e9pices', name: '\u00c9pices' },
+  { image: paprikaImg.src, alt: 'Paprika McCormick', name: 'Paprika McCormick' },
+  { image: jerkyImg.src, alt: 'Kruga Biltong', name: 'Kruga Biltong' },
+  { image: gloriaImg.src, alt: 'Gloria Cassis', name: 'Gloria Cassis' }
+];
+
+const testimonials = [
+  { name: "Fran\u00e7oise", city: "Marseille", avatar: iconePerso1, rating: 5, quote: "J'adore la cuisine chinoise, Yumly a \u00e9t\u00e9 pour moi la solution pour retrouver tous les produits que j'aime, le plus simplement possible !" },
+  { name: "M\u00e9lissa", city: "Paris", avatar: iconePerso2, rating: 5, quote: "Gr\u00e2ce \u00e0 Yumly j'ai d\u00e9couvert des \u00e9piceries proches de chez moi, et j'ai pu d\u00e9couvrir une toute nouvelle culture culinaire !" },
+  { name: "Xavier", city: "Paris", avatar: iconePerso3, rating: 5, quote: "Moi qui adore cuisiner mexicain, Yumly m'a aid\u00e9 \u00e0 d\u00e9nicher les meilleurs produits et o\u00f9 les commander facilement. Super pratique !" },
+  { name: "Michelle", city: "Toulouse", avatar: iconePerso4, rating: 5, quote: "\u00c9tant fan de nourriture, je n'ai pas pu passer \u00e0 c\u00f4t\u00e9 de Yumly. Je peux simplifier mes courses en produits exotiques !" },
+  { name: "Tariq", city: "Lyon", avatar: iconePerso5, rating: 5, quote: "Yumly m'a fait red\u00e9couvrir les produits libanais de mon enfance. Un vrai plaisir !" }
+];
+
+const recipeItems = [
+  { image: recette1.src, alt: 'Recette 1', title: 'Nom Recette 1' },
+  { image: recette2.src, alt: 'Recette 2', title: 'Nom Recette 2' },
+  { image: recette3.src, alt: 'Recette 3', title: 'Nom Recette 3' },
+  { image: recette4.src, alt: 'Recette 4', title: 'Nom Recette 4' },
+  { image: recette5.src, alt: 'Recette 5', title: 'Nom Recette 5' },
+];
+
+
+const favoriteRecipes = [
+  {
+    image: pref1.src,
+    title: "Kimchi Jjigae 🇰🇷",
+    subtitle: "Découvrez ce ragoût très épicé",
+    description: "Un ragoût épicé à base de kimchi fermenté, de tofu, de porc ou de thon, et de divers assaisonnements comme le gochujang."
+  },
+  {
+    image: pref2.src,
+    title: "Feijoada 🇧🇷",
+    subtitle: "Envie d’un ragoût riche en saveurs",
+    description: "Ragoût de haricots noirs et de viande de porc, souvent servi avec du riz et des rondelles d’orange."
+  },
+  {
+    image: pref3.src,
+    title: "Ceviche",
+    subtitle: "La fraîcheur en bouche",
+    description: "Plat à base de poisson cru mariné dans du jus de citron vert avec oignons rouges, coriandre et piment."
+  }
+];
 ---
 
-<Header />
-
+<Layout>
 <main class="relative bg-[var(--color-background)] overflow-hidden pb-24">
-    <!-- Titre ASIE (en haut, en surplomb de l'image) -->
+    <!-- Titre ASIE -->
     <div class="relative z-20 flex justify-center">
         <h1
             class="text-[8rem] md:text-[7rem] font-extrabold text-[var(--color-red-main)] leading-none font-[var(--font-logo)] mt-25 mb-[-2rem]"
@@ -18,7 +101,7 @@ import imgHeroAsie from "../../assets/img/img-hero-asie.webp";
         </h1>
     </div>
 
-    <!-- Image juste en dessous -->
+    <!-- Image -->
     <div class="relative z-10 flex justify-center">
         <img
             src={imgHeroAsie.src}
@@ -27,17 +110,17 @@ import imgHeroAsie from "../../assets/img/img-hero-asie.webp";
         />
     </div>
 
-    <!-- Grille rouge responsive alignée sous l’image -->
+    <!-- Grille rouge -->
     <div
         class="absolute z-0 left-1/2 -translate-x-1/2 top-[360px] pointer-events-none"
     >
         <div
             class="grid grid-cols-11 grid-rows-6 gap-0"
             style="
-    width: calc(100vw - 14px);            /* 7px de marge de chaque côté */
-    max-width: 525px;                     /* limite sur desktop */
-    margin-bottom: 25px;
-  "
+                width: calc(100vw - 14px);
+                max-width: 525px;
+                margin-bottom: 25px;
+            "
         >
             {
                 Array.from({ length: 66 }).map((_, i) => (
@@ -49,7 +132,9 @@ import imgHeroAsie from "../../assets/img/img-hero-asie.webp";
             }
         </div>
     </div>
-    <!-- Réserve l’espace pour la grille + 45px -->
+    
+
+    <!-- Espace réservé pour la grille -->
     <div class="h-[calc((100vw-14px)/11*6)] max-h-[250px] mb-[45px]"></div>
 
     <!-- Section Recherche Produit -->
@@ -60,8 +145,6 @@ import imgHeroAsie from "../../assets/img/img-hero-asie.webp";
             class="bg-[var(--color-red-main)] text-white rounded-2xl w-full max-w-md p-6 text-center shadow-lg"
         >
             <p class="text-lg font-semibold mb-4">Vous cherchez un produit ?</p>
-
-            <!-- Conteneur blanc à l'intérieur de la card rouge -->
             <div
                 class="bg-white rounded-full px-4 py-2 flex items-center gap-2"
             >
@@ -71,6 +154,7 @@ import imgHeroAsie from "../../assets/img/img-hero-asie.webp";
                     class="w-5 h-5"
                 />
                 <input
+                    id="searchInput"
                     type="text"
                     placeholder="Rechercher..."
                     class="flex-1 bg-transparent outline-none text-[var(--color-red-shade-1)] placeholder:text-[var(--color-red-shade-2)]"
@@ -78,6 +162,322 @@ import imgHeroAsie from "../../assets/img/img-hero-asie.webp";
             </div>
         </div>
     </section>
-</main>
 
-<Footer />
+    <!-- Filtres + Cards dans un bloc rose clair -->
+    <section class="bg-[var(--color-red-shade-5)] py-10 px-4">
+        <!-- Filtres de catégories -->
+        <div
+            class="flex flex-wrap justify-center gap-4 mb-8 text-[var(--color-red-main)] font-semibold"
+        >
+            <button class="filter-btn hover:underline transition-all duration-200" data-filter="all">Voir tous</button>
+            <button class="filter-btn hover:underline transition-all duration-200" data-filter="condiments">Condiments & Sauces</button>
+            <button class="filter-btn hover:underline transition-all duration-200" data-filter="boissons">Boissons</button>
+            <button class="filter-btn hover:underline transition-all duration-200" data-filter="epicerie-salee">Épicerie salée</button>
+            <button class="filter-btn hover:underline transition-all duration-200" data-filter="epices">Épices</button>
+            <button class="filter-btn hover:underline transition-all duration-200" data-filter="snacks">Snacks & Confiseries</button>
+        </div>
+
+        <!-- Message "Aucun résultat" -->
+        <div id="noResults" class="text-center text-[var(--color-red-main)] text-lg mt-8 hidden">
+            <p>Aucun produit trouvé pour votre recherche.</p>
+        </div>
+
+        <!-- Grille de cards produits dynamiques -->
+        <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {
+            produitsAsie.map(produit => (
+              <div class="product-card bg-white rounded-2xl p-4 shadow-md flex flex-col gap-2"
+                   data-name={produit.nom_produit || ''}
+                   data-category={produit.categorie_produit || ''}>
+                <!-- Image -->
+                <img
+                  src={`https://pb-yumly.leo-baudry.fr/api/files/Produit/${produit.id}/${produit.photo_produit}`}
+                  alt={produit.nom_produit || 'Produit'}
+                  class="w-full h-32 object-contain rounded-md"
+                  onerror="this.src='/src/assets/placeholder.jpg'"
+                />
+                
+                <!-- Infos -->
+                <div class="flex justify-between items-end mt-2 flex-1">
+                  <div class="text-left text-[var(--color-blue-main)]">
+                    <p class="text-sm">{produit.categorie_produit || 'Catégorie'}</p>
+                    <h2 class="font-semibold">{produit.nom_produit || 'Produit sans nom'}</h2>
+                    <p class="text-lg font-bold">{produit.prix_produit ? `${produit.prix_produit}€` : 'Prix non disponible'}</p>
+                  </div>
+                  <button class="heart-btn">
+                    <img
+                      src="/src/assets/icons/heart.svg"
+                      alt="Ajouter aux favoris"
+                      class="w-6 h-6 transition-all duration-200"
+                    />
+                  </button>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+    </section>
+
+    <!-- Séparateur graphique avec image parfaitement centrée et grille alignée -->
+    <div class="relative mt-50">
+      <!-- Bloc responsif avec max-height -->
+      <div class="relative w-full max-w-[600px] h-[calc(55px*10)] mx-auto overflow-hidden">
+        
+        <!-- Grille centrée -->
+        <div
+          class="absolute z-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+        >
+          <div
+            class="grid grid-cols-[repeat(10,55px)] grid-rows-[repeat(10,55px)] gap-0"
+            style="width: 550px; height: 660px;"
+          >
+            {
+              Array.from({ length: 120 }).map((_, i) => (
+                <div key={i} class="border border-red-700 aspect-square" />
+              ))
+            }
+          </div>
+        </div>
+
+        <!-- Image parfaitement centrée et responsive -->
+        <div class="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full sm:w-[600px]">
+          <img
+            src={imgSepAsie.src}
+            alt="Séparateur Asie"
+            class="w-full h-auto object-cover"
+          />
+        </div>
+      </div>
+    </div>
+
+      <!-- Titre VOS RECETTES PRÉFÉRÉES -->
+      <div class="relative z-10 text-center mt-50 mb-[-1.5rem]">
+        <div class="bg-red-main text-white font-bold text-lg py-3 px-6 inline-block rounded shadow-md z-20 relative">
+          VOS RECETTES PRÉFÉRÉES
+        </div>
+      </div>
+
+      <!-- Section avec fond rose et cartes recettes -->
+      <section class="relative pt-[3rem] px-4 bg-red-shade-4 overflow-hidden z-0">
+        <div class="flex gap-6 overflow-x-auto px-4 scrollbar-hide pb-10">
+          {favoriteRecipes.map((r, index) => (
+            <div class="flex-shrink-0 w-64 bg-background p-5 rounded-lg shadow-md relative text-left" key={index}>
+              
+              <!-- Image grande en haut à droite, dans la card -->
+              <div class="flex justify-end pl-2">
+                <img 
+                  src={r.image} 
+                  alt={r.title} 
+                  class="w-28 h-28 object-cover rounded-full mb-4" 
+                />
+              </div>
+
+              <!-- Texte en dessous de l'image -->
+              <h3 class="text-red-main font-extrabold text-lg mb-1">{r.title}</h3>
+              <p class="font-semibold text-grey-9 mb-2">{r.subtitle}</p>
+              <p class="text-grey-7 text-sm">{r.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+
+
+
+    <!-- Séparateur Damier CSS -->
+    <div class="w-full h-[90px] mt-50 bg-damier-checkerboard"></div>
+
+    <!-- Bloc FACTS style maquette toujours horizontal -->
+    <section class="px-4 py-12 mt-1">
+      <div class="border-2 border-red-main mx-auto bg-[var(--color-background)] flex flex-row w-full max-w-[700px] rounded-md overflow-hidden">
+
+        <!-- Image à gauche -->
+        <div class="w-[50%] min-w-[150px] max-w-[300px]">
+          <img 
+            src="/src/assets/img/img-fact-asie.webp" 
+            alt="Enfant au marché asiatique" 
+            class="w-full h-full object-cover"
+          />
+        </div>
+
+        <!-- Texte à droite -->
+        <div class="w-[50%] p-1 flex flex-col justify-start">
+          <!-- Badge pleine largeur -->
+          <div class="bg-red-shade-3 text-white font-bold text-lg px-4 py-2 shadow-md text-center w-full">
+            FACTS
+          </div>
+
+          <!-- Texte -->
+          <div class="mt-10 text-grey-9 text-sm sm:text-base leading-relaxed">
+            En Thaïlande, un propriétaire d'épicerie a trouvé un assistant très... inhabituel : un singe nommé Bobby !<br /><br />
+            Ce macaque aide à ramasser les bouteilles, porter les sacs et même accueillir les clients.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Nos Recettes Inspirantes avec grille verte centrée -->
+    <section class="relative mt-50 py-12 px-4 bg-[var(--color-background)] overflow-hidden min-h-[400px]">
+      <!-- Grille centrée -->
+      <div
+        class="absolute z-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+      >
+        <div
+          class="grid grid-cols-[repeat(10,55px)] grid-rows-[repeat(6,55px)] gap-0"
+          style="width: 550px; height: 330px;"
+        >
+          {
+            Array.from({ length: 60 }).map((_, i) => (
+              <div key={i} class="border border-red-700 aspect-square" />
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Contenu réel au-dessus -->
+      <div class="relative z-10">
+        <Carousel items={recipeItems} />
+      </div>
+    </section>
+
+    <!-- Nos Produits Phares -->
+    <section class="py-50 mt-5  px-4">
+      <h2 class="text-center font-bold text-3xl text-red-main mb-10">NOS PRODUITS PHARES</h2>
+      <div class="max-w-4xl mx-auto">
+        <Carousel items={produitPhares} itemWidthClass="w-32 sm:w-40 md:w-44" itemHeightClass="h-32 sm:h-40 md:h-44" gapClass="gap-4 sm:gap-6 md:gap-8" containerPaddingClass="py-8 px-4" showNames={true} />
+      </div>
+    </section>
+</main>
+</Layout>
+
+<style>
+    .filter-active {
+        background-color: var(--color-red-main);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+    }
+    
+    .card-hidden {
+        display: none;
+    }
+    
+    .heart-btn:hover img {
+        filter: brightness(0) saturate(100%) invert(16%) sepia(99%) saturate(7404%) hue-rotate(3deg) brightness(95%) contrast(118%);
+    }
+</style>
+
+<script>
+    class ProductFilter {
+        constructor() {
+            this.searchInput = document.getElementById('searchInput');
+            this.filterButtons = document.querySelectorAll('.filter-btn');
+            this.productCards = document.querySelectorAll('.product-card');
+            this.noResults = document.getElementById('noResults');
+            this.currentFilter = 'all';
+            this.currentSearch = '';
+            
+            // Mapping des filtres vers les catégories
+            this.filterMapping = {
+                'all': [], // Toutes les catégories
+                'condiments': ['Condiments & Sauces', 'Condiments', 'Sauces'],
+                'boissons': ['Boissons', 'Boissons sans alcool', 'Boissons alcoolisées'],
+                'epicerie-salee': ['Épicerie salée', 'Produits frais'],
+                'epices': ['Épices'],
+                'snacks': ['Snacks & Confiseries', 'Snacks', 'Confiseries']
+            };
+            
+            this.init();
+        }
+        
+        init() {
+            // Événement de recherche
+            this.searchInput?.addEventListener('input', (e) => {
+                this.currentSearch = e.target.value.toLowerCase().trim();
+                this.filterProducts();
+            });
+            
+            // Événements des filtres
+            this.filterButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.setActiveFilter(e.target);
+                    this.currentFilter = e.target.dataset.filter;
+                    this.filterProducts();
+                });
+            });
+            
+            // Événements des cœurs
+            document.querySelectorAll('.heart-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const img = btn.querySelector('img');
+                    if (img) {
+                        img.style.filter = img.style.filter ? '' : 'brightness(0) saturate(100%) invert(16%) sepia(99%) saturate(7404%) hue-rotate(3deg) brightness(95%) contrast(118%)';
+                    }
+                });
+            });
+            
+            // Définir le filtre par défaut
+            if (this.filterButtons.length > 0) {
+                this.setActiveFilter(this.filterButtons[0]);
+            }
+        }
+        
+        setActiveFilter(activeButton) {
+            this.filterButtons.forEach(btn => {
+                btn.classList.remove('filter-active');
+            });
+            activeButton.classList.add('filter-active');
+        }
+        
+        matchesCategory(productCategory, filter) {
+            if (filter === 'all') {
+                return true;
+            }
+            
+            const allowedCategories = this.filterMapping[filter] || [];
+            return allowedCategories.some(category => 
+                productCategory.toLowerCase().includes(category.toLowerCase()) ||
+                category.toLowerCase().includes(productCategory.toLowerCase())
+            );
+        }
+        
+        filterProducts() {
+            let visibleCount = 0;
+            
+            this.productCards.forEach(card => {
+                const name = (card.dataset.name || '').toLowerCase();
+                const category = card.dataset.category || '';
+                
+                // Vérifier le filtre de catégorie avec mapping
+                const matchesFilter = this.matchesCategory(category, this.currentFilter);
+                
+                // Vérifier la recherche
+                const matchesSearch = this.currentSearch === '' || name.includes(this.currentSearch);
+                
+                if (matchesFilter && matchesSearch) {
+                    card.classList.remove('card-hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('card-hidden');
+                }
+            });
+            
+            // Afficher/masquer le message "Aucun résultat"
+            if (this.noResults) {
+                if (visibleCount === 0) {
+                    this.noResults.classList.remove('hidden');
+                } else {
+                    this.noResults.classList.add('hidden');
+                }
+            }
+        }
+    }
+    
+    // Initialiser le système de filtrage au chargement de la page
+    document.addEventListener('DOMContentLoaded', () => {
+        new ProductFilter();
+    });
+</script>

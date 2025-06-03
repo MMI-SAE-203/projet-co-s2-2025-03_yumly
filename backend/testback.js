@@ -1,5 +1,7 @@
 import PocketBase from 'pocketbase';
 const pb = new PocketBase('https://pb-yumly.leo-baudry.fr');
+await pb.admins.authWithPassword("lison.pruvost@edu.univ-fcomte.fr", "YUMLYYUMLYYUMLY");
+
 
 // Récupérer toutes les recettes
 export async function getAllRecettes() {
@@ -49,3 +51,12 @@ export async function getRecettesByContinent(continent) {
         sort: 'nom_recette'
     });
 }
+
+export async function getProduitsAsie() {
+    return await pb.collection('Produit').getFullList({
+        filter: 'pays_produit = "Asie"',
+        sort: 'nom_produit'
+    });
+}  
+
+  
