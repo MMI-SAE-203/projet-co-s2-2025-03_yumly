@@ -1,0 +1,154 @@
+---
+// Imports
+import Layout from "../../layouts/Layout.astro";
+import CardRecette from "../../components/CardRecette.astro";
+import { getAllRecettes } from "../../../backend/testback.js";
+import { Image } from 'astro:assets';
+import heroRecette from '../../assets/img/hero-recettes-2.webp';
+
+const continents = ["Tous", "Asie", "Afrique", "Amérique latine", "Europe"];
+
+const recettes = await getAllRecettes();
+
+// Helper pour image
+function getImageUrl(recette) {
+    if (!recette.photo_recette) return "/placeholder-recette.webp";
+    return `https://pb-yumly.leo-baudry.fr/api/files/Recette/${recette.id}/${recette.photo_recette}`;
+}
+---
+
+<Layout title="Nos Recettes">
+    <h1 class="sr-only">Nos Recettes</h1>
+
+    <section class="relative w-full py-16">
+        <div class="text-center">
+            <div>
+                <h2 class="text-6xl font-bold text-[color:var(--color-orange-main)]">RECETTE</h2>
+                <h2 class="text-6xl font-bold text-[color:var(--color-orange-main)]">RECETTE</h2>
+                <h2 class="text-6xl font-bold text-[color:var(--color-orange-main)]">RECETTE</h2>
+                <h2 class="text-6xl font-bold text-[color:var(--color-orange-main)]">RECETTE</h2>
+                <h2 class="text-6xl font-bold text-[color:var(--color-orange-main)]">RECETTE</h2>
+                <h2 class="text-6xl font-bold text-[color:var(--color-orange-main)]">RECETTE</h2>
+            </div>
+        </div>
+
+        <div class="absolute inset-0 flex justify-center items-center">
+            <div class="w-auto h-auto">
+                <Image
+                    src={heroRecette}
+                    alt="Pozole"
+                    class="w-auto h-auto object-cover"
+                    width={250}
+                    height={250}
+                />
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-[color:var(--color-green-main)] py-8 px-6 text-white font-medium">
+        <h2 class="text-2xl font-bold text-center">NOS RECETTES</h2>
+        <p class="pt-4">
+            Yumly vous guide dans votre exploration culinaire mondiale avec une sélection de recettes 
+            authentiques et l'accès aux ingrédients essentiels pour les réaliser.
+        </p>
+        <p class="pt-4">
+            Des tacos mexicains aux pad thaï, en passant par les tajines marocains, chaque recette est accompagnée 
+            d'informations sur où trouver les ingrédients spécifiques qui font toute leur authenticité.        
+        </p>
+        <p class="pt-4">
+            Nous collaborons avec des épiceries spécialisées pour vous offrir l'accès à ces produits d'exception. De 
+            l'ají amarillo péruvien au gochujang coréen, chaque ingrédient est présenté avec des conseils d'utilisation 
+            et des idées de recettes.
+        </p>
+        <p class="pt-4">
+            Que vous souhaitiez reproduire un plat découvert en voyage ou explorer de nouvelles saveurs, Yumly transforme 
+            vos repas en véritables voyages gustatifs.
+        </p>
+        <p class="pt-6 font-bold">Découvrez, cuisinez, voyagez !</p>
+    </section>
+
+    <!-- Filtre par continent -->
+    <section class="flex justify-center mb-8 pt-12">
+        <select id="continent-filter"
+            class="w-full max-w-[300px] px-6 py-3 border border-gray-300 rounded-full text-gray-600 bg-white focus:outline-none cursor-pointer"
+        >
+            <option value="">Tous les continents</option>
+            {
+                continents.filter(c => c !== "Tous").map((cont) => (
+                    <option value={cont}>{cont}</option>
+                ))
+            }
+        </select>
+    </section>
+
+    <!-- Liste des recettes -->
+    <section class="recettes-liste" id="recettes-container">
+    {
+        recettes.map((recette, index) => (
+        <div
+            class="recette-item"
+            data-continent={(recette.pays_recette || "inconnu").trim().toLowerCase()}
+            data-index={index}
+        >
+            <CardRecette
+            id={recette.id}
+            nom={recette.nom_recette}
+            description={recette.description_recette}
+            image={getImageUrl(recette)}
+            index={index}
+            continent={recette.pays_recette}  
+            />
+        </div>
+        ))
+    }
+    </section>
+
+    <script type="module" client:load>
+         
+    // Une fois le DOM chargé
+  function updateAlternance() {
+    const cards = document.querySelectorAll(".recette-content");
+
+    let visibleIndex = 0;
+    cards.forEach((card) => {
+      // On vérifie si la carte est visible
+      const isVisible = card.offsetParent !== null;
+      
+      if (isVisible) {
+        // Réinitialise d’abord la classe
+        card.classList.remove("odd");
+
+        // Applique 'odd' à une sur deux visible
+        if (visibleIndex % 2 === 1) {
+          card.classList.add("odd");
+        }
+
+        visibleIndex++;
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", updateAlternance);
+
+    const filter = document.getElementById("continent-filter");
+    const recetteItems = document.querySelectorAll(".recette-item");
+
+    if (filter && recetteItems.length > 0) {
+        filter.addEventListener("change", (e) => {
+            const selectedContinent = e.target.value.toLowerCase();
+
+            recetteItems.forEach((item) => {
+                const itemContinent = item.getAttribute("data-continent").toLowerCase();
+
+                if (selectedContinent === "" || itemContinent === selectedContinent) {
+                    item.classList.remove("hidden");
+                } else {
+                    item.classList.add("hidden");
+                }
+            });
+              updateAlternance();
+
+        });
+    }
+    </script>
+</Layout>

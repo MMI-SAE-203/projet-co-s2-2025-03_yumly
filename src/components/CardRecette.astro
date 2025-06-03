@@ -1,167 +1,166 @@
 ---
-// Props pour le composant CardRecette
-export interface Props {
-    id: string;
-    nom: string;
-    description: string;
-    image: string;
-    continent: string;
-    index: number;
+const { id, nom, description, image, continent } = Astro.props;
+
+function normalizeContinentName(str) {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
 }
 
-const { id, nom, description, image, continent, index } = Astro.props;
+const continentColors = {
+  "amerique latine": "var(--color-orange-main)",
+  "asie": "var(--color-red-main)",
+  "afrique": "var(--color-green-main)",
+  "europe": "var(--color-blue-main)"
+};
 
-// Déterminer l'alignement en fonction de l'index
-const isEven = index % 2 === 0;
+const normalizedContinent = continent ? normalizeContinentName(continent) : "";
 
-// Définition des couleurs qui alternent selon l'index (comme sur la maquette)
-const colors = ["#f97316", "#22c55e", "#3b82f6", "#ef4444"]; // Orange, Vert, Bleu, Rouge
-const cssColorVariable = colors[index % 4];
+const cssColorVariable = continentColors[normalizedContinent] || "var(--color-orange-main)";
 ---
 
-<div class="recette-card">
-    <div class={`recette-content ${isEven ? "even" : "odd"}`}>
-        <div class="image-container">
-            <img src={image} alt={nom} class="recette-image" />
-        </div>
-        <div class="recette-info">
-            <div
-                class={`recette-title-container ${isEven ? "title-even" : "title-odd"}`}
-                style={`background-color: ${cssColorVariable};`}
-            >
-                <h3 class="recette-title">{nom}</h3>
-            </div>
-            <p class="recette-description">{description}</p>
-            <div class={`button-container ${isEven ? "" : "button-right"}`}>
-                <a
-                    href={`/recettes/${id}`}
-                    class="voir-plus-btn"
-                    style={`background-color: ${cssColorVariable};`}
-                >
-                    Voir plus
-                </a>
-            </div>
-        </div>
+<div class="mb-12 w-full">
+  <div class="recette-content">
+    <div class="image-container">
+      <img src={image} alt={nom} class="recette-image" />
     </div>
+    <div class="recette-info">
+      <div
+        class="block w-full text-white py-2 px-8 mb-4"
+        style={`background-color: ${cssColorVariable};`}
+      >
+        <h3 class="recette-title">{nom}</h3>
+      </div>
+      <p class="recette-description">{description}</p>
+      <div class="button-container">
+        <a
+          href={`/recettes/${id}`}
+          class="voir-plus-btn"
+          style={`background-color: ${cssColorVariable};`}
+        >
+          Voir plus
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="py-5">
+
 </div>
 
 <style>
-    .recette-card {
-        margin-bottom: 3rem;
-        width: 100%;
-    }
+  .recette-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+  }
 
+  .recette-content.odd {
+    flex-direction: row-reverse;
+  }
+
+  .image-container {
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .recette-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+  }
+
+  .recette-info {
+    flex: 1;
+  }
+
+
+.recette-content.odd .recette-title-container {
+  border-radius: 5px 0 0 5px;
+}
+
+
+  .recette-title {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .recette-description {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    color: #666;
+    padding: 0 0.5rem;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .recette-content.odd .button-container {
+    justify-content: flex-end;
+  }
+
+  .voir-plus-btn {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+  }
+
+  .voir-plus-btn:hover {
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
     .recette-content {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-        width: 100%;
-    }
-
-    .recette-content.odd {
-        flex-direction: row-reverse;
-    }
-
-    .recette-content.odd {
-        flex-direction: row-reverse;
+      gap: 1.5rem;
     }
 
     .image-container {
-        width: 240px;
-        height: 240px;
-        border-radius: 50%;
-        overflow: hidden;
-        flex-shrink: 0;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .recette-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        position: absolute;
-    }
-
-    .recette-info {
-        flex: 1;
-    }
-
-    .recette-title-container {
-        display: inline-block;
-        color: white;
-        padding: 0.5rem 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .title-even {
-        border-radius: 0 5px 5px 0;
-    }
-
-    .title-odd {
-        border-radius: 5px 0 0 5px;
+      width: 150px;
+      height: 150px;
     }
 
     .recette-title {
-        margin: 0;
-        font-size: 1.4rem;
-        font-weight: 600;
+      font-size: 1.2rem;
     }
 
     .recette-description {
-        margin-bottom: 1.5rem;
-        line-height: 1.6;
-        color: #666;
-        padding: 0 0.5rem;
-    }
-
-    .button-container {
-        display: flex;
-        justify-content: flex-start;
-    }
-
-    .button-right {
-        justify-content: flex-end;
+      font-size: 0.75rem;
     }
 
     .voir-plus-btn {
-        display: inline-block;
-        padding: 0.5rem 1.5rem;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 0.9rem;
-        font-weight: 500;
-        transition: opacity 0.3s ease;
+      font-size: 0.85rem;
+      padding: 0.45rem 1.2rem;
     }
-
-    .voir-plus-btn:hover {
-        opacity: 0.9;
+    
+    .button-container {
+      justify-content: center;
     }
-
-    @media (max-width: 768px) {
-        .recette-content {
-            gap: 1.5rem;
-        }
-
-        .image-container {
-            width: 180px;
-            height: 180px;
-        }
-
-        .recette-title {
-            font-size: 1.2rem;
-        }
-
-        .recette-description {
-            font-size: 0.95rem;
-        }
-
-        .voir-plus-btn {
-            font-size: 0.85rem;
-            padding: 0.45rem 1.2rem;
-        }
+    
+    .recette-content.odd .button-container {
+      justify-content: center;
     }
+  }
 </style>
+
+<script>
+ console.log("Astro.props", Astro.props);
+    </script>
