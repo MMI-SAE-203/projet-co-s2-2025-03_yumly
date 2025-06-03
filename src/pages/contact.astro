@@ -1,0 +1,279 @@
+---
+// src/pages/contact.astro
+import Layout from '../layouts/Layout.astro';
+
+import { Image } from "astro:assets";
+
+import iconFacebook from '../assets/icons/Facebook.svg';
+import iconInstagram from '../assets/icons/Instagram.svg';
+import iconTwitter from '../assets/icons/Twitter.svg';
+import iconLinkedIn from '../assets/icons/LinkedIn.svg';
+import iconBehance from '../assets/icons/Behance.svg';
+---
+
+<Layout title="Contact" description="Yumly - Des questions ? Contactez-nous !">
+
+    <h1 class="text-4xl font-bold text-(--color-orange-main) mb-2 px-4 pt-30 py-2 max-w-3xl mx-auto">CONTACT</h1>
+    <h3 class="text-4xl font-logo font-bold text-(--color-orange-main) mb-8 px-4 max-w-3xl mx-auto">Yumly.</h3>
+
+    <div class="mb-10 max-w-3xl mx-auto">
+
+        <!-- Début de page -->
+        <div class="flex items-center mb-6">
+            <div class="bg-(--color-orange-main) h-6 flex-grow">
+            </div>
+
+            <h2 class="text-2xl font-bold text-(--color-orange-main) px-4 whitespace-normal max-w-[225px] text-center uppercase">Nous contacter</h2>
+
+            <div class="bg-(--color-orange-main) h-6 flex-grow">
+            </div>
+        </div>
+
+        <div class="px-4">
+            <p class="py-4">
+                Vous avez une question sur Yumly, nos recommandations d'épiceries ou simplement des suggestions pour améliorer notre projet ? N'hésitez pas à nous contacter 
+                via le formulaire ci-dessous.
+            </p>
+
+            <p class="py-4">
+                Yumly est un projet étudiant développé par Camille, Lison et Léo dans le cadre d'un projet collectif en MMI à l'IUT de Montbéliard. Nous apprécions 
+                particulièrement vos retours qui nous aident à améliorer cette expérience.
+            </p>
+
+            <p class="py-4">
+                Nous nous efforçons de répondre à toutes les demandes dans un délai de 48 heures.
+            </p>
+
+            <p class="py-4">
+                Vous pouvez aussi nous contacter à l'adresse suivante : 
+                <a href="mailto:Yumly@gmail.com" class="text-(--color-orange-main) underline hover:text-[oklch(79.68%_0.2006_40.79)]">Yumly@gmail.com</a>
+            </p>
+        </div>
+
+        <!-- Formulaire de contact -->
+        <div class="flex items-center mb-6">
+            <div class="bg-(--color-orange-main) h-6 flex-grow">
+            </div>
+
+            <h2 class="text-2xl font-bold text-(--color-orange-main) px-4 whitespace-normal max-w-[225px] text-center uppercase">Formulaire de contact</h2>
+
+            <div class="bg-(--color-orange-main) h-6 flex-grow">
+            </div>
+        </div>
+
+        <!-- Le formulaire (a faire fonctionner)-->
+        <div x-data="formulaire()" class="bg-[#fffde8] p-4 rounded-md space-y-4 max-w-md mx-auto px-12">
+            <div>
+                <label class="block font-semibold">Nom</label>
+                <input type="text" x-model="nom" class="w-full border border-black rounded-xl p-2" required>
+            </div>
+
+            <div>
+                <label class="block font-semibold">Prénom</label>
+                <input type="text" x-model="prenom" class="w-full border border-black rounded-xl p-2" required>
+            </div>
+
+            <div>
+                <label class="block font-semibold">Email</label>
+                <input type="email" x-model="email" class="w-full border border-black rounded-xl p-2" required>
+            </div>
+
+            <div>
+                <label class="block font-semibold">Objet</label>
+                <input type="text" x-model="objet" class="w-full border border-black rounded-xl p-2" required>
+            </div>
+
+            <div>
+                <label class="block font-semibold">Message</label>
+                <textarea x-model="message" class="w-full border border-black rounded-xl p-2 h-28 resize-none" required></textarea>
+            </div>
+
+            <button @click="envoyerEmail" class="bg-(--color-orange-main) text-white font-bold px-4 py-2 rounded-xl hover:brightness-90">
+                Envoyer
+            </button>
+        </div>
+
+        <!-- FAQ -->
+        <div class="flex items-center mb-6 pt-5">
+            <div class="bg-(--color-orange-main) h-6 flex-grow">
+            </div>
+
+            <h2 class="text-2xl font-bold text-(--color-orange-main) px-4 whitespace-normal max-w-[225px] text-center uppercase">FAQ</h2>
+
+            <div class="bg-(--color-orange-main) h-6 flex-grow">
+            </div>
+        </div>
+
+        <div class="mb-4 px-4 mt-10">
+            <h2 class="text-2xl font-bold text-center mx-auto px-10 mb-4 text-(--color-orange-main)">Questions fréquement posées</h2>
+            <h3 class="text-2xl font-semibold text-center mx-auto px-10 mb-4 mt-4">À propos de Yumly</h3>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Qu'est-ce que Yumly ?</h4>    
+                <p>Yumly est une plateforme qui référence des épiceries spécialisées et propose des recettes du monde entier. Notre objectif est de vous aider à 
+                découvrir des ingrédients authentiques et des préparations culinaires de différentes cultures.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Yumly est-il une entreprise réelle ?</h4>
+                <p>Non, Yumly est un projet étudiant développé dans le cadre de notre formation. Bien que le site soit fonctionnel, il s'agit d'une simulation à but pédagogique.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Peut-on acheter des produits directement sur Yumly ?</h4>
+                <p>Non, Yumly ne vend pas directement de produits. Notre plateforme vous redirige vers les sites des épiceries partenaires où vous pourrez effectuer vos achats.</p>
+        </div>
+
+        <div class="mb-4 px-4 mt-10">
+            <!-- Utilisation du service -->
+            <h3 class="text-2xl font-semibold text-center mx-auto px-10 mb-4 mt-4">Utilisation du service</h3>
+            
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Comment fonctionne la recherche d'épiceries ?</h4>
+                <p>Vous pouvez rechercher des épiceries par type de cuisine, par ingrédient spécifique ou par localisation. Notre système vous proposera alors les 
+                boutiques correspondant à vos critères.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Comment suggérer une épicerie qui n'est pas référencée ?</h4>
+                <p>Vous pouvez nous suggérer de nouvelles épiceries via notre formulaire de contact. Nous examinerons votre suggestion et l'ajouterons si elle correspond à nos 
+                critères.</p>
+        </div>
+
+        <div class="mb-4 px-4 mt-10">
+            <!-- Recettes et ingrédients -->
+            <h3 class="text-2xl font-semibold text-center mx-auto px-10 mb-4 mt-4">Recettes et ingrédients</h3>
+            
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">D'où viennent les recettes proposées ?</h4>   
+                <p>Nos recettes sont issues de recherches culinaires, de livres de cuisine et parfois partagées par notre communauté. Nous citons toujours nos sources.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Je ne trouve pas un ingrédient mentionné dans une recette, que faire ?</h4>   
+                <p>Chaque recette propose des alternatives pour les ingrédients difficiles à trouver. Si ce n'est pas le cas, n'hésitez pas à 
+                nous contacter pour obtenir des suggestions.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Puis-je partager mes propres recettes ?</h4>   
+                <p>Dans le cadre de ce projet étudiant, nous n'acceptons pas encore les contributions externes. Cette fonctionnalité pourrait être développée ultérieurement.</p>
+        </div>
+
+        <div class="mb-4 px-4 mt-10">
+            <!-- Données et confidentialité -->
+            <h3 class="text-2xl font-semibold text-center mx-auto px-10 mb-4 mt-4">Données et confidentialité</h3>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Quelles données collectez-vous lorsque j'utilise Yumly ?</h4>   
+                <p>Dans le cadre de ce projet, nous collectons uniquement les données nécessaires au fonctionnement du site : informations de navigation et, si vous nous contactez, 
+                votre adresse email.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Mes informations sont-elles partagées avec les épiceries référencées ?</h4>   
+                <p>Non, nous ne partageons pas vos données avec les épiceries. Lorsque vous visitez le site d'une épicerie via nos liens, vous êtes soumis à leur 
+                propre politique de confidentialité.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Comment puis-je supprimer mes données ?</h4>   
+                <p>Pour toute demande concernant vos données, y compris leur suppression, contactez-nous directement à 
+                    <a href="mailto:Yumly@gmail.com" class="text-(--color-orange-main) underline hover:text-[oklch(79.68%_0.2006_40.79)]">Yumly@gmail.com</a>.
+                </p>
+        </div>
+
+        <div class="mb-4 px-4 mt-10">
+            <!-- Technique & support -->
+            <h3 class="text-2xl font-semibold text-center mx-auto px-10 mb-4 mt-4">Technique et support</h3>
+            
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Le site ne fonctionne pas correctement, que faire ?</h4>   
+                <p>Essayez d'abord d'actualiser la page ou de vider le cache de votre navigateur. Si le problème persiste, décrivez-nous le bug via notre formulaire de contact.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Les liens vers certaines épiceries ne fonctionnent pas, pourquoi ?</h4>   
+                <p>Il est possible que certains liens soient temporairement indisponibles ou que l'épicerie ait modifié son site. Signalez-nous ces problèmes pour que nous 
+                puissions mettre à jour nos références.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Combien de temps faut-il pour recevoir une réponse à une question ?</h4>   
+                <p>Nous nous efforçons de répondre à toutes les demandes dans un délai de 48 heures ouvrées.</p>
+        </div>
+            
+        <div class="mb-4 px-4">
+            <!-- Projet Académique -->
+            <h3 class="text-2xl font-semibold text-center mx-auto px-10 mb-4 mt-4">Projet académique</h3>
+            
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Dans quel cadre ce projet a-t-il été développé ?</h4> 
+                <p>Yumly a été développé dans le cadre du BUT MMI à l'IUT de Montbéliard.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Peut-on collaborer avec votre équipe ?</h4> 
+                <p>Malheureusement nous ne sommes pas ouverts aux collaborations dans ce cadre pédagogique.</p>
+
+            <h4 class="text-xl font-medium text-center mx-auto px-10 mb-4 mt-4">Ce projet va-t-il devenir une véritable entreprise ?</h4> 
+                <p>Pour l'instant, Yumly reste un projet étudiant sans intention commerciale immédiate. L'avenir du projet dépendra de l'évaluation de son 
+                potentiel à la fin de notre formation.</p>
+        </div>
+
+        <!-- Réseaux -->
+        <div class="flex items-center mb-6">
+            <div class="bg-(--color-orange-main) h-6 flex-grow">
+            </div>
+
+            <h2 class="text-2xl font-bold text-(--color-orange-main) px-4 whitespace-normal max-w-[225px] text-center uppercase">Nos réseaux </h2>
+
+            <div class="bg-(--color-orange-main) h-6 flex-grow">
+            </div>
+        </div>
+
+        <div>
+            <h3 class="font-logo font-light text-2xl text-center px-16 mx-auto">Suivez-nous pour rester à jour sur les avancées du projet !</h3>
+
+            <div class="pt-8 mb-8">
+                <ul class="flex justify-center gap-6 items-end">
+                    <li>
+                        <a href="https://facebook.com" aria-label="Facebook" class="hover:opacity-75 transition-opacity">
+                            <Image
+                                src={iconFacebook}
+                                alt="Facebook"
+                                class="w-8 h-8"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://instagram.com" aria-label="Instagram" class="hover:opacity-75 transition-opacity">
+                            <Image
+                                src={iconInstagram}
+                                alt="Instagram"
+                                class="w-8 h-8"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com" aria-label="Twitter" class="hover:opacity-75 transition-opacity">
+                            <Image
+                                src={iconTwitter}
+                                alt="Twitter"
+                                class="w-8 h-8"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://linkedin.com" aria-label="LinkedIn" class="hover:opacity-75 transition-opacity">
+                            <Image
+                                src={iconLinkedIn}
+                                alt="LinkedIn"
+                                class="w-8 h-8"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://behance.com" aria-label="Behance" class="hover:opacity-75 transition-opacity">
+                            <Image
+                                src={iconBehance}
+                                alt="Behance"
+                                class="w-8 h-8"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+            
+</Layout>   
+
+<script>
+  function formulaire() {
+    return {
+      nom: '',
+      prenom: '',
+      email: '',
+      objet: '',
+      message: '',
+      envoyerEmail() {
+        const destinataire = "Yumly@gmail.com";
+        const sujet = encodeURIComponent(this.objet);
+        const corps = encodeURIComponent(
+          `Nom : ${this.nom}\nPrénom : ${this.prenom}\nEmail : ${this.email}\n\nMessage :\n${this.message}`
+        );
+
+        window.location.href = `mailto:${destinataire}?subject=${sujet}&body=${corps}`;
+      }
+    };
+  }
+</script>
