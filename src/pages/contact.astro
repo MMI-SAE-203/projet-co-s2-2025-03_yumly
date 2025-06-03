@@ -50,6 +50,8 @@ import iconBehance from '../assets/icons/Behance.svg';
             </p>
         </div>
 
+        <script type="module" src="/src/scripts/formulaire-alpine.js" client:load></script>
+
         <!-- Formulaire de contact -->
         <div class="flex items-center mb-6">
             <div class="bg-(--color-orange-main) h-6 flex-grow">
@@ -88,7 +90,7 @@ import iconBehance from '../assets/icons/Behance.svg';
                 <textarea x-model="message" class="w-full border border-black rounded-xl p-2 h-28 resize-none" required></textarea>
             </div>
 
-            <button @click="envoyerEmail" class="bg-(--color-orange-main) text-white font-bold px-4 py-2 rounded-xl hover:brightness-90">
+            <button @click="envoyer" class="bg-(--color-orange-main) text-white font-bold px-4 py-2 rounded-xl hover:brightness-90">
                 Envoyer
             </button>
         </div>
@@ -258,23 +260,27 @@ import iconBehance from '../assets/icons/Behance.svg';
         </div>
 </Layout>   
 
-<script>
-  function formulaire() {
+<script type="module">
+
+  function formulaireContact() {
     return {
       nom: '',
-      prenom: '',
       email: '',
-      objet: '',
       message: '',
-      envoyerEmail() {
-        const destinataire = "Yumly@gmail.com";
-        const sujet = encodeURIComponent(this.objet);
-        const corps = encodeURIComponent(
-          `Nom : ${this.nom}\nPrénom : ${this.prenom}\nEmail : ${this.email}\n\nMessage :\n${this.message}`
-        );
-
-        window.location.href = `mailto:${destinataire}?subject=${sujet}&body=${corps}`;
+      envoyer() {
+        fetch('https://pb-yumly.leo-baudry.fr/api/collections/contact/records', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nom: this.nom,
+            email: this.email,
+            message: this.message
+          })
+        })
+        .then(res => res.json())
+        .then(data => console.log("Succès", data))
+        .catch(err => console.error("Erreur", err));
       }
-    };
+    }
   }
 </script>
