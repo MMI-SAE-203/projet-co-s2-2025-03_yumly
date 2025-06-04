@@ -1,0 +1,21 @@
+---
+export async function getStaticPaths() {
+  // Retournez tous les IDs de recettes possibles
+  // Exemple avec des données statiques :
+  return [
+    { params: { id: '1' } },
+    { params: { id: '2' } },
+    { params: { id: '3' } },
+    // ... autres IDs
+     ];
+  
+  // Ou si vous récupérez les données depuis une API/base de données :
+  // const recettes = await fetch('votre-api/recettes').then(r => r.json());
+  // return recettes.map(recette => ({
+  //   params: { id: recette.id.toString() }
+  // }));
+}
+
+const { id } = Astro.params;
+// Votre logique de page ici
+---
