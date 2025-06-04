@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 
-import LoadingWelcome from '../components/LoadingWelcome.astro';
+// import LoadingWelcome from '../components/LoadingWelcome.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
@@ -12,6 +12,8 @@ const pageUrl = `${baseUrl}${Astro.url.pathname}`;
 const siteName = "Yumly";
 
 const title = Astro.url.pathname === "/" ? siteName : `${Astro.props.title} — ${siteName}`;
+
+
 ---
 <!doctype html>
 <html lang="fr">
@@ -60,7 +62,11 @@ const title = Astro.url.pathname === "/" ? siteName : `${Astro.props.title} — 
 		<link rel="icon" type="image/png" sizes="512x512" href="/favicon/android-chrome-512x512.png">
 
     <meta name="generator" content={Astro.generator} />
-	
+    <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.21.3/dist/pocketbase.umd.js"></script> 
+
+
+
+	</head>
 	
 	
 	<body >

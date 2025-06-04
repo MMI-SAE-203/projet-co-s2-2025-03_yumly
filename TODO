@@ -1,23 +1,4 @@
-FINIR LANDING PAGE  : 
-         - Responsive carousel europe, afrique, etc. -> pas encore fait
-         - grid version mobile des valeurs (déjà bien faite en desktop ?)
-    - Les produits phares à ajouter (carousel)
-    - Fix les avis (carousel, truc bizarre ??)
-    - Fix footer 
-         - Ajouter mascotte dans footer 
 
     - MENU : 
     - Attention background header nav mobile 
-    - Ajouter vidéos (autoplay/muted)
-         - (HERO)
-         - (EN BAS)
     
-    - autres éléments responsive de la page (cards, etc.)
-- épaisseur typo, 
-
-
-FAIT 
-         - En dessous de 640px, la grille derrière le carousel "Nos recettes inspirantes" se casse FAIT 
-                    - Responsive	
-
-PAS DE RESPONSIVE SUR LE SITE SAUF LANDING PAGE YOUPI
