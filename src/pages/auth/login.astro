@@ -6,7 +6,7 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr'; // Ton URL PocketBase
 ---
 
 <Layout title="Connexion - Yumly">
-  <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8" x-data={`loginForm({ pocketbaseUrl: "${POCKETBASE_URL}" })`}>
       <div>
         <div class="mx-auto h-12 w-auto flex justify-center">
@@ -210,20 +210,25 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr'; // Ton URL PocketBase
           }
         },
         async loginWithGoogle() {
-          // Placeholder - Implémentation future
-          console.log('loginForm: Connexion Google à implémenter.');
-          if (!pbClient) {
-            this.error = "Client de base de données non initialisé pour Google OAuth.";
-            return;
-          }
+          console.log('loginForm: Connexion Google initiée. Loading set to true.');
+
           try {
-            // Exemple pour Google OAuth2 avec PocketBase (nécessite configuration dans PB Admin UI)
-            // const authData = await pbClient.collection('users').authWithOAuth2({ provider: 'google' });
-            // console.log(authData);
-            // Gérer la redirection après succès OAuth
+            const authData = await pbClient.collection('users').authWithOAuth2({ provider: 'google' });
+            console.log("loginForm: Google OAuth successful.", authData);
+            window.location.href = '/'; 
+
           } catch (err) {
-            console.error("Google OAuth error:", err);
-            this.error = "Erreur lors de la connexion avec Google.";
+            
+            console.error("!!! RAW Google OAuth error object:", err);
+            console.dir(err); 
+
+            this.error = "Une erreur est survenue avec Google. Vérifiez la console.";
+            console.log("Error message set to UI:", this.error);
+
+          } finally {
+            console.log("loginForm: Reached finally block. Setting loading to false.");
+            this.loading = false;
+            console.log("loginForm: Loading set to false.");
           }
         }
       };
