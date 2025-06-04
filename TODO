@@ -7,6 +7,7 @@ ATTENTION NETLIFY, LIEN LOGIN / REGISTER
 
 page "forgot-password" en grande vitesse
 pages : CONFIG PROFIL ? (avec les icones)
+PAGE QUI ALLEGE LA PAGE CONTACT (FAQ?)
 
 
 IMPORTANT POUR L'API : PQ pocketbase n'enregistre pas les utilisateurs qui se co avec google
