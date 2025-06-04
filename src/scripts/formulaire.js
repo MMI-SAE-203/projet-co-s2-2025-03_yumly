@@ -5,18 +5,21 @@ export default function formulaire() {
     email: '',
     objet: '',
     message: '',
+    showNotification: false,
+    notificationMessage: '',
+    notificationType: 'success', // 'success' ou 'error'
 
     async envoyer() {
       // Validation côté client
       if (!this.nom.trim() || !this.prenom.trim() || !this.email.trim() || !this.objet.trim() || !this.message.trim()) {
-        alert('Tous les champs sont obligatoires');
+        this.showNotificationMessage('Tous les champs sont obligatoires', 'error');
         return;
       }
 
       // Validation email simple
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this.email)) {
-        alert('Veuillez saisir une adresse email valide');
+        this.showNotificationMessage('Veuillez saisir une adresse email valide', 'error');
         return;
       }
 
@@ -52,15 +55,15 @@ export default function formulaire() {
                 errors.push(`${field}: ${JSON.stringify(fieldErrors)}`);
               }
             }
-            alert(`Erreurs de validation :\n${errors.join('\n')}`);
+            this.showNotificationMessage(`Erreurs de validation :\n${errors.join('\n')}`, 'error');
           } else {
-            alert(`Erreur serveur : ${response.status} - ${errorData.message || 'Pas de message'}`);
+            this.showNotificationMessage(`Erreur serveur : ${response.status} - ${errorData.message || 'Pas de message'}`, 'error');
           }
           return;
         }
 
         await response.json();
-        alert("Message envoyé et enregistré !");
+        this.showNotificationMessage("Message envoyé et enregistré avec succès !", 'success');
 
         // Réinitialiser les champs
         this.nom = '';
@@ -70,8 +73,23 @@ export default function formulaire() {
         this.message = '';
 
       } catch (error) {
-        alert("Erreur lors de l'enregistrement. Merci de réessayer.");
+        this.showNotificationMessage("❌ Erreur lors de l'enregistrement. Merci de réessayer.", 'error');
       }
+    },
+
+    showNotificationMessage(message, type = 'success') {
+      this.notificationMessage = message;
+      this.notificationType = type;
+      this.showNotification = true;
+      
+      // Auto-hide après 5 secondes
+      setTimeout(() => {
+        this.showNotification = false;
+      }, 5000);
+    },
+
+    hideNotification() {
+      this.showNotification = false;
     }
   };
 }
