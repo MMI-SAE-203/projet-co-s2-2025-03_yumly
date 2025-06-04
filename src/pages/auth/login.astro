@@ -209,28 +209,77 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr'; // Ton URL PocketBase
             this.loading = false;
           }
         },
-        async loginWithGoogle() {
-          console.log('loginForm: Connexion Google initiée. Loading set to true.');
+async loginWithGoogle() {
+  console.log('loginForm: Connexion Google initiée.');
+  
+  if (!pbClient) {
+    this.error = "Client de base de données non disponible.";
+    console.error("loginWithGoogle: pbClient is not initialized!");
+    return;
+  }
 
-          try {
-            const authData = await pbClient.collection('users').authWithOAuth2({ provider: 'google' });
-            console.log("loginForm: Google OAuth successful.", authData);
-            window.location.href = '/'; 
+  this.error = null;
+  this.loading = true;
+  console.log('loginForm: Loading set to true.');
 
-          } catch (err) {
-            
-            console.error("!!! RAW Google OAuth error object:", err);
-            console.dir(err); 
+  // Variable pour suivre si l'auth est terminée
+  let authCompleted = false;
 
-            this.error = "Une erreur est survenue avec Google. Vérifiez la console.";
-            console.log("Error message set to UI:", this.error);
+  // Timeout de 6 secondes pour forcer le reset après fermeture de popup
+  const resetTimeout = setTimeout(() => {
+    if (!authCompleted) {
+      console.log('loginForm: Timeout (6s) - Reset loading state after popup closure');
+      this.loading = false;
+      this.error = "L'authentification a échouée. Veuillez réessayer.";
+    }
+  }, 8000);
 
-          } finally {
-            console.log("loginForm: Reached finally block. Setting loading to false.");
-            this.loading = false;
-            console.log("loginForm: Loading set to false.");
-          }
+  try {
+    const authData = await pbClient.collection('users').authWithOAuth2({ provider: 'google' });
+    
+    authCompleted = true;
+    clearTimeout(resetTimeout); // Annuler le timeout si succès
+    console.log("loginForm: Google OAuth successful.", authData);
+    window.location.href = '/'; 
+
+  } catch (err) {
+    authCompleted = true;
+    clearTimeout(resetTimeout); // Annuler le timeout si erreur
+    console.error("loginForm: !!! RAW Google OAuth error object:", err);
+    console.dir(err); 
+
+    // Message d'erreur plus détaillé
+    let errorMessage = "Une erreur est survenue avec Google.";
+    
+    if (err && typeof err === 'object') {
+      if (err.message) {
+        if (err.message.includes('popup') || err.message.includes('cancelled') || err.message.includes('closed')) {
+          errorMessage = "Connexion Google annulée.";
+        } else if (err.message.includes('network') || err.message.includes('fetch')) {
+          errorMessage = "Problème de connexion réseau.";
+        } else {
+          errorMessage = `Erreur Google: ${err.message}`;
         }
+      } else if (err.status === 0) {
+        errorMessage = "Connexion Google annulée ou bloquée.";
+      } else if (err.status) {
+        errorMessage = `Erreur Google (${err.status}): Vérifiez la configuration.`;
+      }
+    }
+    
+    this.error = errorMessage;
+    console.log("loginForm: Error message set to UI:", this.error);
+
+  } finally {
+    if (!authCompleted) {
+      authCompleted = true;
+      clearTimeout(resetTimeout);
+    }
+    console.log("loginForm: Reached finally block. Setting loading to false.");
+    this.loading = false;
+    console.log("loginForm: Loading set to false. Current error:", this.error);
+  }
+}
       };
     });
     console.log("login.astro: Alpine.data('loginForm') DEFINITION REGISTERED.");
