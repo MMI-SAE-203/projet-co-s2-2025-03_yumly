@@ -23,7 +23,7 @@ const menuItems = [
   { name: "Épiceries", href: "/epiceries" },
   { name: "Recettes", href: "/recettes" },
   { name: "Devenir partenaire", href: "/partenaire" },
-  { name: "Connexion", href: "/auth/login" },
+  { name: "Connexion", href: "/auth/login/" },
 ];
 
 const footerLinks = [
@@ -92,7 +92,7 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
     handleProtectedClick(event, href) {
       if (!this.isAuthenticated) {
         event.preventDefault();
-        window.location.href = '/auth/login';
+        window.location.href = '/auth/login/';
       } else {
         // Normal navigation - allow default link behavior
         window.location.href = href;

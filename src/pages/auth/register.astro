@@ -23,9 +23,9 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
     <!-- Contenu principal -->
     <div class="flex-1 flex flex-col items-center px-6 pt-2 sm:pt-4 pb-8 w-full">
       
-      <div class="w-full max-w-xs sm:max-w-sm space-y-5"> {/* Conteneur pour centrer et limiter la largeur */}
+      <div class="w-full max-w-xs sm:max-w-sm space-y-5"> 
         
-        {/* 1. Grande icône utilisateur */}
+    <!-- Grande icône utilisateur -->
     <div class="mb-6  sm:mb-8 relative"> 
       <div class="w-32 h-32 sm:w-40 sm:h-40 text-(--color-background) flex items-center justify-center mx-auto" set:html={BigUserIcon} /> 
     </div>
@@ -87,17 +87,17 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
     </button>
 
 
-        {/* 3. Séparateur avec "ou" */}
+        <!-- 3. Séparateur avec "ou"  -->
         <div class="flex items-center">
           <hr class="flex-1 border-white border-opacity-30">
           <span class="px-3 sm:px-4 text-white text-xs sm:text-sm">Ou</span>
           <hr class="flex-1 border-white border-opacity-30">
         </div>
 
-        {/* Formulaire d'inscription Email/Mot de passe */}
+        <!-- *Formulaire d'inscription Email/Mot de passe -->
         <form class="space-y-4" @submit.prevent="handleRegister">
           
-          {/* 4. Champ Nom complet */}
+          <!-- Champ nom complet -->
           <div class="relative">
             <div class="absolute left-4 inset-y-0 flex items-center pointer-events-none z-10">
               <div class="text-orange-400" set:html={UserIcon} />
@@ -107,7 +107,7 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
                    placeholder="Nom complet">
           </div>
           
-          {/* 5. Champ Adresse email */}
+          <!-- Champ Email -->
           <div class="relative">
             <div class="absolute left-4 inset-y-0 flex items-center pointer-events-none z-10">
                <div class=" text-orange-400" set:html={MailIcon} />
@@ -117,7 +117,7 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
                    placeholder="Adresse e-mail">
           </div>
 
-          {/* 6. Champ Mot de passe */}
+          <!-- Champ Mot de passe  -->
           <div class="relative">
             <div class="absolute left-4 inset-y-0 flex items-center pointer-events-none z-10">
               <div class=" text-orange-400" set:html={LockIcon} />
@@ -126,9 +126,8 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
                    class="w-full bg-orange-50 text-orange-700 placeholder-orange-400 rounded-full py-4 pl-15 pr-4 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-orange-300 shadow-sm" 
                    placeholder="Mot de passe">
           </div>
-          {/* Note sur le mot de passe déplacée sous le champ "Confirmer" pour un meilleur flux visuel */}
 
-          {/* 7. Champ Confirmer le mot de passe */}
+          <!-- Confirmation MDP -->
           <div class="relative">
              <div class="absolute left-4 inset-y-0 flex items-center pointer-events-none z-10">
               <div class=" text-orange-400" set:html={LockIcon} />
@@ -140,13 +139,13 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
           <p class="mt-1 text-xs text-center text-orange-100 opacity-80 mb-2">Le mot de passe doit contenir au moins 8 caractères.</p>
 
 
-          {/* Message: Mots de passe ne correspondent pas (affiché si pertinent) */}
+          <!-- Message: Mots de passe ne correspondent pas -->
           <div x-show="form.password && form.confirmPassword && form.password !== form.confirmPassword" 
                class="bg-red-700 bg-opacity-90 text-white px-4 py-2.5 rounded-full text-center text-sm">
             <p>Les mots de passe ne correspondent pas</p>
           </div>
           
-          {/* 8. Conditions d'utilisation */}
+          <!-- Conditions d'utilisation -->
           <div class="flex items-start pt-1">
             <label for="acceptTerms" class="flex items-center cursor-pointer text-xs sm:text-sm text-orange-100 group">
               <input id="acceptTerms" name="acceptTerms" type="checkbox" x-model="form.acceptTerms" required 
@@ -162,7 +161,7 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
             </label>
           </div>
           
-          {/* 9. Bouton S'inscrire */}
+          <!-- Incription -->
           <div class="pt-2 sm:pt-4">
             <button 
               type="submit" 
@@ -180,23 +179,22 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
           </div>
         </form>
 
-        {/* 10. Un séparateur à nouveau */}
-        <div class="flex items-center pt-2"> {/* pt-2 pour un peu d'espace */}
+        <!-- Séparateur -->
+        <div class="flex items-center pt-2"> 
           <hr class="flex-1 border-white border-opacity-30">
-          {/* Pas de texte "ou" ici, juste une ligne si c'est ce que tu voulais */}
         </div>
 
-        {/* 11. Partie "ou alors se connecter à votre compte existant" */}
-        <div class="text-center pt-0"> {/* pt-0 car le séparateur donne déjà de l'espace */}
+        <!-- Accès login -->
+        <div class="text-center pt-0"> 
           <p class="text-sm text-orange-100">
             Déjà un compte ? 
-            <a href="/auth/login" class="font-medium text-white hover:underline">
+            <a href="/auth/login/" class="font-medium text-white hover:underline">
               Connectez-vous
             </a>
           </p>
         </div>
 
-      </div> {/* Fin du conteneur max-w-xs/sm */}
+      </div> 
     </div>
   </div>
 </Layout>
@@ -213,7 +211,6 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
       if (typeof PocketBase !== 'undefined' && config && config.pocketbaseUrl) {
         try {
           pbClient = new PocketBase(config.pocketbaseUrl);
-          // console.log("registerForm: Client-side PocketBase instance created with URL:", config.pocketbaseUrl); // Moins de logs en prod
         } catch (e) {
           console.error("registerForm: Failed to create client-side PocketBase instance:", e);
         }
@@ -239,9 +236,7 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
         // --- FIN PROPRIÉTÉS NOTIFICATION ---
 
         init() {
-          // console.log("registerForm COMPONENT INSTANCE: init() called.");
           if (!pbClient) {
-            // MODIFIÉ: Utiliser la nouvelle fonction de notification
             this.showErrorNotification("Erreur de connexion au service. Veuillez réessayer plus tard.");
           }
         },
@@ -254,8 +249,8 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
             this.notificationMessage = message;
             this.notificationType = 'success';
             this.showNotification = true;
-            // Optionnel: cacher automatiquement après X secondes
-            // setTimeout(() => this.hideNotification(), 5000); 
+            
+            setTimeout(() => this.hideNotification(), 5000); 
         },
         showErrorNotification(message) {
             this.notificationMessage = message;
@@ -274,12 +269,11 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
         },
 
         async handleRegister() {
-          // console.log("registerForm: handleRegister called.");
           if (!pbClient) { 
-            this.showErrorNotification("Service non disponible pour l'inscription."); // MODIFIÉ
+            this.showErrorNotification("Service non disponible pour l'inscription."); 
             return; 
           }
-          this.hideNotification(); // MODIFIÉ: Cacher les notifications précédentes
+          this.hideNotification(); 
 
           if (!this.isFormValid) {
             let validationError = "Veuillez vérifier les informations du formulaire.";
@@ -287,12 +281,10 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
             else if (!this.form.email) validationError = "Veuillez entrer une adresse e-mail valide.";
             else if (!this.form.password) validationError = "Veuillez entrer un mot de passe.";
             else if (this.form.password.length < 8) validationError = "Le mot de passe doit contenir au moins 8 caractères.";
-            // L'erreur "mots de passe ne correspondent pas" est gérée par un x-show séparé dans le HTML
-            // mais si vous voulez aussi une notif pour ça, décommentez :
-            // else if (this.form.password !== this.form.confirmPassword) validationError = "Les mots de passe ne correspondent pas.";
+          
             else if (!this.form.acceptTerms) validationError = "Veuillez accepter les conditions d'utilisation.";
             
-            this.showErrorNotification(validationError); // MODIFIÉ
+            this.showErrorNotification(validationError); 
             return;
           }
 
@@ -310,12 +302,12 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
             
             try {
               await pbClient.collection('users').authWithPassword(this.form.email, this.form.password);
-              this.showSuccessNotification('Inscription réussie ! Vous êtes connecté. Redirection...'); // MODIFIÉ
+              this.showSuccessNotification('Inscription réussie ! Vous êtes connecté. Redirection...'); 
               setTimeout(() => { window.location.href = '/'; }, 2500);
             } catch (authError) {
               console.error("registerForm: Auto-login failed after registration:", authError);
-              this.showSuccessNotification('Inscription réussie ! Veuillez vous connecter manuellement. Redirection...'); // MODIFIÉ
-              setTimeout(() => { window.location.href = '/auth/login'; }, 3000);
+              this.showSuccessNotification('Inscription réussie ! Veuillez vous connecter manuellement. Redirection...'); 
+              setTimeout(() => { window.location.href = '/auth/login/'; }, 3000);
             }
             
           } catch (err) {
@@ -327,25 +319,24 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
             } else if (err.message) {
               apiError = err.message;
             }
-            this.showErrorNotification(apiError); // MODIFIÉ
+            this.showErrorNotification(apiError); 
           } finally {
             this.loading = false;
           }
         },
         
         async handleAuthWithGoogle() {
-          // console.log('[RegisterPage] handleAuthWithGoogle: Initiated.');
           if (!pbClient) { 
-            this.showErrorNotification("Service Google non disponible."); // MODIFIÉ
+            this.showErrorNotification("Service Google non disponible."); 
             return; 
           }
-          this.hideNotification(); // MODIFIÉ
+          this.hideNotification(); 
           this.loading = true;
           let authCompleted = false;
           const timeoutId = setTimeout(() => {
             if (!authCompleted && this.loading) {
               this.loading = false;
-              this.showErrorNotification("L'opération avec Google a pris trop de temps ou a été interrompue."); // MODIFIÉ
+              this.showErrorNotification("L'opération avec Google a pris trop de temps ou a été interrompue."); 
             }
           }, 8000);
         
@@ -353,7 +344,7 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
             await pbClient.collection('users').authWithOAuth2({ provider: 'google' });
             authCompleted = true; 
             clearTimeout(timeoutId);
-            this.showSuccessNotification('Authentification avec Google réussie ! Redirection...'); // MODIFIÉ
+            this.showSuccessNotification('Authentification avec Google réussie ! Redirection...'); 
             setTimeout(() => { window.location.href = '/'; }, 2000);
         
           } catch (err) {
@@ -361,14 +352,14 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
             clearTimeout(timeoutId);
             console.error("[RegisterPage] Google OAuth error:", err);
             let googleError = "Une erreur est survenue avec Google.";
-            if (err?.isAbort) { // PocketBase SDK specific
+            if (err?.isAbort) { 
               googleError = "Authentification Google annulée par l'utilisateur.";
             } else if (err?.message?.toLowerCase().includes("popup closed") || err?.message?.toLowerCase().includes("cancelled")) {
               googleError = "La fenêtre Google a été fermée ou l'opération annulée.";
             } else if (err?.message) {
               googleError = `Erreur Google : ${err.message.substring(0,100)}`;
             }
-            this.showErrorNotification(googleError); // MODIFIÉ
+            this.showErrorNotification(googleError); 
           } finally {
             if (!authCompleted) { clearTimeout(timeoutId); }
             if (this.loading) { this.loading = false; }
@@ -376,16 +367,12 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
         }
       };
     });
-    // console.log("register.astro: Alpine.data('registerForm') DEFINITION REGISTERED with Alpine."); // Moins de logs
   }
 
   if (window.Alpine && window.Alpine.version) {
-    // console.log("register.astro: Alpine already initialized, defining component immediately."); // Moins de logs
     defineRegisterFormComponent();
   } else {
-    // console.log("register.astro: Alpine not yet initialized, waiting for alpine:init."); // Moins de logs
     document.addEventListener('alpine:init', () => {
-      // console.log("register.astro: alpine:init event FIRED. Calling defineRegisterFormComponent."); // Moins de logs
       defineRegisterFormComponent();
     });
   }
