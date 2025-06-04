@@ -58,3 +58,24 @@ export async function getProduitsAsie() {
         sort: 'nom_produit'
     });
 }  
+
+export async function getProduitsEurope() {
+    return await pb.collection('Produit').getFullList({
+        filter: 'pays_produit = "Europe"',
+        sort: 'nom_produit'
+    });
+}
+
+export async function getProduitsAfrique() {
+    return await pb.collection('Produit').getFullList({
+        filter: 'pays_produit = "Afrique"',
+        sort: 'nom_produit'
+    });
+}
+
+export async function getProduitsLatino() {
+    return await pb.collection('Produit').getFullList({
+        filter: 'pays_produit = "Amérique latine"',
+        sort: 'nom_produit'
+    });
+}
