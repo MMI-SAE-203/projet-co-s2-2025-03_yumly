@@ -6,9 +6,14 @@ PENSER AU MIDDLEWARE
 ATTENTION NETLIFY, LIEN LOGIN / REGISTER
 
 page "forgot-password" en grande vitesse
-PQ pocketbase n'enregistre pas les utilisateurs qui se co avec google
-transitions entre les pages ? 
+pages : CONFIG PROFIL ? (avec les icones)
+
+
+IMPORTANT POUR L'API : PQ pocketbase n'enregistre pas les utilisateurs qui se co avec google
+
+transitions entre les pages ? -> pas forcément GSAP, Astro en a un intégré !!!!!!!!!!!
+
 mise en ligne netlify sur branche main
 
-POLITIQUE DE CONFIDENTIALITE 
+PAGE POLITIQUE DE CONFIDENTIALITE 
 
