@@ -2,14 +2,15 @@
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/global.css";
 
-import imgHeroAsie from "../../assets/img/img-hero-asie.webp";
-import imgSepAsie from "../../assets/img/img-sep-asie.webp";
+import imgHeroAfrique from "../../assets/img/img-hero-afrique.webp";
+import imgSepAfrique from "../../assets/img/img-sep-afrique.webp";
 
 import Carousel_infini from '../../components/Carousel_infini.astro';
 import Carousel from '../../components/Carousel.astro';
 
-import { getProduitsAsie } from "../../../backend/testback.js";
-const produitsAsie = await getProduitsAsie();
+import { getProduitsAfrique } from "../../../backend/testback.js";
+const produitsAfrique = await getProduitsAfrique();
+
 
 // PRODUITS PHARES
 import burrataImg from '../../assets/img/burrata.webp';
@@ -24,11 +25,11 @@ import pref2 from '../../assets/img/plat_pref2.webp';
 import pref3 from '../../assets/img/plat_pref3.webp';
 
 // RECETTES 
-import recette1 from '../../assets/img/assiette-asie4.webp';
-import recette2 from '../../assets/img/assiette-asie2.webp';
-import recette3 from '../../assets/img/assiette-asie3.webp';
-import recette4 from '../../assets/img/assiette-asie5.webp';
-import recette5 from '../../assets/img/assiette-asie1.webp';
+import recette1 from '../../assets/img/afrique_plat_pref5.webp';
+import recette2 from '../../assets/img/afrique_plat_pref2.webp';
+import recette3 from '../../assets/img/afrique_plat_pref3.webp';
+import recette4 from '../../assets/img/afrique_plat_pref6.webp';
+import recette5 from '../../assets/img/afrique_plat_pref1.webp';
 
 // IMAGES ÉPICERIES
 import afriqueImage from '../../assets/img/Afrique-final.webp';
@@ -92,19 +93,19 @@ const favoriteRecipes = [
 
 <Layout>
 <main class="relative bg-[var(--color-background)] overflow-hidden pb-24">
-    <!-- Titre ASIE -->
+    <!-- Titre AFRIQUE -->
     <div class="relative z-20 flex justify-center">
         <h1
-            class="text-[8rem] md:text-[7rem] font-extrabold text-[var(--color-red-main)] leading-none font-[var(--font-logo)] mt-25 mb-[-2rem]"
+            class="text-[7rem] md:text-[7rem] font-extrabold text-[var(--color-green-main)] leading-none font-[var(--font-logo)] mt-25 mb-[-2rem]"
         >
-            ASIE
+            AFRIQUE
         </h1>
     </div>
 
     <!-- Image -->
     <div class="relative z-10 flex justify-center">
         <img
-            src={imgHeroAsie.src}
+            src={imgHeroAfrique.src}
             alt="Rue asiatique"
             class="w-full max-w-[500px] h-auto"
         />
@@ -126,7 +127,7 @@ const favoriteRecipes = [
                 Array.from({ length: 66 }).map((_, i) => (
                     <div
                         key={i}
-                        class="aspect-square border border-[var(--color-red-main)]"
+                        class="aspect-square border border-[var(--color-green-main)]"
                     />
                 ))
             }
@@ -139,17 +140,17 @@ const favoriteRecipes = [
 
     <!-- Section Recherche Produit -->
     <section
-        class="bg-[var(--color-red-shade-5)] py-10 px-4 flex justify-center"
+        class="bg-[var(--color-green-shade-5)] py-10 px-4 flex justify-center"
     >
         <div
-            class="bg-[var(--color-red-main)] text-white rounded-2xl w-full max-w-md p-6 text-center shadow-lg"
+            class="bg-[var(--color-green-main)] text-white rounded-2xl w-full max-w-md p-6 text-center shadow-lg"
         >
             <p class="text-lg font-semibold mb-4">Vous cherchez un produit ?</p>
             <div
                 class="bg-white rounded-full px-4 py-2 flex items-center gap-2"
             >
                 <img
-                    src="/src/assets/icons/red-search.svg"
+                    src="/src/assets/icons/green-search.svg"
                     alt="Recherche"
                     class="w-5 h-5"
                 />
@@ -157,17 +158,17 @@ const favoriteRecipes = [
                     id="searchInput"
                     type="text"
                     placeholder="Rechercher..."
-                    class="flex-1 bg-transparent outline-none text-[var(--color-red-shade-1)] placeholder:text-[var(--color-red-shade-2)]"
+                    class="flex-1 bg-transparent outline-none text-[var(--color-green-shade-1)] placeholder:text-[var(--color-green-shade-2)]"
                 />
             </div>
         </div>
     </section>
 
     <!-- Filtres + Cards dans un bloc rose clair -->
-    <section class="bg-[var(--color-red-shade-5)] py-10 px-4">
+    <section class="bg-[var(--color-green-shade-5)] py-10 px-4">
         <!-- Filtres de catégories -->
         <div
-            class="flex flex-wrap justify-center gap-4 mb-8 text-[var(--color-red-main)] font-semibold"
+            class="flex flex-wrap justify-center gap-4 mb-8 text-[var(--color-green-main)] font-semibold"
         >
             <button class="filter-btn hover:underline transition-all duration-200" data-filter="all">Voir tous</button>
             <button class="filter-btn hover:underline transition-all duration-200" data-filter="condiments">Condiments & Sauces</button>
@@ -178,14 +179,14 @@ const favoriteRecipes = [
         </div>
 
         <!-- Message "Aucun résultat" -->
-        <div id="noResults" class="text-center text-[var(--color-red-main)] text-lg mt-8 hidden">
+        <div id="noResults" class="text-center text-[var(--color-green-main)] text-lg mt-8 hidden">
             <p>Aucun produit trouvé pour votre recherche.</p>
         </div>
 
         <!-- Grille de cards produits dynamiques -->
         <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {
-            produitsAsie.map(produit => (
+         {
+            produitsAfrique.map(produit => (          
               <div class="product-card bg-white rounded-2xl p-4 shadow-md flex flex-col gap-2"
                    data-name={produit.nom_produit || ''}
                    data-category={produit.categorie_produit || ''}>
@@ -233,7 +234,7 @@ const favoriteRecipes = [
           >
             {
               Array.from({ length: 120 }).map((_, i) => (
-                <div key={i} class="border border-red-700 aspect-square" />
+                <div key={i} class="border border-green-700 aspect-square" />
               ))
             }
           </div>
@@ -242,7 +243,7 @@ const favoriteRecipes = [
         <!-- Image parfaitement centrée et responsive -->
         <div class="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full sm:w-[600px]">
           <img
-            src={imgSepAsie.src}
+            src={imgSepAfrique.src}
             alt="Séparateur Asie"
             class="w-full h-auto object-cover"
           />
@@ -252,13 +253,13 @@ const favoriteRecipes = [
 
       <!-- Titre VOS RECETTES PRÉFÉRÉES -->
       <div class="relative z-10 text-center mt-50 mb-[-1.5rem]">
-        <div class="bg-red-main text-white font-bold text-lg py-3 px-6 inline-block rounded shadow-md z-20 relative">
+        <div class="bg-green-main text-white font-bold text-lg py-3 px-6 inline-block rounded shadow-md z-20 relative">
           VOS RECETTES PRÉFÉRÉES
         </div>
       </div>
 
       <!-- Section avec fond rose et cartes recettes -->
-      <section class="relative pt-[3rem] px-4 bg-red-shade-4 overflow-hidden z-0">
+      <section class="relative pt-[3rem] px-4 bg-green-shade-4 overflow-hidden z-0">
         <div class="flex gap-6 overflow-x-auto px-4 scrollbar-hide pb-10">
           {favoriteRecipes.map((r, index) => (
             <div class="flex-shrink-0 w-64 bg-background p-5 rounded-lg shadow-md relative text-left" key={index}>
@@ -273,7 +274,7 @@ const favoriteRecipes = [
               </div>
 
               <!-- Texte en dessous de l'image -->
-              <h3 class="text-red-main font-extrabold text-lg mb-1">{r.title}</h3>
+              <h3 class="text-green-main font-extrabold text-lg mb-1">{r.title}</h3>
               <p class="font-semibold text-grey-9 mb-2">{r.subtitle}</p>
               <p class="text-grey-7 text-sm">{r.description}</p>
             </div>
@@ -285,16 +286,16 @@ const favoriteRecipes = [
 
 
     <!-- Séparateur Damier CSS -->
-    <div class="w-full h-[90px] mt-50 bg-damier-checkerboard"></div>
+    <div class="w-full h-[90px] mt-50 bg-damier-checkerboard-green"></div>
 
     <!-- Bloc FACTS style maquette toujours horizontal -->
     <section class="px-4 py-12 mt-1">
-      <div class="border-2 border-red-main mx-auto bg-[var(--color-background)] flex flex-row w-full max-w-[700px] rounded-md overflow-hidden">
+      <div class="border-2 border-green-main mx-auto bg-[var(--color-background)] flex flex-row w-full max-w-[700px] rounded-md overflow-hidden">
 
         <!-- Image à gauche -->
         <div class="w-[50%] min-w-[150px] max-w-[300px]">
           <img 
-            src="/src/assets/img/img-fact-asie.webp" 
+            src="/src/assets/img/img-fact-afrique.webp" 
             alt="Enfant au marché asiatique" 
             class="w-full h-full object-cover"
           />
@@ -303,15 +304,14 @@ const favoriteRecipes = [
         <!-- Texte à droite -->
         <div class="w-[50%] p-1 flex flex-col justify-start">
           <!-- Badge pleine largeur -->
-          <div class="bg-red-shade-3 text-white font-bold text-lg px-4 py-2 shadow-md text-center w-full">
+          <div class="bg-green-shade-3 text-white font-bold text-lg px-4 py-2 shadow-md text-center w-full">
             FACTS
           </div>
 
           <!-- Texte -->
           <div class="mt-10 text-grey-9 text-sm sm:text-base leading-relaxed">
-            En Thaïlande, un propriétaire d'épicerie a trouvé un assistant très... inhabituel : un singe nommé Bobby !<br /><br />
-            Ce macaque aide à ramasser les bouteilles, porter les sacs et même accueillir les clients.
-          </div>
+            En Afrique du Sud, un épicier a trouvé une méthode radicale pour éviter les cambriolages : installer une cage avec un vrai lion derrière son magasin. <br><br>Plus besoin de caméras, ils préfèrent garder leurs distances…
+        </div>
         </div>
 
       </div>
@@ -329,7 +329,7 @@ const favoriteRecipes = [
         >
           {
             Array.from({ length: 60 }).map((_, i) => (
-              <div key={i} class="border border-red-700 aspect-square" />
+              <div key={i} class="border border-green-700 aspect-square" />
             ))
           }
         </div>
@@ -343,7 +343,7 @@ const favoriteRecipes = [
 
     <!-- Nos Produits Phares -->
     <section class="py-50 mt-5  px-4">
-      <h2 class="text-center font-bold text-3xl text-red-main mb-10">NOS PRODUITS PHARES</h2>
+      <h2 class="text-center font-bold text-3xl text-green-main mb-10">NOS PRODUITS PHARES</h2>
       <div class="max-w-4xl mx-auto">
         <Carousel items={produitPhares} itemWidthClass="w-32 sm:w-40 md:w-44" itemHeightClass="h-32 sm:h-40 md:h-44" gapClass="gap-4 sm:gap-6 md:gap-8" containerPaddingClass="py-8 px-4" showNames={true} />
       </div>
@@ -353,7 +353,7 @@ const favoriteRecipes = [
 
 <style>
     .filter-active {
-        background-color: var(--color-red-main);
+        background-color: var(--color-green-main);
         color: white;
         padding: 0.5rem 1rem;
         border-radius: 9999px;
