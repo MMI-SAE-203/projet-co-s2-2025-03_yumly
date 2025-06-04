@@ -297,26 +297,61 @@ import iconBehance from '../assets/icons/Behance.svg';
 </Layout>   
 
 <script type="module">
-
-  function formulaireContact() {
+  function formulaire() {
     return {
       nom: '',
+      prenom: '',
       email: '',
+      objet: '',
       message: '',
+      showNotification: false,
+      notificationType: 'success',
+      notificationMessage: '',
+      
       envoyer() {
         fetch('https://pb-yumly.leo-baudry.fr/api/collections/contact/records', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             nom: this.nom,
+            prenom: this.prenom,
             email: this.email,
+            objet: this.objet,
             message: this.message
           })
         })
-        .then(res => res.json())
-        .then(data => console.log("Succès", data))
-        .catch(err => console.error("Erreur", err));
+        .then(res => {
+          if (res.ok) {
+            return res.json();
+          }
+          throw new Error('Erreur réseau');
+        })
+        .then(data => {
+          console.log("Succès", data);
+          this.showNotification = true;
+          this.notificationType = 'success';
+          this.notificationMessage = 'Votre message a été envoyé avec succès !';
+          // Réinitialiser le formulaire
+          this.nom = '';
+          this.prenom = '';
+          this.email = '';
+          this.objet = '';
+          this.message = '';
+        })
+        .catch(err => {
+          console.error("Erreur", err);
+          this.showNotification = true;
+          this.notificationType = 'error';
+          this.notificationMessage = 'Une erreur est survenue lors de l\'envoi du message.';
+        });
+      },
+      
+      hideNotification() {
+        this.showNotification = false;
       }
     }
   }
+  
+  // Rendre la fonction disponible globalement pour Alpine
+  window.formulaire = formulaire;
 </script>

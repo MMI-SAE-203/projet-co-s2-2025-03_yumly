@@ -255,7 +255,7 @@ const POCKETBASE_URL = 'https://pb-yumly.leo-baudry.fr';
               // Forcer Alpine à réévaluer l'UI si besoin
               // this.$nextTick(() => { console.log("UI update potentially forced after timeout"); });
             }
-          }, 20000); // Timeout de 20 secondes (ajustable)
+          }, 8000); // Timeout de 8 secondes (ajustable)
         
           try {
             const authData = await pbClient.collection('users').authWithOAuth2({ provider: 'google' });
