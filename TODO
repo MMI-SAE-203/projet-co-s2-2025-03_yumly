@@ -2,7 +2,7 @@
     - MENU : 
     - Attention background header nav mobile 
     
-PENSER AU MIDDLEWARE
+PENSER AU MIDDLEWARE ? (pas important)
 ATTENTION NETLIFY, LIEN LOGIN / REGISTER
 
 page "forgot-password" en grande vitesse
@@ -13,7 +13,12 @@ IMPORTANT POUR L'API : PQ pocketbase n'enregistre pas les utilisateurs qui se co
 
 transitions entre les pages ? -> pas forcément GSAP, Astro en a un intégré !!!!!!!!!!!
 
-mise en ligne netlify sur branche main
+mise en ligne netlify sur branche main -> CNAME INFOMANIAK
 
 PAGE POLITIQUE DE CONFIDENTIALITE 
 
+LES FOOTER EN COULEUR POUR LES PAGES CONTIENTS. IMPORTANT A FOND 
+
+REDUIRE TAILLE TYPO DES PAGES EUROPE, AFRIQUE, LATINO (ça dépasse)
+
+TRES TRES IMPORTANT = VERIFIER LE TITRE DE CHAQUE PAGE, BIEN NETTOYER LES FRONTMATTER ET LES TRUCS PAS UTILES... (pages cuisines, landing page, fiche-recette)
