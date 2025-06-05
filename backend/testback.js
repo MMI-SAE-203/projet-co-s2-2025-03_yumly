@@ -79,3 +79,10 @@ export async function getProduitsLatino() {
         sort: 'nom_produit'
     });
 }
+
+export async function getAllEpiceries() {
+    return await pb.collection('Epicerie').getFullList({
+        sort: '-created',
+    });
+}
+  
