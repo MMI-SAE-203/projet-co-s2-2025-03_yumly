@@ -169,11 +169,11 @@ const favoriteRecipes = [
 
         <!-- Grille de cards produits dynamiques -->
         <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-         {
+          {
             produitsAfrique.map(produit => (          
-              <div class="product-card bg-white rounded-2xl p-4 shadow-md flex flex-col gap-2"
-                   data-name={produit.nom_produit || ''}
-                   data-category={produit.categorie_produit || ''}>
+              <a href={`/cuisine/${produit.id}`} class="product-card bg-white rounded-2xl p-4 shadow-md flex flex-col gap-2 hover:shadow-lg transition-shadow duration-200"
+                  data-name={produit.nom_produit || ''}
+                  data-category={produit.categorie_produit || ''}>
                 <!-- Image -->
                 <img
                   src={`https://pb-yumly.leo-baudry.fr/api/files/Produit/${produit.id}/${produit.photo_produit}`}
@@ -189,7 +189,7 @@ const favoriteRecipes = [
                     <h2 class="font-semibold">{produit.nom_produit || 'Produit sans nom'}</h2>
                     <p class="text-lg font-bold">{produit.prix_produit ? `${produit.prix_produit}€` : 'Prix non disponible'}</p>
                   </div>
-                  <button class="heart-btn">
+                  <button class="heart-btn" onclick="event.preventDefault(); event.stopPropagation();">
                     <img
                       src={heartIcon.src}
                       alt="Ajouter aux favoris"
@@ -197,7 +197,7 @@ const favoriteRecipes = [
                     />
                   </button>
                 </div>
-              </div>
+              </a>
             ))
           }
         </div>
