@@ -4,271 +4,484 @@ import Layout from "../../layouts/Layout.astro";
 import "../../styles/global.css";
 
 // Imports d'icônes
-import heartIcon from '../../assets/icons/heart.svg';
-import backIcon from '../../assets/icons/back-arrow.svg'; // Ajoutez cette icône
+import heartIcon from "../../assets/icons/heart.svg";
+import backIcon from "../../assets/icons/back-arrow.svg"; // Ajoutez cette icône
 
 // Import de votre fonction backend
 import { getProduitById } from "../../../backend/testback.js";
 
 export async function getStaticPaths() {
-  try {
-    // Récupérer tous les produits pour générer les chemins statiques
-    const { getAllProduits } = await import("../../../backend/testback.js");
-    const produits = await getAllProduits();
+    try {
+        // Récupérer tous les produits pour générer les chemins statiques
+        const { getAllProduits } = await import("../../../backend/testback.js");
+        const produits = await getAllProduits();
 
-    return produits.map((produit) => ({
-      params: { id: produit.id },
-      props: { 
-        produit: {
-          id: produit.id,
-          nom_produit: produit.nom_produit,
-          description_produit: produit.description_produit,
-          prix_produit: produit.prix_produit,
-          photo_produit: produit.photo_produit,
-          categorie_produit: produit.categorie_produit,
-          type_cuisine: produit.type_cuisine,
-          marque_produit: produit.marque_produit,
-          poids_produit: produit.poids_produit,
-          origine_produit: produit.origine_produit,
-          ingredients_produit: produit.ingredients_produit,
-          valeurs_nutritionnelles: produit.valeurs_nutritionnelles,
-          allergenes: produit.allergenes,
-          conservation: produit.conservation,
-          date_peremption: produit.date_peremption,
-          stock_produit: produit.stock_produit
-        }
-      }
-    }));
-  } catch (error) {
-    console.error('Erreur lors de la récupération des produits:', error);
-    return [];
-  }
+        return produits.map((produit) => ({
+            params: { id: produit.id },
+            props: {
+                produit: {
+                    id: produit.id,
+                    nom_produit: produit.nom_produit,
+                    description_produit: produit.description_produit,
+                    prix_produit: produit.prix_produit,
+                    photo_produit: produit.photo_produit,
+                    categorie_produit: produit.categorie_produit,
+                    type_cuisine: produit.type_cuisine,
+                    marque_produit: produit.marque_produit,
+                    poids_produit: produit.poids_produit,
+                    origine_produit: produit.origine_produit,
+                    ingredients_produit: produit.ingredients_produit,
+                    conservation: produit.conservation,
+                    date_peremption: produit.date_peremption,
+                    stock_produit: produit.stock_produit,
+
+                    // Ajouts nécessaires pour la section COMPOSITION
+                    compo_energie_produit: produit.compo_energie_produit,
+                    compo_glucides_produit: produit.compo_glucides_produit,
+                    compo_sucres_produit: produit.compo_sucres_produit,
+                    compo_proteines_produit: produit.compo_proteines_produit,
+                    compo_lipides_produit: produit.compo_lipides_produit,
+                    compo_alcool_produit: produit.compo_alcool_produit,
+                    compo_allergenes_produit: produit.compo_allergenes_produit,
+                },
+            },
+        }));
+    } catch (error) {
+        console.error("Erreur lors de la récupération des produits:", error);
+        return [];
+    }
 }
 
 const { produit } = Astro.props;
 
 // Fonction pour générer l'URL de l'image depuis PocketBase
 function getImageUrl(produitId, filename) {
-  if (!filename) return '/src/assets/placeholder.jpg';
-  return `https://pb-yumly.leo-baudry.fr/api/files/Produit/${produitId}/${filename}`;
+    if (!filename) return "/src/assets/placeholder.jpg";
+    return `https://pb-yumly.leo-baudry.fr/api/files/Produit/${produitId}/${filename}`;
 }
 
 // Fonction pour déterminer la page de retour selon le type de cuisine
 function getBackUrl(typeCuisine) {
-  const cuisineMap = {
-    'asiatique': '/cuisine/asiatique',
-    'africaine': '/cuisine/africaine', 
-    'europeenne': '/cuisine/europeenne',
-    'latino': '/cuisine/latino'
-  };
-  return cuisineMap[typeCuisine?.toLowerCase()] || '/';
+    const cuisineMap = {
+        asiatique: "/cuisine/asiatique",
+        africaine: "/cuisine/africaine",
+        europeenne: "/cuisine/europeenne",
+        latino: "/cuisine/latino",
+    };
+    return cuisineMap[typeCuisine?.toLowerCase()] || "/";
 }
 ---
 
-<Layout title={`${produit.nom_produit} - Yumly`} description={`Découvrez ${produit.nom_produit} - ${produit.description_produit}`}>
-<main class="relative bg-[var(--color-background)] min-h-screen">
-  
-  <!-- Header avec bouton retour stylisé -->
-  <header class="relative z-20 pt-8 pb-4 px-4">
-    <div class="max-w-4xl mx-auto">
-      <a 
-        href={getBackUrl(produit.type_cuisine)}
-        class="inline-flex items-center gap-2 text-[var(--color-red-main)] hover:text-[var(--color-red-shade-1)] transition-colors font-semibold"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-        </svg>
-        Retour à la cuisine {produit.type_cuisine}
-      </a>
-    </div>
-  </header>
-
-  <!-- Contenu principal du produit -->
-  <section class="px-4 pb-16">
-    <div class="max-w-4xl mx-auto">
-      
-      <!-- Card principale du produit -->
-      <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
-        
-        <!-- Section image et infos principales -->
-        <div class="md:flex">
-          
-          <!-- Image du produit -->
-          <div class="md:w-1/2 p-8 flex justify-center items-center bg-[var(--color-red-shade-5)]">
-            <img 
-              src={getImageUrl(produit.id, produit.photo_produit)} 
-              alt={produit.nom_produit}
-              class="w-full max-w-sm h-auto object-contain rounded-lg"
-              onerror="this.src='/src/assets/placeholder.jpg'"
-            />
-          </div>
-
-          <!-- Détails du produit -->
-          <div class="md:w-1/2 p-8">
-            
-            <!-- Badge catégorie -->
-            <div class="mb-4">
-              <span class="inline-block bg-[var(--color-red-main)] text-white text-sm px-4 py-2 rounded-full font-semibold">
-                {produit.categorie_produit}
-              </span>
-            </div>
-
-            <!-- Nom du produit -->
-            <h1 class="text-3xl font-bold text-[var(--color-blue-main)] mb-4">
-              {produit.nom_produit}
-            </h1>
-            
-            <!-- Prix -->
-            <div class="mb-6">
-              <span class="text-4xl font-bold text-[var(--color-red-main)]">
-                {produit.prix_produit}€
-              </span>
-            </div>
-
-            <!-- Description -->
-            {produit.description_produit && (
-              <div class="mb-6">
-                <h3 class="text-lg font-semibold text-[var(--color-blue-main)] mb-2">Description</h3>
-                <p class="text-[var(--color-grey-7)] leading-relaxed">
-                  {produit.description_produit}
-                </p>
-              </div>
-            )}
-
-            <!-- Informations complémentaires -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-sm">
-              {produit.marque_produit && (
-                <div>
-                  <span class="font-semibold text-[var(--color-blue-main)]">Marque:</span>
-                  <span class="text-[var(--color-grey-7)] ml-2">{produit.marque_produit}</span>
-                </div>
-              )}
-              {produit.poids_produit && (
-                <div>
-                  <span class="font-semibold text-[var(--color-blue-main)]">Poids:</span>
-                  <span class="text-[var(--color-grey-7)] ml-2">{produit.poids_produit}</span>
-                </div>
-              )}
-              {produit.origine_produit && (
-                <div>
-                  <span class="font-semibold text-[var(--color-blue-main)]">Origine:</span>
-                  <span class="text-[var(--color-grey-7)] ml-2">{produit.origine_produit}</span>
-                </div>
-              )}
-              {produit.stock_produit !== undefined && (
-                <div>
-                  <span class="font-semibold text-[var(--color-blue-main)]">Stock:</span>
-                  <span class="text-[var(--color-grey-7)] ml-2">{produit.stock_produit} unités</span>
-                </div>
-              )}
-            </div>
-
-            <!-- Actions avec Alpine.js -->
-            <div class="space-y-4" x-data="{ quantite: 1, favoris: false, panier: false }">
-              
-              <!-- Quantité -->
-              <div class="flex items-center gap-4">
-                <label class="text-sm font-semibold text-[var(--color-blue-main)]">Quantité:</label>
-                <div class="flex items-center border-2 border-[var(--color-red-main)] rounded-lg overflow-hidden">
-                  <button 
-                    @click="quantite = Math.max(1, quantite - 1)"
-                    class="px-4 py-2 text-[var(--color-red-main)] hover:bg-[var(--color-red-shade-5)] transition-colors"
-                  >-</button>
-                  <span x-text="quantite" class="px-4 py-2 border-l border-r border-[var(--color-red-main)] min-w-[3rem] text-center"></span>
-                  <button 
-                    @click="quantite++"
-                    class="px-4 py-2 text-[var(--color-red-main)] hover:bg-[var(--color-red-shade-5)] transition-colors"
-                  >+</button>
-                </div>
-              </div>
-
-              <!-- Boutons d'action -->
-              <div class="flex gap-3">
-                <button 
-                  @click="panier = true; setTimeout(() => panier = false, 2000)"
-                  class="flex-1 bg-[var(--color-red-main)] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[var(--color-red-shade-1)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-red-main)] focus:ring-offset-2"
-                  :class="{ 'bg-green-600 hover:bg-green-700': panier }"
+<Layout
+    title={`${produit.nom_produit} - Yumly`}
+    description={`Découvrez ${produit.nom_produit} - ${produit.description_produit}`}
+>
+    <main class="relative bg-[var(--color-background)] min-h-screen">
+        <!-- Header avec bouton retour stylisé -->
+        <header class="relative z-20 pt-8 pb-4 px-4">
+            <div class="max-w-4xl mx-auto">
+                <a
+                    href={getBackUrl(produit.type_cuisine)}
+                    class="inline-flex items-center gap-2 text-[var(--color-orange-main)] hover:text-[var(--color-orange-shade-1)] transition-colors font-semibold"
                 >
-                  <span x-show="!panier">Ajouter au panier</span>
-                  <span x-show="panier" class="flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 19l-7-7 7-7"></path>
                     </svg>
-                    Ajouté !
-                  </span>
-                </button>
-
-                <button 
-                  @click="favoris = !favoris"
-                  class="p-3 border-2 border-[var(--color-red-main)] rounded-lg hover:bg-[var(--color-red-shade-5)] transition-colors"
-                  :class="{ 'bg-[var(--color-red-main)]': favoris }"
-                >
-                  <img
-                    src={heartIcon.src}
-                    alt="Favoris"
-                    class="w-6 h-6 transition-all duration-200"
-                    :style="favoris ? 'filter: brightness(0) invert(1)' : ''"
-                  />
-                </button>
-              </div>
+                    Retour à la cuisine {produit.type_cuisine}
+                </a>
             </div>
-          </div>
-        </div>
+        </header>
 
-        <!-- Informations détaillées -->
-        <div class="border-t border-[var(--color-red-shade-4)] p-8">
-          <div class="grid md:grid-cols-2 gap-8">
-            
-            <!-- Ingrédients -->
-            {produit.ingredients_produit && (
-              <div>
-                <h3 class="text-lg font-semibold text-[var(--color-blue-main)] mb-3">Ingrédients</h3>
-                <p class="text-[var(--color-grey-7)] text-sm leading-relaxed">
-                  {produit.ingredients_produit}
-                </p>
-              </div>
-            )}
+        <!-- Contenu principal du produit -->
+        <section class="px-4 pb-16">
+            <div class="max-w-4xl mx-auto">
+                <!-- Section image + grille + infos principales -->
+                <section class="relative py-10 px-4">
+                    <div class="max-w-xl mx-auto relative z-10">
+                        <!-- Image du produit -->
+                        <div class="flex justify-start">
+                            <img
+                                src={getImageUrl(
+                                    produit.id,
+                                    produit.photo_produit,
+                                )}
+                                alt={produit.nom_produit}
+                                class="w-60 h-auto object-contain rounded-lg z-10 relative"
+                                onerror="this.src='/src/assets/placeholder.jpg'"
+                            />
+                        </div>
+                    </div>
 
-            <!-- Valeurs nutritionnelles -->
-            {produit.valeurs_nutritionnelles && (
-              <div>
-                <h3 class="text-lg font-semibold text-[var(--color-blue-main)] mb-3">Valeurs nutritionnelles</h3>
-                <p class="text-[var(--color-grey-7)] text-sm leading-relaxed">
-                  {produit.valeurs_nutritionnelles}
-                </p>
-              </div>
-            )}
+                    <!-- Grille rouge en fond -->
+                    <div
+                        class="absolute z-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+                    >
+                        <div
+                            class="grid grid-cols-[repeat(10,55px)] grid-rows-[repeat(6,55px)] gap-0"
+                            style="width: 550px; height: 330px;"
+                        >
+                            {
+                                Array.from({ length: 60 }).map((_, i) => (
+                                    <div
+                                        key={i}
+                                        class="border border-[var(--color-orange-main)] aspect-square"
+                                    />
+                                ))
+                            }
+                        </div>
+                    </div>
+                </section>
 
-            <!-- Allergènes -->
-            {produit.allergenes && (
-              <div>
-                <h3 class="text-lg font-semibold text-[var(--color-blue-main)] mb-3">Allergènes</h3>
-                <p class="text-[var(--color-grey-7)] text-sm leading-relaxed">
-                  {produit.allergenes}
-                </p>
-              </div>
-            )}
+                <!-- Détails du produit -->
+                <div class="md:w-1/2 p-8">
+                    <!-- Badge catégorie -->
+                    <div class="mb-4">
+                        <span
+                            class="inline-block bg-[var(--color-orange-shade-2)] text-white text-sm px-4 py-2 rounded-full font-semibold"
+                        >
+                            {produit.categorie_produit}
+                        </span>
+                    </div>
 
-            <!-- Conservation -->
-            {produit.conservation && (
-              <div>
-                <h3 class="text-lg font-semibold text-[var(--color-blue-main)] mb-3">Conservation</h3>
-                <p class="text-[var(--color-grey-7)] text-sm leading-relaxed">
-                  {produit.conservation}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
+                    <!-- Nom du produit -->
+                    <h1
+                        class="text-3xl font-bold text-[var(--color-orange-main)] mb-4"
+                    >
+                        {produit.nom_produit}
+                    </h1>
+
+                    <!-- Prix -->
+                    <div class="mb-6">
+                        <span
+                            class="text-4xl font-bold text-[var(--color-grey-7)]"
+                        >
+                            {produit.prix_produit}€
+                        </span>
+                    </div>
+
+                    <!-- Description -->
+                    {
+                        produit.description_produit && (
+                            <div class="mb-6">
+                                <h3 class="text-lg font-semibold text-[var(--color-green-main)] mb-2">
+                                    Description
+                                </h3>
+                                <p class="text-[var(--color-grey-7)] leading-relaxed">
+                                    {produit.description_produit}
+                                </p>
+                            </div>
+                        )
+                    }
+
+                    <!-- Informations complémentaires -->
+                    <div
+                        class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-sm"
+                    >
+                        {
+                            produit.marque_produit && (
+                                <div>
+                                    <span class="font-semibold text-[var(--color-green-main)]">
+                                        Marque:
+                                    </span>
+                                    <span class="text-[var(--color-grey-7)] ml-2">
+                                        {produit.marque_produit}
+                                    </span>
+                                </div>
+                            )
+                        }
+                        {
+                            produit.poids_produit && (
+                                <div>
+                                    <span class="font-semibold text-[var(--color-green-main)]">
+                                        Poids:
+                                    </span>
+                                    <span class="text-[var(--color-grey-7)] ml-2">
+                                        {produit.poids_produit}
+                                    </span>
+                                </div>
+                            )
+                        }
+                        {
+                            produit.origine_produit && (
+                                <div>
+                                    <span class="font-semibold text-[var(--color-green-main)]">
+                                        Origine:
+                                    </span>
+                                    <span class="text-[var(--color-grey-7)] ml-2">
+                                        {produit.origine_produit}
+                                    </span>
+                                </div>
+                            )
+                        }
+                        {
+                            produit.stock_produit !== undefined && (
+                                <div>
+                                    <span class="font-semibold text-[var(--color-green-main)]">
+                                        Stock:
+                                    </span>
+                                    <span class="text-[var(--color-grey-7)] ml-2">
+                                        {produit.stock_produit} unités
+                                    </span>
+                                </div>
+                            )
+                        }
+                    </div>
+
+                    <!-- Actions avec Alpine.js -->
+                    <div
+                        class="space-y-4"
+                        x-data="{ quantite: 1, favoris: false, panier: false }"
+                    >
+                        <!-- Quantité -->
+                        <div class="flex items-center gap-4">
+                            <label
+                                class="text-sm font-semibold text-[var(--color-green-main)]"
+                                >Quantité:</label
+                            >
+                            <div
+                                class="flex items-center border-2 border-[var(--color-orange-main)] rounded-lg overflow-hidden"
+                            >
+                                <button
+                                    @click="quantite = Math.max(1, quantite - 1)"
+                                    class="px-4 py-2 text-[var(--color-orange-main)] hover:bg-[var(--color-orange-shade-5)] transition-colors"
+                                    >-</button
+                                >
+                                <span
+                                    x-text="quantite"
+                                    class="px-4 py-2 border-l border-r border-[var(--color-orange-main)] min-w-[3rem] text-center"
+                                ></span>
+                                <button
+                                    @click="quantite++"
+                                    class="px-4 py-2 text-[var(--color-orange-main)] hover:bg-[var(--color-orange-shade-5)] transition-colors"
+                                    >+</button
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Boutons d'action -->
+                        <div class="flex gap-3">
+                            <button
+                                @click="panier = true; setTimeout(() => panier = false, 2000)"
+                                class="flex-1 bg-[var(--color-orange-main)] text-white py-3 px-6 rounded-lg font-semibold hover:bg-[var(--color-orange-shade-1)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-orange-main)] focus:ring-offset-2"
+                                :class="{ 'bg-green-600 hover:bg-green-700': panier }"
+                            >
+                                <span x-show="!panier">Ajouter au panier</span>
+                                <span
+                                    x-show="panier"
+                                    class="flex items-center justify-center"
+                                >
+                                    <svg
+                                        class="w-5 h-5 mr-2"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Ajouté !
+                                </span>
+                            </button>
+
+                            <button
+                                @click="favoris = !favoris"
+                                class="p-3 border-2 border-[var(--color-orange-main)] rounded-lg hover:bg-[var(--color-orange-shade-5)] transition-colors"
+                                :class="{ 'bg-[var(--color-orange-main)]': favoris }"
+                            >
+                                <img
+                                    src={heartIcon.src}
+                                    alt="Favoris"
+                                    class="w-6 h-6 transition-all duration-200"
+                                    :style="favoris ? 'filter: brightness(0) invert(1)' : ''"
+                                />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Informations détaillées -->
+            <div class="border-t border-[var(--color-red-shade-4)] p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Ingrédients -->
+                    {
+                        produit.ingredients_produit && (
+                            <div>
+                                <h3 class="text-lg font-semibold text-[var(--color-green-main)] mb-3">
+                                    Ingrédients
+                                </h3>
+                                <p class="text-[var(--color-grey-7)] text-sm leading-relaxed">
+                                    {produit.ingredients_produit}
+                                </p>
+                            </div>
+                        )
+                    }
+
+                    <!-- Section Composition -->
+                    <section class="relative z-10 max-w-4xl mx-auto px-4 mb-12">
+                        <h2
+                            class="text-3xl font-extrabold text-center mb-6 flex items-center justify-center"
+                        >
+                            <span
+                                class="bg-[var(--color-orange-main)] text-white px-4 py-1 rounded-l-md mr-2"
+                            >
+                            </span>
+                            <span class="text-[var(--color-orange-main)]"
+                                >COMPOSITION</span
+                            >
+                            <span
+                                class="bg-[var(--color-orange-main)] text-white px-4 py-1 rounded-r-md ml-2"
+                            >
+                            </span>
+                        </h2>
+
+                        <div class="space-y-6 text-[var(--color-grey-9)]">
+                            {
+                                produit.ingredients_produit && (
+                                    <p>
+                                        <strong>INGRÉDIENTS :</strong>
+                                        <em class="text-[var(--color-grey-7)]">
+                                            {" "}
+                                            {produit.ingredients_produit}
+                                        </em>
+                                    </p>
+                                )
+                            }
+
+                            <div>
+                                <strong
+                                    >VALEURS NUTRITIONNELLES (POUR 100ML) :</strong
+                                >
+                                <ul class="pl-4 mt-2 space-y-1">
+                                    {
+                                        produit.compo_energie_produit && (
+                                            <li>
+                                                <strong>ÉNERGIE :</strong>{" "}
+                                                <span class="italic">
+                                                    {
+                                                        produit.compo_energie_produit
+                                                    }{" "}
+                                                    kcal
+                                                </span>
+                                            </li>
+                                        )
+                                    }
+                                    {
+                                        produit.compo_glucides_produit && (
+                                            <li>
+                                                <strong>GLUCIDES :</strong>{" "}
+                                                <span>
+                                                    {
+                                                        produit.compo_glucides_produit
+                                                    }
+                                                    g
+                                                </span>
+                                            </li>
+                                        )
+                                    }
+                                    {
+                                        produit.compo_sucres_produit && (
+                                            <li>
+                                                <strong>SUCRES :</strong>{" "}
+                                                <span>
+                                                    {
+                                                        produit.compo_sucres_produit
+                                                    }
+                                                    g
+                                                </span>
+                                            </li>
+                                        )
+                                    }
+                                    {
+                                        produit.compo_proteines_produit && (
+                                            <li>
+                                                <strong>PROTÉINES :</strong>{" "}
+                                                <span>
+                                                    {
+                                                        produit.compo_proteines_produit
+                                                    }
+                                                    g
+                                                </span>
+                                            </li>
+                                        )
+                                    }
+                                    {
+                                        produit.compo_lipides_produit && (
+                                            <li>
+                                                <strong>LIPIDES :</strong>{" "}
+                                                <span>
+                                                    {
+                                                        produit.compo_lipides_produit
+                                                    }
+                                                    g
+                                                </span>
+                                            </li>
+                                        )
+                                    }
+                                    {
+                                        produit.compo_alcool_produit && (
+                                            <li>
+                                                <strong>ALCOOL :</strong>{" "}
+                                                <span>
+                                                    {
+                                                        produit.compo_alcool_produit
+                                                    }
+                                                    % vol
+                                                </span>
+                                            </li>
+                                        )
+                                    }
+                                </ul>
+                            </div>
+
+                            {
+                                produit.compo_allergenes_produit && (
+                                    <p>
+                                        <strong>ALLERGÈNES :</strong>
+                                        <em class="text-[var(--color-grey-7)]">
+                                            {" "}
+                                            {produit.compo_allergenes_produit}
+                                        </em>
+                                    </p>
+                                )
+                            }
+                        </div>
+                    </section>
+
+                    <!-- Conservation -->
+                    {
+                        produit.conservation && (
+                            <div>
+                                <h3 class="text-lg font-semibold text-[var(--color-green-main)] mb-3">
+                                    Conservation
+                                </h3>
+                                <p class="text-[var(--color-grey-7)] text-sm leading-relaxed">
+                                    {produit.conservation}
+                                </p>
+                            </div>
+                        )
+                    }
+                </div>
+            </div>
+        </section>
+    </main>
 </Layout>
 
 <script>
-  // Import Alpine.js
-  import Alpine from 'alpinejs';
-  window.Alpine = Alpine;
-  Alpine.start();
+    // Import Alpine.js
+    import Alpine from "alpinejs";
+    window.Alpine = Alpine;
+    Alpine.start();
 </script>
