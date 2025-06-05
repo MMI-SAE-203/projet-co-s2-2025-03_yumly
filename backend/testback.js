@@ -276,16 +276,26 @@ export async function getAllCategoriesEpiceries() {
 
 // Récupérer tous les produits
 export async function getAllProduits() {
-    return await pb.collection('Produit').getFullList({
-        sort: 'nom_produit'
+  try {
+    const records = await pb.collection('Produit').getFullList({
+      sort: '-created',
     });
+    return records;
+  } catch (error) {
+    console.error('Erreur lors de la récupération de tous les produits:', error);
+    return [];
+  }
 }
-
 // Récupérer un produit par ID
 export async function getProduitById(id) {
-    return await pb.collection('Produit').getOne(id);
+  try {
+    const record = await pb.collection('Produit').getOne(id);
+    return record;
+  } catch (error) {
+    console.error(`Erreur lors de la récupération du produit ${id}:`, error);
+    return null;
+  }
 }
-
 // Récupérer les produits similaires (même catégorie, exclure le produit actuel)
 export async function getProduitsSimilaires(id, categorie, limit = 3) {
     return await pb.collection('Produit').getFullList({

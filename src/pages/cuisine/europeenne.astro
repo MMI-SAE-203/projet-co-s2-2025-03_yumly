@@ -191,7 +191,7 @@ const favoriteRecipes = [
         <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           {
             produitsEurope.map(produit => (
-              <a href={`/produits/${produit.id}`} class="product-card bg-white rounded-2xl p-4 shadow-md flex flex-col gap-2 hover:shadow-lg transition-shadow duration-200"
+              <a href={`/cuisine/${produit.id}`} class="product-card bg-white rounded-2xl p-4 shadow-md flex flex-col gap-2 hover:shadow-lg transition-shadow duration-200"
                 data-name={produit.nom_produit || ''}
                 data-category={produit.categorie_produit || ''}>
                 <!-- Image -->
