@@ -5,6 +5,12 @@ import "../../styles/global.css";
 import imgHeroAsie from "../../assets/img/img-hero-asie.webp";
 import imgSepAsie from "../../assets/img/img-sep-asie.webp";
 
+import heartIcon from '../../assets/icons/heart.svg';
+import redSearchIcon from '../../assets/icons/red-search.svg';
+import factAsie from '../../assets/img/img-fact-asie.webp';
+
+
+
 import Carousel_infini from '../../components/Carousel_infini.astro';
 import Carousel from '../../components/Carousel.astro';
 
@@ -143,7 +149,7 @@ const favoriteRecipes = [
                 class="bg-white rounded-full px-4 py-2 flex items-center gap-2"
             >
                 <img
-                    src="/src/assets/icons/red-search.svg"
+                    src={redSearchIcon.src}
                     alt="Recherche"
                     class="w-5 h-5"
                 />
@@ -200,7 +206,7 @@ const favoriteRecipes = [
                   </div>
                   <button class="heart-btn">
                     <img
-                      src="/src/assets/icons/heart.svg"
+                      src={heartIcon.src}
                       alt="Ajouter aux favoris"
                       class="w-6 h-6 transition-all duration-200"
                     />
@@ -288,7 +294,7 @@ const favoriteRecipes = [
         <!-- Image à gauche -->
         <div class="w-[50%] min-w-[150px] max-w-[300px]">
           <img 
-            src="/src/assets/img/img-fact-asie.webp" 
+            src={factAsie.src} 
             alt="Enfant au marché asiatique" 
             class="w-full h-full object-cover"
           />
