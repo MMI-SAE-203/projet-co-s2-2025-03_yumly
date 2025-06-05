@@ -31,19 +31,6 @@ import recette3 from '../../assets/img/afrique_plat_pref3.webp';
 import recette4 from '../../assets/img/afrique_plat_pref6.webp';
 import recette5 from '../../assets/img/afrique_plat_pref1.webp';
 
-// IMAGES ÉPICERIES
-import afriqueImage from '../../assets/img/Afrique-final.webp';
-import asieImage from '../../assets/img/Asie-final.webp';
-import europeImage from '../../assets/img/Europe-final.webp';
-import latinoImage from '../../assets/img/Latino-final.webp';
-
-// AVIS
-import iconePerso1 from '../../assets/icons/perso1.svg';
-import iconePerso2 from '../../assets/icons/perso2.svg';
-import iconePerso3 from '../../assets/icons/perso3.svg';
-import iconePerso4 from '../../assets/icons/perso4.svg';
-import iconePerso5 from '../../assets/icons/perso5.svg';
-
 const produitPhares = [
   { image: burrataImg.src, alt: 'Burrata', name: 'Burrata' },
   { image: epiceImg.src, alt: 'Bocal d\'\u00e9pices', name: '\u00c9pices' },
@@ -52,13 +39,6 @@ const produitPhares = [
   { image: gloriaImg.src, alt: 'Gloria Cassis', name: 'Gloria Cassis' }
 ];
 
-const testimonials = [
-  { name: "Fran\u00e7oise", city: "Marseille", avatar: iconePerso1, rating: 5, quote: "J'adore la cuisine chinoise, Yumly a \u00e9t\u00e9 pour moi la solution pour retrouver tous les produits que j'aime, le plus simplement possible !" },
-  { name: "M\u00e9lissa", city: "Paris", avatar: iconePerso2, rating: 5, quote: "Gr\u00e2ce \u00e0 Yumly j'ai d\u00e9couvert des \u00e9piceries proches de chez moi, et j'ai pu d\u00e9couvrir une toute nouvelle culture culinaire !" },
-  { name: "Xavier", city: "Paris", avatar: iconePerso3, rating: 5, quote: "Moi qui adore cuisiner mexicain, Yumly m'a aid\u00e9 \u00e0 d\u00e9nicher les meilleurs produits et o\u00f9 les commander facilement. Super pratique !" },
-  { name: "Michelle", city: "Toulouse", avatar: iconePerso4, rating: 5, quote: "\u00c9tant fan de nourriture, je n'ai pas pu passer \u00e0 c\u00f4t\u00e9 de Yumly. Je peux simplifier mes courses en produits exotiques !" },
-  { name: "Tariq", city: "Lyon", avatar: iconePerso5, rating: 5, quote: "Yumly m'a fait red\u00e9couvrir les produits libanais de mon enfance. Un vrai plaisir !" }
-];
 
 const recipeItems = [
   { image: recette1.src, alt: 'Recette 1', title: 'Nom Recette 1' },
@@ -79,8 +59,8 @@ const favoriteRecipes = [
   {
     image: pref2.src,
     title: "Feijoada 🇧🇷",
-    subtitle: "Envie d’un ragoût riche en saveurs",
-    description: "Ragoût de haricots noirs et de viande de porc, souvent servi avec du riz et des rondelles d’orange."
+    subtitle: "Envie d'un ragoût riche en saveurs",
+    description: "Ragoût de haricots noirs et de viande de porc, souvent servi avec du riz et des rondelles d'orange."
   },
   {
     image: pref3.src,
@@ -96,19 +76,19 @@ const favoriteRecipes = [
     <!-- Titre AFRIQUE -->
     <div class="relative z-20 flex justify-center">
         <h1
-            class="text-[7rem] md:text-[7rem] font-extrabold text-[var(--color-green-main)] leading-none font-[var(--font-logo)] mt-25 mb-[-2rem]"
+            class="text-[4.25rem] md:text-[6rem] font-extrabold text-[var(--color-green-main)] leading-none  mt-25 mb-[-2rem]"
         >
             AFRIQUE
         </h1>
     </div>
 
     <!-- Image -->
-    <div class="relative z-10 flex justify-center">
-        <img
-            src={imgHeroAfrique.src}
-            alt="Rue asiatique"
-            class="w-full max-w-[500px] h-auto"
-        />
+    <div class="relative z-10 flex justify-center mt-12">
+      <img
+        src={imgHeroAfrique.src}
+        alt="Cuisine africaine"
+        class="w-full max-w-[500px] h-auto"
+      />
     </div>
 
     <!-- Grille rouge -->

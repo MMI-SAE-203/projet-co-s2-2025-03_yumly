@@ -5,7 +5,6 @@ import "../../styles/global.css";
 import imgHeroLatine from "../../assets/img/img-hero-latine.webp";
 import imgSepLatine from "../../assets/img/img-sep-latine.webp";
 
-import Carousel_infini from '../../components/Carousel_infini.astro';
 import Carousel from '../../components/Carousel.astro';
 
 import { getProduitsLatino } from "../../../backend/testback.js";
@@ -31,33 +30,12 @@ import recette3 from '../../assets/img/latine_plat_pref4.webp';
 import recette4 from '../../assets/img/latine_plat_pref5.webp';
 import recette5 from '../../assets/img/latine_plat_pref1.webp';
 
-// IMAGES ÉPICERIES
-import afriqueImage from '../../assets/img/Afrique-final.webp';
-import asieImage from '../../assets/img/Asie-final.webp';
-import europeImage from '../../assets/img/Europe-final.webp';
-import latinoImage from '../../assets/img/Latino-final.webp';
-
-// AVIS
-import iconePerso1 from '../../assets/icons/perso1.svg';
-import iconePerso2 from '../../assets/icons/perso2.svg';
-import iconePerso3 from '../../assets/icons/perso3.svg';
-import iconePerso4 from '../../assets/icons/perso4.svg';
-import iconePerso5 from '../../assets/icons/perso5.svg';
-
 const produitPhares = [
   { image: burrataImg.src, alt: 'Burrata', name: 'Burrata' },
   { image: epiceImg.src, alt: 'Bocal d\'\u00e9pices', name: '\u00c9pices' },
   { image: paprikaImg.src, alt: 'Paprika McCormick', name: 'Paprika McCormick' },
   { image: jerkyImg.src, alt: 'Kruga Biltong', name: 'Kruga Biltong' },
   { image: gloriaImg.src, alt: 'Gloria Cassis', name: 'Gloria Cassis' }
-];
-
-const testimonials = [
-  { name: "Fran\u00e7oise", city: "Marseille", avatar: iconePerso1, rating: 5, quote: "J'adore la cuisine chinoise, Yumly a \u00e9t\u00e9 pour moi la solution pour retrouver tous les produits que j'aime, le plus simplement possible !" },
-  { name: "M\u00e9lissa", city: "Paris", avatar: iconePerso2, rating: 5, quote: "Gr\u00e2ce \u00e0 Yumly j'ai d\u00e9couvert des \u00e9piceries proches de chez moi, et j'ai pu d\u00e9couvrir une toute nouvelle culture culinaire !" },
-  { name: "Xavier", city: "Paris", avatar: iconePerso3, rating: 5, quote: "Moi qui adore cuisiner mexicain, Yumly m'a aid\u00e9 \u00e0 d\u00e9nicher les meilleurs produits et o\u00f9 les commander facilement. Super pratique !" },
-  { name: "Michelle", city: "Toulouse", avatar: iconePerso4, rating: 5, quote: "\u00c9tant fan de nourriture, je n'ai pas pu passer \u00e0 c\u00f4t\u00e9 de Yumly. Je peux simplifier mes courses en produits exotiques !" },
-  { name: "Tariq", city: "Lyon", avatar: iconePerso5, rating: 5, quote: "Yumly m'a fait red\u00e9couvrir les produits libanais de mon enfance. Un vrai plaisir !" }
 ];
 
 const recipeItems = [
@@ -95,10 +73,10 @@ const favoriteRecipes = [
 <main class="relative bg-[var(--color-background)] overflow-hidden pb-24">
     <!-- Titre AMERIQUE LATINE -->
     <div class="relative z-20 flex flex-col items-center mt-20 mb-[-2rem]">
-      <span class="text-[4rem] md:text-[3.5rem] font-extrabold text-[var(--color-orange-main)] font-[var(--font-logo)]">
+      <span class="text-[4rem] md:text-[3.5rem] font-extrabold text-[var(--color-orange-main)] ">
         AMÉRIQUE
       </span>
-      <h1 class="text-[8rem] md:text-[7rem] font-extrabold text-[var(--color-orange-main)] leading-none font-[var(--font-logo)]">
+      <h1 class="text-[6rem] md:text-[5rem] font-extrabold text-[var(--color-orange-main)] leading-none ">
         LATINE
       </h1>
     </div>
