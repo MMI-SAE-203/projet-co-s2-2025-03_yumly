@@ -3,4 +3,4 @@ POCKETBASE
 Email : leo.baudry@edu.univ-fcomte.fr  
 Password : YUMLYYUMLYYUMLY
 
-URL pocketbase : 
+URL pocketbase : https://pb-yumly.leo-baudry.fr/_/
