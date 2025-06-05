@@ -1,0 +1,248 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getAllEpiceries, getEpicerieById } from "../../../backend/testback.js";
+
+export async function getStaticPaths() {
+    try {
+        const epiceries = await getAllEpiceries();
+        return epiceries.map((epicerie) => ({
+            params: { id: epicerie.id },
+            props: { epicerie },
+        }));
+    } catch (error) {
+        console.error("Erreur lors de la récupération des épiceries:", error);
+        return [];
+    }
+}
+
+const { id } = Astro.params;
+let epicerie = Astro.props.epicerie || await getEpicerieById(id);
+
+const toutesEpiceries = await getAllEpiceries();
+const epiceriesSimilaires = toutesEpiceries
+    .filter(e => e.id !== epicerie.id && e.categorie_epicerie === epicerie.categorie_epicerie)
+    .slice(0, 3);
+---
+
+<Layout title={epicerie.nom_epicerie} description={epicerie.description_epicerie}>
+    <div class="min-h-screen bg-[var(--color-background)] relative overflow-hidden">
+        
+        <!-- Hero Section avec grille -->
+        <section class="relative pt-8 pb-16">
+            <!-- Grille orange -->
+            <div class="absolute z-0 left-1/2 -translate-x-1/2 top-[100px] pointer-events-none">
+                <div class="grid grid-cols-11 grid-rows-6 gap-0" 
+                     style="width: calc(100vw - 14px); max-width: 525px; margin-bottom: 25px;">
+                    {Array.from({ length: 66 }).map((_, i) => (
+                        <div key={i} class="aspect-square border border-[var(--color-orange-main)]"></div>
+                    ))}
+                </div>
+            </div>
+
+            <!-- Contenu principal -->
+            <div class="relative z-10 max-w-md mx-auto px-4">
+                <!-- Titre -->
+                <h1 class="text-4xl font-bold text-[var(--color-orange-main)] mb-8 font-[var(--font-logo)] text-center pt-8">
+                    {epicerie.nom_epicerie.toUpperCase()}
+                </h1>
+
+                <!-- Image et avis -->
+                <div>
+                    <div class="aspect-[4/3] bg-gray-100 overflow-hidden mb-4">
+                        {epicerie.photo_epicerie ? (
+                            <img src={`https://pb-yumly.leo-baudry.fr/api/files/Epicerie/${epicerie.id}/${epicerie.photo_epicerie}`}
+                                 alt={epicerie.nom_epicerie}
+                                 class="w-full h-full object-cover" />
+                        ) : (
+                            <div class="w-full h-full flex items-center justify-center text-gray-400">
+                                <span>Image non disponible</span>
+                            </div>
+                        )}
+                    </div>
+
+                    {epicerie.avis_epicerie && (
+                        <div class="flex justify-center w-full">
+                            <div class="bg-[var(--color-orange-main)] text-white px-3 py-2 rounded-full inline-flex flex-col items-center text-sm font-medium">
+                                <span class="mb-1">AVIS CLIENTS</span>
+                                <div class="flex">
+                                    {Array.from({ length: 5 }).map((_, i) => (
+                                        <span key={i} class={i < epicerie.avis_epicerie ? "text-yellow-400" : "text-gray-300"}>★</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Informations -->
+<section class="relative z-10 max-w-md mx-auto px-4 mb-6">
+    <div class="border-l-4 border-[var(--color-orange-main)] pl-4 relative ml-6"> <!-- ← AJOUT DE ml-6 -->
+                <!-- Titre vertical -->
+                <div class="absolute -left-12 top-0 bottom-0 flex items-center">
+                    <h2 class="text-[var(--color-orange-main)] font-bold text-lg transform -rotate-90 whitespace-nowrap">
+                        INFOS
+                    </h2>
+                </div>
+
+                <div class="space-y-4 ml-4">
+                    <!-- Description -->
+                    {epicerie.description_epicerie && (
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-1">DESCRIPTION :</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">{epicerie.description_epicerie}</p>
+                        </div>
+                    )}
+                    
+                    <!-- Adresse -->
+                    <div>
+                        <h3 class="font-semibold text-gray-800 mb-1">ADRESSE :</h3>
+                        <p class="text-gray-600 text-sm">{epicerie.adresse_epicerie}</p>
+                    </div>
+                    
+                    <!-- Catégorie -->
+                    <div>
+                        <h3 class="font-semibold text-gray-800 mb-1">CATÉGORIE :</h3>
+                        <p class="text-gray-600 text-sm">{epicerie.categorie_epicerie}</p>
+                    </div>
+                    
+                    <!-- Téléphone -->
+                    {epicerie.telephone_epicerie && (
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-1">TÉLÉPHONE :</h3>
+                            <p class="text-gray-600 text-sm">
+                                <a href={`tel:${epicerie.telephone_epicerie}`} class="hover:text-[var(--color-orange-main)]">
+                                    {epicerie.telephone_epicerie}
+                                </a>
+                            </p>
+                        </div>
+                    )}
+                    
+                    <!-- Email -->
+                    {epicerie.mail_epicerie && (
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-1">EMAIL :</h3>
+                            <p class="text-gray-600 text-sm">
+                                <a href={`mailto:${epicerie.mail_epicerie}`} class="hover:text-[var(--color-orange-main)] underline">
+                                    {epicerie.mail_epicerie}
+                                </a>
+                            </p>
+                        </div>
+                    )}
+                    
+                    <!-- Site web -->
+                    {epicerie.site_web_epicerie && (
+                        <div>
+                            <h3 class="font-semibold text-gray-800 mb-1">SITE WEB :</h3>
+                            <p class="text-gray-600 text-sm">
+                                <a href={epicerie.site_web_epicerie} target="_blank" class="hover:text-[var(--color-orange-main)] underline">
+                                    {epicerie.site_web_epicerie}
+                                </a>
+                            </p>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Horaires -->
+         <div class="flex items-center mb-4">
+                <div class="flex-1 h-8 bg-[var(--color-orange-main)]"></div>
+                <h2 class="px-4 text-2xl font-bold text-[var(--color-orange-main)] whitespace-nowrap">
+                    HORAIRES<br>D'OUVERTURE
+                </h2>
+                <div class="flex-1 h-8 bg-[var(--color-orange-main)]"></div>
+            </div>
+
+        <section class="relative z-10 max-w-md mx-auto px-4 mb-6">
+
+            {epicerie.horaires_epicerie ? (
+                <div class="space-y-2 text-sm text-center">
+                    {epicerie.horaires_epicerie.split("\n").map((horaire, index) => (
+                        <div key={index} class="flex justify-center">
+                            <span class="font-medium text-gray-800">{horaire}</span>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p class="text-gray-600 text-sm text-center">Service en ligne disponible 24h/24</p>
+            )}
+        </section>
+
+        <!-- Section Produits -->
+        <section class="relative z-10 max-w-md mx-auto px-4 mb-6">
+            <h2 class="text-2xl font-bold text-[var(--color-orange-main)] mb-4">PRODUITS DISPONIBLES</h2>
+            
+            <!-- Carrousel produit -->
+            <div class="flex items-center justify-center mb-6">
+                <div class="flex items-center space-x-2">
+                    <button class="text-gray-400 hover:text-[var(--color-orange-main)]">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    
+                    <div class="w-16 h-16 bg-red-100 rounded-lg flex items-center justify-center">
+                        <div class="w-12 h-12 bg-[var(--color-orange-main)] rounded-full flex items-center justify-center">
+                            <span class="text-white text-xs font-bold">PRODUIT</span>
+                        </div>
+                    </div>
+                    
+                    <button class="text-gray-400 hover:text-[var(--color-orange-main)]">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {epicerie.labels_certifications && (
+                <div class="mb-4 text-center">
+                    <h3 class="font-semibold text-gray-800 mb-2">LABELS & CERTIFICATIONS :</h3>
+                    <p class="text-gray-600 text-sm">{epicerie.labels_certifications}</p>
+                </div>
+            )}
+
+            {epicerie.service && (
+                <div class="text-center">
+                    <h3 class="font-semibold text-gray-800 mb-2">SERVICES :</h3>
+                    <p class="text-gray-600 text-sm">{epicerie.service}</p>
+                </div>
+            )}
+        </section>
+
+        <!-- Section Localisation -->
+        <section class="relative z-10 max-w-md mx-auto px-4 mb-6">
+            <h2 class="text-2xl font-bold text-[var(--color-orange-main)] mb-4 text-center">LOCALISATION</h2>
+
+            <div class="w-full h-48 bg-gray-200 rounded-lg overflow-hidden">
+                <iframe class="w-full h-full"
+                        src="https://www.openstreetmap.org/export/embed.html?bbox=6.9,47.6,7.1,47.8&layer=mapnik&marker=47.7,7.0"
+                        style="border:0;"
+                        loading="lazy">
+                </iframe>
+            </div>
+        </section>
+
+        <!-- Épiceries similaires -->
+        {epiceriesSimilaires.length > 0 && (
+            <section class="relative z-10 max-w-md mx-auto px-4 mb-6">
+                <h2 class="text-2xl font-bold text-[var(--color-orange-main)] mb-4 text-center">ÉPICERIES SIMILAIRES</h2>
+
+                <div class="space-y-4">
+                    {epiceriesSimilaires.map((similaire) => (
+                        <a href={`/epiceries/${similaire.id}`}
+                           class="block p-4 border border-gray-200 rounded-lg hover:border-[var(--color-orange-main)] transition-colors">
+                            <h3 class="font-semibold text-gray-800">{similaire.nom_epicerie}</h3>
+                            <p class="text-sm text-gray-600 mt-1">{similaire.adresse_epicerie}</p>
+                            <p class="text-xs text-[var(--color-orange-main)] mt-2">{similaire.categorie_epicerie}</p>
+                        </a>
+                    ))}
+                </div>
+            </section>
+        )}
+    </div>
+    <div class="pb-15">
+    </div>
+</Layout>

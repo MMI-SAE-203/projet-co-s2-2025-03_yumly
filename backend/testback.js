@@ -223,9 +223,58 @@ export function slugify(str) {
     .trim()
     .replace(/\s+/g, "-");
 }
+
 export async function getAllEpiceries() {
     return await pb.collection('Epicerie').getFullList({
         sort: '-created',
     });
 }
   
+// test epiceries tt
+
+// Récupérer toutes les épiceries
+export async function getAllEpiceries() {
+    return await pb.collection('Epicerie').getFullList({
+        sort: 'nom_epicerie'
+    });
+}
+
+// Récupérer une épicerie par ID
+export async function getEpicerieById(id) {
+    return await pb.collection('Epicerie').getOne(id);
+}
+
+//test epicerires id
+
+// Fonctions à ajouter dans votre backend existant
+
+// Récupérer toutes les épiceries par catégorie
+export async function getEpiceriesByCategorie(categorie) {
+    if (!categorie || categorie === "Toutes") {
+        return await getAllEpiceries();
+    }
+
+    return await pb.collection('Epicerie').getFullList({
+        filter: `categorie_epicerie = "${categorie}"`,
+        sort: 'nom_epicerie'
+    });
+}
+
+// Récupérer les épiceries similaires (même catégorie, exclure l'épicerie actuelle)
+export async function getEpiceriesSimilaires(id, categorie, limit = 3) {
+    return await pb.collection('Epicerie').getFullList({
+        filter: `id != "${id}" && categorie_epicerie = "${categorie}"`,
+        sort: 'nom_epicerie',
+        perPage: limit
+    });
+}
+
+// Récupérer toutes les catégories d'épiceries disponibles
+export async function getAllCategoriesEpiceries() {
+    const epiceries = await pb.collection('Epicerie').getFullList({
+        fields: 'categorie_epicerie'
+    });
+
+    const categories = [...new Set(epiceries.map(e => e.categorie_epicerie))];
+    return categories.filter(cat => cat); // Enlever les valeurs vides
+}

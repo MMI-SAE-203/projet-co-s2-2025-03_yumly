@@ -80,7 +80,6 @@ const testimonials = [
   },
 ];
 
-// Fonction pour extraire la ville de l'adresse de manière plus robuste
 function extractCity(address) {
   if (!address) return '';
   
@@ -152,14 +151,14 @@ const epiceriesWithCities = epiceries.map(ep => ({
 ---
 
 <Layout
-  title="Cuisine Asiatique"
-  description="Yumly - Découvrez la cuisine asiatique !"
+  title="Épiceries"
+  description="Découvrez les meilleures épiceries du monde entier, classées par continent et ville. Trouvez facilement les produits exotiques que vous cherchez."
 >
   <main class="relative bg-[var(--color-background)] overflow-hidden pb-24">
     <!-- Titre Epicerie -->
     <div class="relative z-20 flex justify-center">
       <h1
-        class="text-[8rem] md:text-[6rem] font-extrabold text-[var(--color-orange-main)] leading-none font-[var(--font-logo)] mt-25 mb-[-2rem] px-0 sm:px-[5px]"
+        class="text-[4rem] md:text-[6rem] font-extrabold text-[var(--color-orange-main)] leading-none font-[var(--font-logo)] mt-25 mb-[-2rem] px-0 sm:px-[5px]"
       >
         ÉPICERIE
       </h1>
