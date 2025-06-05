@@ -2,18 +2,13 @@
     - MENU : 
     - Attention background header nav mobile 
     
-page "forgot-password" en grande vitesse
-pages : CONFIG PROFIL ? (avec les icones)
-PAGE QUI ALLEGE LA PAGE CONTACT (FAQ?)
 
 
 IMPORTANT POUR L'API : PQ pocketbase n'enregistre pas les utilisateurs qui se co avec google
 
-transitions entre les pages ? -> pas forcément GSAP, Astro en a un intégré !!!!!!!!!!!
 
 mise en ligne netlify sur branche main -> CNAME INFOMANIAK
 
-PAGE POLITIQUE DE CONFIDENTIALITE 
 
 LES FOOTER EN COULEUR POUR LES PAGES CONTIENTS. IMPORTANT A FOND 
 
