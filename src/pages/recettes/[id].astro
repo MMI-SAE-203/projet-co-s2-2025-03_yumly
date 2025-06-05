@@ -1,6 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getRecetteById, getAllRecettes } from "/backend.mjs";
+import { getRecetteById, getAllRecettes } from "../../../backend/testback.js";
 
 export async function getStaticPaths() {
   const recettes = await getAllRecettes();

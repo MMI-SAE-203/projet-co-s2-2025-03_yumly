@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import CardRecette from "../../components/CardRecette.astro";
-import { getAllRecettes, getRecettesByContinent } from "/backend.mjs";
+import { getAllRecettes, getRecettesByContinent } from "../../../backend/testback.js";
 
 // Récupérer le continent depuis l'URL
 const { continent } = Astro.url.searchParams;
