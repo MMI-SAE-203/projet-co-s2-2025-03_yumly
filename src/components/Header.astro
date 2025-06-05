@@ -97,11 +97,14 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
 
 
 <header
-  class="px-6 py-4 fixed z-30 w-full flex items-center justify-between transition-all duration-300 ease-in-out lg:py-0 bg-transparent lg:backdrop-blur-md"
+  class="
+    px-6 py-4 fixed z-30 w-full flex items-center justify-between transition-all duration-300 ease-in-out lg:py-0
+    lg:bg-white/50 lg:backdrop-blur-md
+  "
   id="header"
   x-data="{ scrolled: false }"
   @scroll.window="scrolled = (window.scrollY > 50)"
-  :class="{ 'lg:bg-white/80 lg:shadow-sm': scrolled }"
+  :class="{ 'lg:bg-white/35 lg:shadow-sm': scrolled }"
 >
   {/* Logo */}
   <div class="flex items-center relative z-40">
@@ -152,19 +155,15 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
         {/* Cartes Mobiles */}
         <div class="flex-grow overflow-hidden flex items-center">
           <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
-            {/* CHANGEMENT ICI: Structure de la carte modifiée */}
             {mobileCardLinks.map((item) => (
               <a
                 href={item.href}
                 class="flex-shrink-0 w-70 aspect-[3/5] rounded-lg overflow-hidden relative group bg-white shadow-md" /* Ajout bg-white et ombre */
               >
-                {/* Section Haute (Orange + Titre + Bordure) - Environ 1/4 de la hauteur */}
                 <div class="relative h-1/4 bg-(--color-orange-main) border-b-2 border-white flex items-center justify-center p-2 z-10">
-                   {/* Ajustement taille police si besoin */}
                    <h3 class="text-white text-3xl font-bold uppercase font-logo tracking-wide text-center">{item.name}</h3>
                 </div>
 
-                {/* Image (prend le reste de la hauteur, environ 3/4) */}
                 {item.imageSrc && (
                    <img
                      src={item.imageSrc}
@@ -178,9 +177,7 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
           </div>
         </div>
 
-        {/* Footer Mobile (inchangé par rapport à la dernière version) */}
         <div class="flex-shrink-0 pt-6 text-center">
-          {/* Liens sociaux */}
           <div class="flex justify-center gap-4 mb-4 text-(--color-text-secondary) items-center">
             {socialLinks.map(link => (
               <a
@@ -231,12 +228,12 @@ const chevronDownSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 
                 )}
               </a>
               {item.subItems?.length && (
-                <div class="
-                  lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:top-full lg:mt-1
-                  lg:invisible lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100
-                  lg:bg-(--color-orange-light) lg:shadow-md lg:rounded-md lg:p-2 lg:w-64 lg:z-30
-                  lg:transition-all lg:duration-300 lg:border-2 lg:border-black
-                ">
+<div class="
+  lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:top-full lg:mt-1
+  lg:invisible lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100
+  lg:bg-white/45 lg:backdrop-blur-md lg:shadow-md lg:rounded-md lg:p-2 lg:w-64 lg:z-30
+  lg:transition-all lg:duration-300 lg:border-2 lg:border-black
+">
                   <ul class="">
                     {item.subItems.map(subItem => (
                       <li class="lg:hover:bg-(--color-orange) lg:rounded">

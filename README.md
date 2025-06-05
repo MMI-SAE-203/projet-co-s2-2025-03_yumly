@@ -4,8 +4,8 @@
 Éléménts à renseigner pour la soutenance :
 
 - [ ] Nom du projet : Yumly
-- [ ] URL de la landing page : 
-- [ ] URL de l'application finale : 
+- [ ] URL de la landing page : https://yumly.leo-baudry.fr
+- [ ] URL de l'application finale : https://yumly.leo-baudry.fr/auth/register
 - [ ] URL de connexion au back office : https://pb-yumly.leo-baudry.fr/_/
 - [ ] Identifiant de connexion au backoffice : leo.baudry@edu.univ-fcomte.fr
 - [ ] Mot de passe de connexion au backoffice : YUMLYYUMLYYUMLY
