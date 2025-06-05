@@ -233,11 +233,6 @@ export async function getAllEpiceries() {
 // test epiceries tt
 
 // Récupérer toutes les épiceries
-export async function getAllEpiceries() {
-    return await pb.collection('Epicerie').getFullList({
-        sort: 'nom_epicerie'
-    });
-}
 
 // Récupérer une épicerie par ID
 export async function getEpicerieById(id) {
