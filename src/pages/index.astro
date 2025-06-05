@@ -248,23 +248,30 @@ const testimonials = [
     <h2 class="text-center font-bold text-3xl text-grey-9 mb-8">DÉCOUVREZ LES ÉPICERIES !</h2>
     <!-- Carousel pour mobile uniquement -->
     <div class="block md:hidden">
-      <Carousel_infini items={groceryItems.map(item => ({ ...item, content: `<h3 class='text-white font-semibold text-lg mt-2'>${item.title}</h3>` }))} />
+      <Carousel_infini items={groceryItems.map((item, index) => ({ 
+        ...item, 
+        link: ['/cuisine/africaine', '/cuisine/asiatique', '/cuisine/europeenne', '/cuisine/latino'][index],
+        content: `<h3 class='text-white font-semibold text-lg mt-2'>${item.title}</h3>` 
+      }))} />
     </div>
 
   <!-- Grille 4 colonnes pour desktop -->
   <div class="hidden md:grid md:grid-cols-4 gap-6">
-    {groceryItems.map((item) => (
-      <div class="flex flex-col items-center">
-        <img 
-          src={item.image} 
-          alt={item.alt}
-          class="w-full h-full object-cover rounded-lg shadow-lg"
-        />
-        <h3 class="text-grey-9 font-semibold text-lg mt-4 text-center">
-          {item.title}
-        </h3>
-      </div>
-    ))}
+    {groceryItems.map((item, index) => {
+      const links = ['/cuisine/africaine', '/cuisine/asiatique', '/cuisine/europeenne', '/cuisine/latino'];
+      return (
+        <a href={links[index]} class="flex flex-col items-center hover:opacity-90 transition-opacity">
+          <img 
+            src={item.image} 
+            alt={item.alt}
+            class="w-full h-full object-cover rounded-lg shadow-lg"
+          />
+          <h3 class="text-grey-9 font-semibold text-lg mt-4 text-center">
+            {item.title}
+          </h3>
+        </a>
+      );
+    })}
   </div>
   </section>
 
