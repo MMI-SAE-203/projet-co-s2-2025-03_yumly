@@ -273,3 +273,24 @@ export async function getAllCategoriesEpiceries() {
     const categories = [...new Set(epiceries.map(e => e.categorie_epicerie))];
     return categories.filter(cat => cat); // Enlever les valeurs vides
 }
+
+// Récupérer tous les produits
+export async function getAllProduits() {
+    return await pb.collection('Produit').getFullList({
+        sort: 'nom_produit'
+    });
+}
+
+// Récupérer un produit par ID
+export async function getProduitById(id) {
+    return await pb.collection('Produit').getOne(id);
+}
+
+// Récupérer les produits similaires (même catégorie, exclure le produit actuel)
+export async function getProduitsSimilaires(id, categorie, limit = 3) {
+    return await pb.collection('Produit').getFullList({
+        filter: `id != "${id}" && categorie_produit = "${categorie}"`,
+        sort: 'nom_produit',
+        perPage: limit
+    });
+}
