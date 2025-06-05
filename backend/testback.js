@@ -223,3 +223,9 @@ export function slugify(str) {
     .trim()
     .replace(/\s+/g, "-");
 }
+export async function getAllEpiceries() {
+    return await pb.collection('Epicerie').getFullList({
+        sort: '-created',
+    });
+}
+  

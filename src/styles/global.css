@@ -102,3 +102,33 @@
     background-size: calc(var(--size) * 2) calc(var(--size) * 2);
     background-position: 0 0, var(--size) var(--size);
 }
+
+
+/*bandeau défilement*/
+@keyframes scrollLoop {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: scrollLoop 20s linear infinite;
+}
+
+.marquee-text {
+    display: inline-block;
+    padding-right: 2rem;
+    font-size: 2rem;
+    color: var(--color-orange-main);
+    font-weight: 800;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+
