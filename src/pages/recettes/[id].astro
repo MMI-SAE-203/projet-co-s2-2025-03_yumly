@@ -1,21 +1,433 @@
 ---
+import Layout from "../../layouts/Layout.astro";
+import { getRecetteById, getAllRecettes } from "../../../backend/testback.js";
+
 export async function getStaticPaths() {
-  // Retournez tous les IDs de recettes possibles
-  // Exemple avec des données statiques :
-  return [
-    { params: { id: '1' } },
-    { params: { id: '2' } },
-    { params: { id: '3' } },
-    // ... autres IDs
-     ];
-  
-  // Ou si vous récupérez les données depuis une API/base de données :
-  // const recettes = await fetch('votre-api/recettes').then(r => r.json());
-  // return recettes.map(recette => ({
-  //   params: { id: recette.id.toString() }
-  // }));
+  const recettes = await getAllRecettes();
+  return recettes.map((recette) => ({
+    params: { id: recette.id },
+    props: { recette },
+  }));
 }
 
 const { id } = Astro.params;
-// Votre logique de page ici
+const { recette } = Astro.props;
+
+// Si pas de recette dans les props, la récupérer
+let recetteData = recette;
+if (!recetteData) {
+  recetteData = await getRecetteById(id);
+}
+
+// Fonction pour obtenir l'URL complète de l'image
+function getImageUrl(filename) {
+  if (!filename) return "";
+  return `https://pb-yumly.leo-baudry.fr/api/files/${recetteData.collectionId}/${recetteData.id}/${filename}`;
+}
+
+// Déterminer la couleur selon le pays/continent
+function getColorClass(pays) {
+  switch (pays) {
+    case "Amérique latine":
+      return "orange";
+    case "Asie":
+      return "red";
+    case "Afrique":
+      return "green";
+    case "Europe":
+    default:
+      return "blue";
+  }
+}
+
+const colorClass = getColorClass(recetteData?.pays_recette);
+
+// Parser les ingrédients s'ils sont en JSON
+let ingredients = [];
+try {
+  ingredients = JSON.parse(recetteData?.ingredients_recette || "[]");
+} catch {
+  // Si ce n'est pas du JSON, on suppose que c'est une string avec des virgules
+  ingredients = (recetteData?.ingredients_recette || "")
+    .split(",")
+    .map((i) => i.trim())
+    .filter(Boolean);
+}
+
+// Parser les instructions
+let instructions = [];
+try {
+  instructions = JSON.parse(recetteData?.instructions_recette || "[]");
+} catch {
+  // Si ce n'est pas du JSON, on découpe par points ou numéros
+  instructions = (recetteData?.instructions_recette || "")
+    .split(/\d+\.|\./)
+    .map((i) => i.trim())
+    .filter(Boolean);
+}
+
+// Parser les allergènes
+let allergenes = [];
+try {
+  allergenes = JSON.parse(recetteData?.allergenes_recette || "[]");
+} catch {
+  allergenes = (recetteData?.allergenes_recette || "")
+    .split(",")
+    .map((i) => i.trim())
+    .filter(Boolean);
+}
 ---
+
+<Layout title={recetteData?.nom_recette || "Recette"}>
+  <div class="recipe-container">
+    <!-- Hero Section avec le titre répété -->
+    <section class="hero-section mb-20">
+      <div class="recipe-title-background">
+        <h1 class="recipe-title">{recetteData?.nom_recette}</h1>
+        <h1 class="recipe-title">{recetteData?.nom_recette}</h1>
+        <h1 class="recipe-title">{recetteData?.nom_recette}</h1>
+        <h1 class="recipe-title">{recetteData?.nom_recette}</h1>
+        <h1 class="recipe-title">{recetteData?.nom_recette}</h1>
+      </div>
+      <div class="hero-image-container">
+        <img
+          src={getImageUrl(recetteData?.photo_recette)}
+          alt={recetteData?.nom_recette}
+          class="hero-image"
+        />
+      </div>
+    </section>
+
+    <!-- Section Ingrédients -->
+    <section class="ingredients-section" data-color={colorClass}>
+      <h2 class="section-title">INGRÉDIENTS</h2>
+      <ul class="ingredients-list">
+        {
+          ingredients.map((ingredient) => (
+            <li class="ingredient-item">• {ingredient}</li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- Section Informations (Temps, Difficulté, Allergènes) -->
+    <section class="info-section-top">
+      <div class="info-grid-top">
+        <div class="info-item">
+          <div class="info-label">TEMPS DE PRÉPARATION</div>
+          <div class="info-value">
+            {recetteData?.temps_preparation_recette || "30 minutes"}
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">DIFFICULTÉ</div>
+          <div class="info-value">
+            {recetteData?.difficulte_recette || "Moyen"}
+          </div>
+        </div>
+        {
+          allergenes.length > 0 && (
+            <div class="info-item full-width">
+              <div class="info-label">ALLERGÈNES</div>
+              <div class="info-value">{allergenes.join(", ")}</div>
+            </div>
+          )
+        }
+      </div>
+    </section>
+
+    <!-- Section Grille d'ingrédients visuels -->
+    {
+      recetteData?.photo_grille_recette && (
+        <section class="ingredients-visual">
+          <img
+            src={getImageUrl(recetteData?.photo_grille_recette)}
+            alt="Ingrédients"
+            class="ingredients-grid-image"
+          />
+        </section>
+      )
+    }
+
+    <!-- Section Préparation -->
+    <section class="preparation-section">
+      <div class="preparation-header">
+        <h2 class="section-title">PRÉPARATION</h2>
+      </div>
+      <div class="preparation-content">
+        {
+          instructions.length > 0 ? (
+            <ol class="preparation-list">
+              {instructions.map((instruction, index) => (
+                <li class="preparation-item">
+                  <span class="step-number">{index + 1}.</span>
+                  <span class="step-text">{instruction}</span>
+                </li>
+              ))}
+            </ol>
+          ) : (
+            <p class="no-instructions">
+              Les instructions détaillées arrivent bientôt !
+            </p>
+          )
+        }
+      </div>
+    </section>
+
+    <!-- Section Aspects Nutritionnels -->
+    <section class="nutrition-section">
+      <h2 class="section-title">LES ASPECTS NUTRITIONNELS</h2>
+      <div class="nutrition-card">
+        <div class="protein-amount">
+          {recetteData?.proteines_recette || "15-25"}
+        </div>
+        <div class="protein-label">par<br />portion</div>
+        <div class="protein-text">PROTÉINES</div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .recipe-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: var(--color-background);
+  }
+
+  /* Hero Section */
+  .hero-section {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background-color: var(--color-background);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .recipe-title-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+  }
+
+  .recipe-title {
+    font-size: 4.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin: 0;
+    text-transform: uppercase;
+    color: #ff6b35;
+    opacity: 0.3;
+  }
+
+  .hero-image-container {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Section titles */
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--color-grey-1);
+    margin: 0;
+  }
+
+  /* Ingredients Section */
+  .ingredients-section {
+    padding: 2rem 1.5rem;
+    background-color: var(--color-green-main);
+  }
+
+  .ingredients-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+  }
+
+  .ingredient-item {
+    color: var(--color-grey-1);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  /* Info Section Top */
+  .info-section-top {
+    padding: 1.5rem;
+    background-color: var(--color-background);
+  }
+
+  .info-grid-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .info-item {
+    text-align: center;
+  }
+
+  .info-item.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .info-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-grey-7);
+    margin-bottom: 0.25rem;
+  }
+
+  .info-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-grey-10);
+  }
+
+  /* Ingredients Visual Grid */
+  .ingredients-visual {
+    padding: 2rem;
+    background-color: var(--color-background);
+  }
+
+  .ingredients-grid-image {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Preparation Section */
+  .preparation-section {
+    background-color: var(--color-background);
+    padding: 2rem 0;
+  }
+
+  .preparation-header {
+    background-color: var(--color-green-main);
+    padding: 1rem 2rem;
+    margin: 0 1.5rem 1.5rem;
+    text-align: center;
+  }
+
+  .preparation-content {
+    padding: 0 1.5rem;
+  }
+
+  .preparation-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .preparation-item {
+    display: flex;
+    margin-bottom: 1rem;
+    color: var(--color-grey-9);
+  }
+
+  .step-number {
+    font-weight: 800;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+    color: var(--color-green-main);
+  }
+
+  .step-text {
+    flex: 1;
+    line-height: 1.5;
+  }
+
+  .no-instructions {
+    color: var(--color-grey-6);
+    font-style: italic;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  /* Nutrition Section */
+  .nutrition-section {
+    padding: 2rem 1.5rem;
+    background-color: var(--color-green-main);
+    text-align: center;
+  }
+
+  .nutrition-card {
+    background-color: rgba(255, 255, 255, 0.3);
+    border: 2px solid var(--color-green-shade-2);
+    padding: 2rem 1.5rem;
+    border-radius: 1rem;
+    margin: 2rem 0;
+    display: inline-block;
+    min-width: 250px;
+  }
+
+  .protein-info {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .protein-amount {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--color-grey-10);
+    line-height: 1;
+  }
+
+  .protein-label {
+    font-size: 1.2rem;
+    color: var(--color-green-main);
+    line-height: 1.2;
+  }
+
+  .protein-text {
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--color-grey-10);
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+
+  @media (max-width: 480px) {
+    .recipe-title {
+      font-size: 3.5rem;
+    }
+
+    .hero-image-container {
+      width: 250px;
+      height: 250px;
+    }
+
+    .protein-amount {
+      font-size: 2.5rem;
+    }
+
+    .protein-text {
+      font-size: 1.5rem;
+    }
+  }
+</style>
