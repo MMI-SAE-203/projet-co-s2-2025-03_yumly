@@ -1,5 +1,6 @@
 ---
 const { id, nom, description, image, continent } = Astro.props;
+import { slugify } from "../../backend/testback.js";
 
 function normalizeContinentName(str) {
   return str
@@ -36,7 +37,7 @@ const cssColorVariable = continentColors[normalizedContinent] || "var(--color-or
       <p class="recette-description">{description}</p>
       <div class="button-container">
         <a
-          href={`/recettes/${id}`}
+          href={`/recettes/${slugify(nom)}`}
           class="voir-plus-btn"
           style={`background-color: ${cssColorVariable};`}
         >

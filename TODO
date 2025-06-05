@@ -2,9 +2,6 @@
     - MENU : 
     - Attention background header nav mobile 
     
-PENSER AU MIDDLEWARE ? (pas important)
-ATTENTION NETLIFY, LIEN LOGIN / REGISTER
-
 page "forgot-password" en grande vitesse
 pages : CONFIG PROFIL ? (avec les icones)
 PAGE QUI ALLEGE LA PAGE CONTACT (FAQ?)

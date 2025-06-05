@@ -1,11 +1,11 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { getRecetteById, getAllRecettes } from "../../../backend/testback.js";
+import { getRecetteById, getAllRecettes, slugify } from "../../../backend/testback.js";
 
 export async function getStaticPaths() {
   const recettes = await getAllRecettes();
   return recettes.map((recette) => ({
-    params: { id: recette.id },
+    params: { id: slugify(recette.nom_recette) }, // <-- slug dans l'URL
     props: { recette },
   }));
 }
@@ -16,9 +16,11 @@ const { recette } = Astro.props;
 // Si pas de recette dans les props, la récupérer
 let recetteData = recette;
 if (!recetteData) {
-  recetteData = await getRecetteById(id);
+  const allRecettes = await getAllRecettes();
+  recetteData = allRecettes.find(
+    (r) => slugify(r.nom_recette) === id
+  );
 }
-
 // Fonction pour obtenir l'URL complète de l'image
 function getImageUrl(filename) {
   if (!filename) return "";
@@ -79,7 +81,7 @@ try {
 ---
 
 <Layout title={recetteData?.nom_recette || "Recette"}>
-  <div class="recipe-container">
+  <div class="recipe-container pt-24 pb-17">
     <!-- Hero Section avec le titre répété -->
     <section class="hero-section mb-20">
       <div class="recipe-title-background">
@@ -99,7 +101,7 @@ try {
     </section>
 
     <!-- Section Ingrédients -->
-    <section class="ingredients-section" data-color={colorClass}>
+    <section class="ingredients-section info-section-top" data-color={colorClass}>
       <h2 class="section-title">INGRÉDIENTS</h2>
       <ul class="ingredients-list">
         {
@@ -149,42 +151,41 @@ try {
       )
     }
 
-    <!-- Section Préparation -->
-    <section class="preparation-section">
-      <div class="preparation-header">
-        <h2 class="section-title">PRÉPARATION</h2>
-      </div>
-      <div class="preparation-content">
-        {
-          instructions.length > 0 ? (
-            <ol class="preparation-list">
-              {instructions.map((instruction, index) => (
-                <li class="preparation-item">
-                  <span class="step-number">{index + 1}.</span>
-                  <span class="step-text">{instruction}</span>
-                </li>
-              ))}
-            </ol>
-          ) : (
-            <p class="no-instructions">
-              Les instructions détaillées arrivent bientôt !
-            </p>
-          )
-        }
-      </div>
-    </section>
+<section class="preparation-section" data-color={colorClass}>
+  <div class="preparation-header">
+    <h2 class="section-title">PRÉPARATION</h2>
+  </div>
+  <div class="preparation-content">
+    {
+      instructions.length > 0 ? (
+        <ol class="preparation-list">
+          {instructions.map((instruction, index) => (
+            <li class="preparation-item">
+              <span class="step-number">{index + 1}.</span>
+              <span class="step-text">{instruction}</span>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="no-instructions">
+          Les instructions détaillées arrivent bientôt !
+        </p>
+      )
+    }
+  </div>
+</section>
 
     <!-- Section Aspects Nutritionnels -->
-    <section class="nutrition-section">
-      <h2 class="section-title">LES ASPECTS NUTRITIONNELS</h2>
-      <div class="nutrition-card">
-        <div class="protein-amount">
-          {recetteData?.proteines_recette || "15-25"}
-        </div>
-        <div class="protein-label">par<br />portion</div>
-        <div class="protein-text">PROTÉINES</div>
-      </div>
-    </section>
+<section class="nutrition-section" data-color={colorClass}>
+  <h2 class="section-title">LES ASPECTS NUTRITIONNELS</h2>
+  <div class="nutrition-card">
+    <div class="protein-amount">
+      {recetteData?.proteines_recette || "15-25"}
+    </div>
+    <div class="protein-label">par<br />portion</div>
+    <div class="protein-text">PROTÉINES</div>
+  </div>
+</section>
   </div>
 </Layout>
 
@@ -351,7 +352,6 @@ try {
     font-weight: 800;
     margin-right: 0.5rem;
     font-size: 1.2rem;
-    color: var(--color-green-main);
   }
 
   .step-text {
@@ -375,7 +375,7 @@ try {
 
   .nutrition-card {
     background-color: rgba(255, 255, 255, 0.3);
-    border: 2px solid var(--color-green-shade-2);
+    border: 2px solid var(--color-background);
     padding: 2rem 1.5rem;
     border-radius: 1rem;
     margin: 2rem 0;
@@ -400,7 +400,7 @@ try {
 
   .protein-label {
     font-size: 1.2rem;
-    color: var(--color-green-main);
+    color: var(--color-grey-9);
     line-height: 1.2;
   }
 
@@ -430,4 +430,44 @@ try {
       font-size: 1.5rem;
     }
   }
+.preparation-section[data-color="orange"] .preparation-header,
+.nutrition-section[data-color="orange"] {
+  background-color: var(--color-orange-main);
+}
+.preparation-section[data-color="red"] .preparation-header,
+.nutrition-section[data-color="red"] {
+  background-color: var(--color-red-main);
+}
+.preparation-section[data-color="green"] .preparation-header,
+.nutrition-section[data-color="green"] {
+  background-color: var(--color-green-main);
+}
+.preparation-section[data-color="blue"] .preparation-header,
+.nutrition-section[data-color="blue"] {
+  background-color: var(--color-blue-main);
+}
+.preparation-section[data-color="orange"] .step-number {
+  color: var(--color-orange-main);
+}
+.preparation-section[data-color="red"] .step-number {
+  color: var(--color-red-main);
+}
+.preparation-section[data-color="green"] .step-number {
+  color: var(--color-green-main);
+}
+.preparation-section[data-color="blue"] .step-number {
+  color: var(--color-blue-main);
+}
+.info-section-top[data-color="orange"] {
+  background-color: var(--color-orange-main);
+}
+.info-section-top[data-color="red"] {
+  background-color: var(--color-red-main);
+}
+.info-section-top[data-color="green"] {
+  background-color: var(--color-green-main);
+}
+.info-section-top[data-color="blue"] {
+  background-color: var(--color-blue-main);
+}
 </style>
